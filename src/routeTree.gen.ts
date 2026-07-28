@@ -9,38 +9,643 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as StatusRouteImport } from './routes/status'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PortalRouteImport } from './routes/portal'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
+import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as PortalUsageRouteImport } from './routes/portal.usage'
+import { Route as PortalSettingsRouteImport } from './routes/portal.settings'
+import { Route as PortalPlaygroundRouteImport } from './routes/portal.playground'
+import { Route as PortalKeysRouteImport } from './routes/portal.keys'
+import { Route as PortalBillingRouteImport } from './routes/portal.billing'
+import { Route as LegalTermsRouteImport } from './routes/legal.terms'
+import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
+import { Route as LegalDpaRouteImport } from './routes/legal.dpa'
+import { Route as DocsUnitsAndLimitsRouteImport } from './routes/docs.units-and-limits'
+import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
+import { Route as DocsErrorsRouteImport } from './routes/docs.errors'
+import { Route as DocsCoverageRouteImport } from './routes/docs.coverage'
+import { Route as DocsAuthenticationRouteImport } from './routes/docs.authentication'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminRevenueRouteImport } from './routes/admin.revenue'
+import { Route as AdminPlansRouteImport } from './routes/admin.plans'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminEndpointsRouteImport } from './routes/admin.endpoints'
+import { Route as PortalCheckoutReturnRouteImport } from './routes/portal.checkout.return'
+import { Route as PortalBillingPlansRouteImport } from './routes/portal.billing.plans'
+import { Route as DocsEndpointsPositionsRouteImport } from './routes/docs.endpoints.positions'
+import { Route as DocsEndpointsPoolsRouteImport } from './routes/docs.endpoints.pools'
+import { Route as DocsEndpointsMetadataRouteImport } from './routes/docs.endpoints.metadata'
 
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PortalUsageRoute = PortalUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSettingsRoute = PortalSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPlaygroundRoute = PortalPlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalKeysRoute = PortalKeysRouteImport.update({
+  id: '/keys',
+  path: '/keys',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalBillingRoute = PortalBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => PortalRoute,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalDpaRoute = LegalDpaRouteImport.update({
+  id: '/legal/dpa',
+  path: '/legal/dpa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsUnitsAndLimitsRoute = DocsUnitsAndLimitsRouteImport.update({
+  id: '/units-and-limits',
+  path: '/units-and-limits',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsQuickstartRoute = DocsQuickstartRouteImport.update({
+  id: '/quickstart',
+  path: '/quickstart',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsErrorsRoute = DocsErrorsRouteImport.update({
+  id: '/errors',
+  path: '/errors',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsCoverageRoute = DocsCoverageRouteImport.update({
+  id: '/coverage',
+  path: '/coverage',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsAuthenticationRoute = DocsAuthenticationRouteImport.update({
+  id: '/authentication',
+  path: '/authentication',
+  getParentRoute: () => DocsRoute,
+} as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRevenueRoute = AdminRevenueRouteImport.update({
+  id: '/revenue',
+  path: '/revenue',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlansRoute = AdminPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEndpointsRoute = AdminEndpointsRouteImport.update({
+  id: '/endpoints',
+  path: '/endpoints',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PortalCheckoutReturnRoute = PortalCheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalBillingPlansRoute = PortalBillingPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => PortalBillingRoute,
+} as any)
+const DocsEndpointsPositionsRoute = DocsEndpointsPositionsRouteImport.update({
+  id: '/endpoints/positions',
+  path: '/endpoints/positions',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsEndpointsPoolsRoute = DocsEndpointsPoolsRouteImport.update({
+  id: '/endpoints/pools',
+  path: '/endpoints/pools',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsEndpointsMetadataRoute = DocsEndpointsMetadataRouteImport.update({
+  id: '/endpoints/metadata',
+  path: '/endpoints/metadata',
+  getParentRoute: () => DocsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/portal': typeof PortalRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/admin/endpoints': typeof AdminEndpointsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/docs/authentication': typeof DocsAuthenticationRoute
+  '/docs/coverage': typeof DocsCoverageRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
+  '/portal/billing': typeof PortalBillingRouteWithChildren
+  '/portal/keys': typeof PortalKeysRoute
+  '/portal/playground': typeof PortalPlaygroundRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/usage': typeof PortalUsageRoute
+  '/admin/': typeof AdminIndexRoute
+  '/docs/': typeof DocsIndexRoute
+  '/portal/': typeof PortalIndexRoute
+  '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
+  '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
+  '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
+  '/portal/billing/plans': typeof PortalBillingPlansRoute
+  '/portal/checkout/return': typeof PortalCheckoutReturnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
+  '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/admin/endpoints': typeof AdminEndpointsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/docs/authentication': typeof DocsAuthenticationRoute
+  '/docs/coverage': typeof DocsCoverageRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
+  '/portal/billing': typeof PortalBillingRouteWithChildren
+  '/portal/keys': typeof PortalKeysRoute
+  '/portal/playground': typeof PortalPlaygroundRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/usage': typeof PortalUsageRoute
+  '/admin': typeof AdminIndexRoute
+  '/docs': typeof DocsIndexRoute
+  '/portal': typeof PortalIndexRoute
+  '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
+  '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
+  '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
+  '/portal/billing/plans': typeof PortalBillingPlansRoute
+  '/portal/checkout/return': typeof PortalCheckoutReturnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/portal': typeof PortalRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/admin/endpoints': typeof AdminEndpointsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/docs/authentication': typeof DocsAuthenticationRoute
+  '/docs/coverage': typeof DocsCoverageRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
+  '/portal/billing': typeof PortalBillingRouteWithChildren
+  '/portal/keys': typeof PortalKeysRoute
+  '/portal/playground': typeof PortalPlaygroundRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/usage': typeof PortalUsageRoute
+  '/admin/': typeof AdminIndexRoute
+  '/docs/': typeof DocsIndexRoute
+  '/portal/': typeof PortalIndexRoute
+  '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
+  '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
+  '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
+  '/portal/billing/plans': typeof PortalBillingPlansRoute
+  '/portal/checkout/return': typeof PortalCheckoutReturnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/changelog'
+    | '/contact'
+    | '/docs'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/portal'
+    | '/pricing'
+    | '/reset-password'
+    | '/signup'
+    | '/status'
+    | '/support'
+    | '/verify-email'
+    | '/admin/endpoints'
+    | '/admin/login'
+    | '/admin/payments'
+    | '/admin/plans'
+    | '/admin/revenue'
+    | '/admin/subscriptions'
+    | '/docs/authentication'
+    | '/docs/coverage'
+    | '/docs/errors'
+    | '/docs/quickstart'
+    | '/docs/units-and-limits'
+    | '/legal/dpa'
+    | '/legal/privacy'
+    | '/legal/terms'
+    | '/portal/billing'
+    | '/portal/keys'
+    | '/portal/playground'
+    | '/portal/settings'
+    | '/portal/usage'
+    | '/admin/'
+    | '/docs/'
+    | '/portal/'
+    | '/docs/endpoints/metadata'
+    | '/docs/endpoints/pools'
+    | '/docs/endpoints/positions'
+    | '/portal/billing/plans'
+    | '/portal/checkout/return'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/changelog'
+    | '/contact'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/pricing'
+    | '/reset-password'
+    | '/signup'
+    | '/status'
+    | '/support'
+    | '/verify-email'
+    | '/admin/endpoints'
+    | '/admin/login'
+    | '/admin/payments'
+    | '/admin/plans'
+    | '/admin/revenue'
+    | '/admin/subscriptions'
+    | '/docs/authentication'
+    | '/docs/coverage'
+    | '/docs/errors'
+    | '/docs/quickstart'
+    | '/docs/units-and-limits'
+    | '/legal/dpa'
+    | '/legal/privacy'
+    | '/legal/terms'
+    | '/portal/billing'
+    | '/portal/keys'
+    | '/portal/playground'
+    | '/portal/settings'
+    | '/portal/usage'
+    | '/admin'
+    | '/docs'
+    | '/portal'
+    | '/docs/endpoints/metadata'
+    | '/docs/endpoints/pools'
+    | '/docs/endpoints/positions'
+    | '/portal/billing/plans'
+    | '/portal/checkout/return'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/changelog'
+    | '/contact'
+    | '/docs'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/portal'
+    | '/pricing'
+    | '/reset-password'
+    | '/signup'
+    | '/status'
+    | '/support'
+    | '/verify-email'
+    | '/admin/endpoints'
+    | '/admin/login'
+    | '/admin/payments'
+    | '/admin/plans'
+    | '/admin/revenue'
+    | '/admin/subscriptions'
+    | '/docs/authentication'
+    | '/docs/coverage'
+    | '/docs/errors'
+    | '/docs/quickstart'
+    | '/docs/units-and-limits'
+    | '/legal/dpa'
+    | '/legal/privacy'
+    | '/legal/terms'
+    | '/portal/billing'
+    | '/portal/keys'
+    | '/portal/playground'
+    | '/portal/settings'
+    | '/portal/usage'
+    | '/admin/'
+    | '/docs/'
+    | '/portal/'
+    | '/docs/endpoints/metadata'
+    | '/docs/endpoints/pools'
+    | '/docs/endpoints/positions'
+    | '/portal/billing/plans'
+    | '/portal/checkout/return'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  ChangelogRoute: typeof ChangelogRoute
+  ContactRoute: typeof ContactRoute
+  DocsRoute: typeof DocsRouteWithChildren
+  ExploreRoute: typeof ExploreRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  PortalRoute: typeof PortalRouteWithChildren
+  PricingRoute: typeof PricingRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
+  StatusRoute: typeof StatusRoute
+  SupportRoute: typeof SupportRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
+  LegalDpaRoute: typeof LegalDpaRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +653,301 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/portal/usage': {
+      id: '/portal/usage'
+      path: '/usage'
+      fullPath: '/portal/usage'
+      preLoaderRoute: typeof PortalUsageRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/settings': {
+      id: '/portal/settings'
+      path: '/settings'
+      fullPath: '/portal/settings'
+      preLoaderRoute: typeof PortalSettingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/playground': {
+      id: '/portal/playground'
+      path: '/playground'
+      fullPath: '/portal/playground'
+      preLoaderRoute: typeof PortalPlaygroundRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/keys': {
+      id: '/portal/keys'
+      path: '/keys'
+      fullPath: '/portal/keys'
+      preLoaderRoute: typeof PortalKeysRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/billing': {
+      id: '/portal/billing'
+      path: '/billing'
+      fullPath: '/portal/billing'
+      preLoaderRoute: typeof PortalBillingRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/dpa': {
+      id: '/legal/dpa'
+      path: '/legal/dpa'
+      fullPath: '/legal/dpa'
+      preLoaderRoute: typeof LegalDpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/units-and-limits': {
+      id: '/docs/units-and-limits'
+      path: '/units-and-limits'
+      fullPath: '/docs/units-and-limits'
+      preLoaderRoute: typeof DocsUnitsAndLimitsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/quickstart': {
+      id: '/docs/quickstart'
+      path: '/quickstart'
+      fullPath: '/docs/quickstart'
+      preLoaderRoute: typeof DocsQuickstartRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/errors': {
+      id: '/docs/errors'
+      path: '/errors'
+      fullPath: '/docs/errors'
+      preLoaderRoute: typeof DocsErrorsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/coverage': {
+      id: '/docs/coverage'
+      path: '/coverage'
+      fullPath: '/docs/coverage'
+      preLoaderRoute: typeof DocsCoverageRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/authentication': {
+      id: '/docs/authentication'
+      path: '/authentication'
+      fullPath: '/docs/authentication'
+      preLoaderRoute: typeof DocsAuthenticationRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/revenue': {
+      id: '/admin/revenue'
+      path: '/revenue'
+      fullPath: '/admin/revenue'
+      preLoaderRoute: typeof AdminRevenueRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/plans': {
+      id: '/admin/plans'
+      path: '/plans'
+      fullPath: '/admin/plans'
+      preLoaderRoute: typeof AdminPlansRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/endpoints': {
+      id: '/admin/endpoints'
+      path: '/endpoints'
+      fullPath: '/admin/endpoints'
+      preLoaderRoute: typeof AdminEndpointsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/portal/checkout/return': {
+      id: '/portal/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/portal/checkout/return'
+      preLoaderRoute: typeof PortalCheckoutReturnRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/billing/plans': {
+      id: '/portal/billing/plans'
+      path: '/plans'
+      fullPath: '/portal/billing/plans'
+      preLoaderRoute: typeof PortalBillingPlansRouteImport
+      parentRoute: typeof PortalBillingRoute
+    }
+    '/docs/endpoints/positions': {
+      id: '/docs/endpoints/positions'
+      path: '/endpoints/positions'
+      fullPath: '/docs/endpoints/positions'
+      preLoaderRoute: typeof DocsEndpointsPositionsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/endpoints/pools': {
+      id: '/docs/endpoints/pools'
+      path: '/endpoints/pools'
+      fullPath: '/docs/endpoints/pools'
+      preLoaderRoute: typeof DocsEndpointsPoolsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/endpoints/metadata': {
+      id: '/docs/endpoints/metadata'
+      path: '/endpoints/metadata'
+      fullPath: '/docs/endpoints/metadata'
+      preLoaderRoute: typeof DocsEndpointsMetadataRouteImport
+      parentRoute: typeof DocsRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminEndpointsRoute: typeof AdminEndpointsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminPlansRoute: typeof AdminPlansRoute
+  AdminRevenueRoute: typeof AdminRevenueRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminEndpointsRoute: AdminEndpointsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminPlansRoute: AdminPlansRoute,
+  AdminRevenueRoute: AdminRevenueRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface DocsRouteChildren {
+  DocsAuthenticationRoute: typeof DocsAuthenticationRoute
+  DocsCoverageRoute: typeof DocsCoverageRoute
+  DocsErrorsRoute: typeof DocsErrorsRoute
+  DocsQuickstartRoute: typeof DocsQuickstartRoute
+  DocsUnitsAndLimitsRoute: typeof DocsUnitsAndLimitsRoute
+  DocsIndexRoute: typeof DocsIndexRoute
+  DocsEndpointsMetadataRoute: typeof DocsEndpointsMetadataRoute
+  DocsEndpointsPoolsRoute: typeof DocsEndpointsPoolsRoute
+  DocsEndpointsPositionsRoute: typeof DocsEndpointsPositionsRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsAuthenticationRoute: DocsAuthenticationRoute,
+  DocsCoverageRoute: DocsCoverageRoute,
+  DocsErrorsRoute: DocsErrorsRoute,
+  DocsQuickstartRoute: DocsQuickstartRoute,
+  DocsUnitsAndLimitsRoute: DocsUnitsAndLimitsRoute,
+  DocsIndexRoute: DocsIndexRoute,
+  DocsEndpointsMetadataRoute: DocsEndpointsMetadataRoute,
+  DocsEndpointsPoolsRoute: DocsEndpointsPoolsRoute,
+  DocsEndpointsPositionsRoute: DocsEndpointsPositionsRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
+interface PortalBillingRouteChildren {
+  PortalBillingPlansRoute: typeof PortalBillingPlansRoute
+}
+
+const PortalBillingRouteChildren: PortalBillingRouteChildren = {
+  PortalBillingPlansRoute: PortalBillingPlansRoute,
+}
+
+const PortalBillingRouteWithChildren = PortalBillingRoute._addFileChildren(
+  PortalBillingRouteChildren,
+)
+
+interface PortalRouteChildren {
+  PortalBillingRoute: typeof PortalBillingRouteWithChildren
+  PortalKeysRoute: typeof PortalKeysRoute
+  PortalPlaygroundRoute: typeof PortalPlaygroundRoute
+  PortalSettingsRoute: typeof PortalSettingsRoute
+  PortalUsageRoute: typeof PortalUsageRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+  PortalCheckoutReturnRoute: typeof PortalCheckoutReturnRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalBillingRoute: PortalBillingRouteWithChildren,
+  PortalKeysRoute: PortalKeysRoute,
+  PortalPlaygroundRoute: PortalPlaygroundRoute,
+  PortalSettingsRoute: PortalSettingsRoute,
+  PortalUsageRoute: PortalUsageRoute,
+  PortalIndexRoute: PortalIndexRoute,
+  PortalCheckoutReturnRoute: PortalCheckoutReturnRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  ChangelogRoute: ChangelogRoute,
+  ContactRoute: ContactRoute,
+  DocsRoute: DocsRouteWithChildren,
+  ExploreRoute: ExploreRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  PortalRoute: PortalRouteWithChildren,
+  PricingRoute: PricingRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
+  StatusRoute: StatusRoute,
+  SupportRoute: SupportRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
+  LegalDpaRoute: LegalDpaRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
