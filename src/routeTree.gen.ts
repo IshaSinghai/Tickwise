@@ -9,38 +9,188 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as DocsUnitsAndLimitsRouteImport } from './routes/docs.units-and-limits'
+import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
+import { Route as DocsErrorsRouteImport } from './routes/docs.errors'
+import { Route as DocsCoverageRouteImport } from './routes/docs.coverage'
+import { Route as DocsAuthenticationRouteImport } from './routes/docs.authentication'
+import { Route as DocsEndpointsPositionsRouteImport } from './routes/docs.endpoints.positions'
+import { Route as DocsEndpointsPoolsRouteImport } from './routes/docs.endpoints.pools'
+import { Route as DocsEndpointsMetadataRouteImport } from './routes/docs.endpoints.metadata'
 
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsUnitsAndLimitsRoute = DocsUnitsAndLimitsRouteImport.update({
+  id: '/units-and-limits',
+  path: '/units-and-limits',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsQuickstartRoute = DocsQuickstartRouteImport.update({
+  id: '/quickstart',
+  path: '/quickstart',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsErrorsRoute = DocsErrorsRouteImport.update({
+  id: '/errors',
+  path: '/errors',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsCoverageRoute = DocsCoverageRouteImport.update({
+  id: '/coverage',
+  path: '/coverage',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsAuthenticationRoute = DocsAuthenticationRouteImport.update({
+  id: '/authentication',
+  path: '/authentication',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsEndpointsPositionsRoute = DocsEndpointsPositionsRouteImport.update({
+  id: '/endpoints/positions',
+  path: '/endpoints/positions',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsEndpointsPoolsRoute = DocsEndpointsPoolsRouteImport.update({
+  id: '/endpoints/pools',
+  path: '/endpoints/pools',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsEndpointsMetadataRoute = DocsEndpointsMetadataRouteImport.update({
+  id: '/endpoints/metadata',
+  path: '/endpoints/metadata',
+  getParentRoute: () => DocsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/docs/authentication': typeof DocsAuthenticationRoute
+  '/docs/coverage': typeof DocsCoverageRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/docs/': typeof DocsIndexRoute
+  '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
+  '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
+  '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
+  '/docs/authentication': typeof DocsAuthenticationRoute
+  '/docs/coverage': typeof DocsCoverageRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/docs': typeof DocsIndexRoute
+  '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
+  '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
+  '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/docs/authentication': typeof DocsAuthenticationRoute
+  '/docs/coverage': typeof DocsCoverageRoute
+  '/docs/errors': typeof DocsErrorsRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/docs/': typeof DocsIndexRoute
+  '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
+  '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
+  '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/docs'
+    | '/pricing'
+    | '/docs/authentication'
+    | '/docs/coverage'
+    | '/docs/errors'
+    | '/docs/quickstart'
+    | '/docs/units-and-limits'
+    | '/docs/'
+    | '/docs/endpoints/metadata'
+    | '/docs/endpoints/pools'
+    | '/docs/endpoints/positions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/pricing'
+    | '/docs/authentication'
+    | '/docs/coverage'
+    | '/docs/errors'
+    | '/docs/quickstart'
+    | '/docs/units-and-limits'
+    | '/docs'
+    | '/docs/endpoints/metadata'
+    | '/docs/endpoints/pools'
+    | '/docs/endpoints/positions'
+  id:
+    | '__root__'
+    | '/'
+    | '/docs'
+    | '/pricing'
+    | '/docs/authentication'
+    | '/docs/coverage'
+    | '/docs/errors'
+    | '/docs/quickstart'
+    | '/docs/units-and-limits'
+    | '/docs/'
+    | '/docs/endpoints/metadata'
+    | '/docs/endpoints/pools'
+    | '/docs/endpoints/positions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DocsRoute: typeof DocsRouteWithChildren
+  PricingRoute: typeof PricingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +198,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/units-and-limits': {
+      id: '/docs/units-and-limits'
+      path: '/units-and-limits'
+      fullPath: '/docs/units-and-limits'
+      preLoaderRoute: typeof DocsUnitsAndLimitsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/quickstart': {
+      id: '/docs/quickstart'
+      path: '/quickstart'
+      fullPath: '/docs/quickstart'
+      preLoaderRoute: typeof DocsQuickstartRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/errors': {
+      id: '/docs/errors'
+      path: '/errors'
+      fullPath: '/docs/errors'
+      preLoaderRoute: typeof DocsErrorsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/coverage': {
+      id: '/docs/coverage'
+      path: '/coverage'
+      fullPath: '/docs/coverage'
+      preLoaderRoute: typeof DocsCoverageRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/authentication': {
+      id: '/docs/authentication'
+      path: '/authentication'
+      fullPath: '/docs/authentication'
+      preLoaderRoute: typeof DocsAuthenticationRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/endpoints/positions': {
+      id: '/docs/endpoints/positions'
+      path: '/endpoints/positions'
+      fullPath: '/docs/endpoints/positions'
+      preLoaderRoute: typeof DocsEndpointsPositionsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/endpoints/pools': {
+      id: '/docs/endpoints/pools'
+      path: '/endpoints/pools'
+      fullPath: '/docs/endpoints/pools'
+      preLoaderRoute: typeof DocsEndpointsPoolsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/endpoints/metadata': {
+      id: '/docs/endpoints/metadata'
+      path: '/endpoints/metadata'
+      fullPath: '/docs/endpoints/metadata'
+      preLoaderRoute: typeof DocsEndpointsMetadataRouteImport
+      parentRoute: typeof DocsRoute
+    }
   }
 }
 
+interface DocsRouteChildren {
+  DocsAuthenticationRoute: typeof DocsAuthenticationRoute
+  DocsCoverageRoute: typeof DocsCoverageRoute
+  DocsErrorsRoute: typeof DocsErrorsRoute
+  DocsQuickstartRoute: typeof DocsQuickstartRoute
+  DocsUnitsAndLimitsRoute: typeof DocsUnitsAndLimitsRoute
+  DocsIndexRoute: typeof DocsIndexRoute
+  DocsEndpointsMetadataRoute: typeof DocsEndpointsMetadataRoute
+  DocsEndpointsPoolsRoute: typeof DocsEndpointsPoolsRoute
+  DocsEndpointsPositionsRoute: typeof DocsEndpointsPositionsRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsAuthenticationRoute: DocsAuthenticationRoute,
+  DocsCoverageRoute: DocsCoverageRoute,
+  DocsErrorsRoute: DocsErrorsRoute,
+  DocsQuickstartRoute: DocsQuickstartRoute,
+  DocsUnitsAndLimitsRoute: DocsUnitsAndLimitsRoute,
+  DocsIndexRoute: DocsIndexRoute,
+  DocsEndpointsMetadataRoute: DocsEndpointsMetadataRoute,
+  DocsEndpointsPoolsRoute: DocsEndpointsPoolsRoute,
+  DocsEndpointsPositionsRoute: DocsEndpointsPositionsRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DocsRoute: DocsRouteWithChildren,
+  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
