@@ -22,9 +22,11 @@ import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalIndexRouteImport } from './routes/portal.index'
 import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as PortalUsageRouteImport } from './routes/portal.usage'
 import { Route as PortalSettingsRouteImport } from './routes/portal.settings'
 import { Route as PortalPlaygroundRouteImport } from './routes/portal.playground'
@@ -38,6 +40,12 @@ import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
 import { Route as DocsErrorsRouteImport } from './routes/docs.errors'
 import { Route as DocsCoverageRouteImport } from './routes/docs.coverage'
 import { Route as DocsAuthenticationRouteImport } from './routes/docs.authentication'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminRevenueRouteImport } from './routes/admin.revenue'
+import { Route as AdminPlansRouteImport } from './routes/admin.plans'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminEndpointsRouteImport } from './routes/admin.endpoints'
 import { Route as PortalCheckoutReturnRouteImport } from './routes/portal.checkout.return'
 import { Route as PortalBillingPlansRouteImport } from './routes/portal.billing.plans'
 import { Route as DocsEndpointsPositionsRouteImport } from './routes/docs.endpoints.positions'
@@ -109,6 +117,11 @@ const ChangelogRoute = ChangelogRouteImport.update({
   path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -123,6 +136,11 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DocsRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const PortalUsageRoute = PortalUsageRouteImport.update({
   id: '/usage',
@@ -189,6 +207,36 @@ const DocsAuthenticationRoute = DocsAuthenticationRouteImport.update({
   path: '/authentication',
   getParentRoute: () => DocsRoute,
 } as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRevenueRoute = AdminRevenueRouteImport.update({
+  id: '/revenue',
+  path: '/revenue',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlansRoute = AdminPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEndpointsRoute = AdminEndpointsRouteImport.update({
+  id: '/endpoints',
+  path: '/endpoints',
+  getParentRoute: () => AdminRoute,
+} as any)
 const PortalCheckoutReturnRoute = PortalCheckoutReturnRouteImport.update({
   id: '/checkout/return',
   path: '/checkout/return',
@@ -217,6 +265,7 @@ const DocsEndpointsMetadataRoute = DocsEndpointsMetadataRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRouteWithChildren
@@ -230,6 +279,12 @@ export interface FileRoutesByFullPath {
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin/endpoints': typeof AdminEndpointsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
@@ -243,6 +298,7 @@ export interface FileRoutesByFullPath {
   '/portal/playground': typeof PortalPlaygroundRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/usage': typeof PortalUsageRoute
+  '/admin/': typeof AdminIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/portal/': typeof PortalIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
@@ -264,6 +320,12 @@ export interface FileRoutesByTo {
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin/endpoints': typeof AdminEndpointsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
@@ -277,6 +339,7 @@ export interface FileRoutesByTo {
   '/portal/playground': typeof PortalPlaygroundRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/usage': typeof PortalUsageRoute
+  '/admin': typeof AdminIndexRoute
   '/docs': typeof DocsIndexRoute
   '/portal': typeof PortalIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
@@ -288,6 +351,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRouteWithChildren
@@ -301,6 +365,12 @@ export interface FileRoutesById {
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin/endpoints': typeof AdminEndpointsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
@@ -314,6 +384,7 @@ export interface FileRoutesById {
   '/portal/playground': typeof PortalPlaygroundRoute
   '/portal/settings': typeof PortalSettingsRoute
   '/portal/usage': typeof PortalUsageRoute
+  '/admin/': typeof AdminIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/portal/': typeof PortalIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
@@ -326,6 +397,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/changelog'
     | '/contact'
     | '/docs'
@@ -339,6 +411,12 @@ export interface FileRouteTypes {
     | '/status'
     | '/support'
     | '/verify-email'
+    | '/admin/endpoints'
+    | '/admin/login'
+    | '/admin/payments'
+    | '/admin/plans'
+    | '/admin/revenue'
+    | '/admin/subscriptions'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
@@ -352,6 +430,7 @@ export interface FileRouteTypes {
     | '/portal/playground'
     | '/portal/settings'
     | '/portal/usage'
+    | '/admin/'
     | '/docs/'
     | '/portal/'
     | '/docs/endpoints/metadata'
@@ -373,6 +452,12 @@ export interface FileRouteTypes {
     | '/status'
     | '/support'
     | '/verify-email'
+    | '/admin/endpoints'
+    | '/admin/login'
+    | '/admin/payments'
+    | '/admin/plans'
+    | '/admin/revenue'
+    | '/admin/subscriptions'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
@@ -386,6 +471,7 @@ export interface FileRouteTypes {
     | '/portal/playground'
     | '/portal/settings'
     | '/portal/usage'
+    | '/admin'
     | '/docs'
     | '/portal'
     | '/docs/endpoints/metadata'
@@ -396,6 +482,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/changelog'
     | '/contact'
     | '/docs'
@@ -409,6 +496,12 @@ export interface FileRouteTypes {
     | '/status'
     | '/support'
     | '/verify-email'
+    | '/admin/endpoints'
+    | '/admin/login'
+    | '/admin/payments'
+    | '/admin/plans'
+    | '/admin/revenue'
+    | '/admin/subscriptions'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
@@ -422,6 +515,7 @@ export interface FileRouteTypes {
     | '/portal/playground'
     | '/portal/settings'
     | '/portal/usage'
+    | '/admin/'
     | '/docs/'
     | '/portal/'
     | '/docs/endpoints/metadata'
@@ -433,6 +527,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ChangelogRoute: typeof ChangelogRoute
   ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRouteWithChildren
@@ -544,6 +639,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -564,6 +666,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/docs/'
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/portal/usage': {
       id: '/portal/usage'
@@ -656,6 +765,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsAuthenticationRouteImport
       parentRoute: typeof DocsRoute
     }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/revenue': {
+      id: '/admin/revenue'
+      path: '/revenue'
+      fullPath: '/admin/revenue'
+      preLoaderRoute: typeof AdminRevenueRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/plans': {
+      id: '/admin/plans'
+      path: '/plans'
+      fullPath: '/admin/plans'
+      preLoaderRoute: typeof AdminPlansRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/endpoints': {
+      id: '/admin/endpoints'
+      path: '/endpoints'
+      fullPath: '/admin/endpoints'
+      preLoaderRoute: typeof AdminEndpointsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/portal/checkout/return': {
       id: '/portal/checkout/return'
       path: '/checkout/return'
@@ -693,6 +844,28 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AdminRouteChildren {
+  AdminEndpointsRoute: typeof AdminEndpointsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminPlansRoute: typeof AdminPlansRoute
+  AdminRevenueRoute: typeof AdminRevenueRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminEndpointsRoute: AdminEndpointsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminPlansRoute: AdminPlansRoute,
+  AdminRevenueRoute: AdminRevenueRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface DocsRouteChildren {
   DocsAuthenticationRoute: typeof DocsAuthenticationRoute
@@ -757,6 +930,7 @@ const PortalRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ChangelogRoute: ChangelogRoute,
   ContactRoute: ContactRoute,
   DocsRoute: DocsRouteWithChildren,
@@ -777,3 +951,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
