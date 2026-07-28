@@ -9,9 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as StatusRouteImport } from './routes/status'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -30,6 +35,11 @@ import { Route as DocsEndpointsPositionsRouteImport } from './routes/docs.endpoi
 import { Route as DocsEndpointsPoolsRouteImport } from './routes/docs.endpoints.pools'
 import { Route as DocsEndpointsMetadataRouteImport } from './routes/docs.endpoints.metadata'
 
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
@@ -40,9 +50,29 @@ const StatusRoute = StatusRouteImport.update({
   path: '/status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExploreRoute = ExploreRouteImport.update({
@@ -137,9 +167,14 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRouteWithChildren
   '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
@@ -158,9 +193,14 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
@@ -181,9 +221,14 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRouteWithChildren
   '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/support': typeof SupportRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
@@ -205,9 +250,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/docs'
     | '/explore'
+    | '/forgot-password'
+    | '/login'
     | '/pricing'
+    | '/reset-password'
+    | '/signup'
     | '/status'
     | '/support'
+    | '/verify-email'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
@@ -226,9 +276,14 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/contact'
     | '/explore'
+    | '/forgot-password'
+    | '/login'
     | '/pricing'
+    | '/reset-password'
+    | '/signup'
     | '/status'
     | '/support'
+    | '/verify-email'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
@@ -248,9 +303,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/docs'
     | '/explore'
+    | '/forgot-password'
+    | '/login'
     | '/pricing'
+    | '/reset-password'
+    | '/signup'
     | '/status'
     | '/support'
+    | '/verify-email'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
@@ -271,9 +331,14 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRouteWithChildren
   ExploreRoute: typeof ExploreRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
   StatusRoute: typeof StatusRoute
   SupportRoute: typeof SupportRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
   LegalDpaRoute: typeof LegalDpaRoute
   LegalPrivacyRoute: typeof LegalPrivacyRoute
   LegalTermsRoute: typeof LegalTermsRoute
@@ -281,6 +346,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/support': {
       id: '/support'
       path: '/support'
@@ -295,11 +367,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/explore': {
@@ -456,9 +556,14 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DocsRoute: DocsRouteWithChildren,
   ExploreRoute: ExploreRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
   StatusRoute: StatusRoute,
   SupportRoute: SupportRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
   LegalDpaRoute: LegalDpaRoute,
   LegalPrivacyRoute: LegalPrivacyRoute,
   LegalTermsRoute: LegalTermsRoute,
