@@ -9,10 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as StatusRouteImport } from './routes/status'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as LegalTermsRouteImport } from './routes/legal.terms'
+import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
+import { Route as LegalDpaRouteImport } from './routes/legal.dpa'
 import { Route as DocsUnitsAndLimitsRouteImport } from './routes/docs.units-and-limits'
 import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
 import { Route as DocsErrorsRouteImport } from './routes/docs.errors'
@@ -22,14 +30,39 @@ import { Route as DocsEndpointsPositionsRouteImport } from './routes/docs.endpoi
 import { Route as DocsEndpointsPoolsRouteImport } from './routes/docs.endpoints.pools'
 import { Route as DocsEndpointsMetadataRouteImport } from './routes/docs.endpoints.metadata'
 
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +74,21 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DocsRoute,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/legal/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/legal/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalDpaRoute = LegalDpaRouteImport.update({
+  id: '/legal/dpa',
+  path: '/legal/dpa',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DocsUnitsAndLimitsRoute = DocsUnitsAndLimitsRouteImport.update({
   id: '/units-and-limits',
@@ -85,13 +133,21 @@ const DocsEndpointsMetadataRoute = DocsEndpointsMetadataRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
   '/docs': typeof DocsRouteWithChildren
+  '/explore': typeof ExploreRoute
   '/pricing': typeof PricingRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
   '/docs/quickstart': typeof DocsQuickstartRoute
   '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/docs/': typeof DocsIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
   '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
@@ -99,12 +155,20 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
+  '/explore': typeof ExploreRoute
   '/pricing': typeof PricingRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
   '/docs/quickstart': typeof DocsQuickstartRoute
   '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/docs': typeof DocsIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
   '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
@@ -113,13 +177,21 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/changelog': typeof ChangelogRoute
+  '/contact': typeof ContactRoute
   '/docs': typeof DocsRouteWithChildren
+  '/explore': typeof ExploreRoute
   '/pricing': typeof PricingRoute
+  '/status': typeof StatusRoute
+  '/support': typeof SupportRoute
   '/docs/authentication': typeof DocsAuthenticationRoute
   '/docs/coverage': typeof DocsCoverageRoute
   '/docs/errors': typeof DocsErrorsRoute
   '/docs/quickstart': typeof DocsQuickstartRoute
   '/docs/units-and-limits': typeof DocsUnitsAndLimitsRoute
+  '/legal/dpa': typeof LegalDpaRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/docs/': typeof DocsIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
   '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
@@ -129,13 +201,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/changelog'
+    | '/contact'
     | '/docs'
+    | '/explore'
     | '/pricing'
+    | '/status'
+    | '/support'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
     | '/docs/quickstart'
     | '/docs/units-and-limits'
+    | '/legal/dpa'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/docs/'
     | '/docs/endpoints/metadata'
     | '/docs/endpoints/pools'
@@ -143,12 +223,20 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/changelog'
+    | '/contact'
+    | '/explore'
     | '/pricing'
+    | '/status'
+    | '/support'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
     | '/docs/quickstart'
     | '/docs/units-and-limits'
+    | '/legal/dpa'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/docs'
     | '/docs/endpoints/metadata'
     | '/docs/endpoints/pools'
@@ -156,13 +244,21 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/changelog'
+    | '/contact'
     | '/docs'
+    | '/explore'
     | '/pricing'
+    | '/status'
+    | '/support'
     | '/docs/authentication'
     | '/docs/coverage'
     | '/docs/errors'
     | '/docs/quickstart'
     | '/docs/units-and-limits'
+    | '/legal/dpa'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/docs/'
     | '/docs/endpoints/metadata'
     | '/docs/endpoints/pools'
@@ -171,12 +267,34 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChangelogRoute: typeof ChangelogRoute
+  ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRouteWithChildren
+  ExploreRoute: typeof ExploreRoute
   PricingRoute: typeof PricingRoute
+  StatusRoute: typeof StatusRoute
+  SupportRoute: typeof SupportRoute
+  LegalDpaRoute: typeof LegalDpaRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -184,11 +302,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs': {
       id: '/docs'
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -204,6 +343,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/docs/'
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRoute
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/legal/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/legal/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal/dpa': {
+      id: '/legal/dpa'
+      path: '/legal/dpa'
+      fullPath: '/legal/dpa'
+      preLoaderRoute: typeof LegalDpaRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/docs/units-and-limits': {
       id: '/docs/units-and-limits'
@@ -292,8 +452,16 @@ const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChangelogRoute: ChangelogRoute,
+  ContactRoute: ContactRoute,
   DocsRoute: DocsRouteWithChildren,
+  ExploreRoute: ExploreRoute,
   PricingRoute: PricingRoute,
+  StatusRoute: StatusRoute,
+  SupportRoute: SupportRoute,
+  LegalDpaRoute: LegalDpaRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
