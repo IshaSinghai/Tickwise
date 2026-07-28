@@ -15,6 +15,7 @@ import { Route as StatusRouteImport } from './routes/status'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ExploreRouteImport } from './routes/explore'
@@ -22,7 +23,13 @@ import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
 import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as PortalUsageRouteImport } from './routes/portal.usage'
+import { Route as PortalSettingsRouteImport } from './routes/portal.settings'
+import { Route as PortalPlaygroundRouteImport } from './routes/portal.playground'
+import { Route as PortalKeysRouteImport } from './routes/portal.keys'
+import { Route as PortalBillingRouteImport } from './routes/portal.billing'
 import { Route as LegalTermsRouteImport } from './routes/legal.terms'
 import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
 import { Route as LegalDpaRouteImport } from './routes/legal.dpa'
@@ -31,6 +38,8 @@ import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
 import { Route as DocsErrorsRouteImport } from './routes/docs.errors'
 import { Route as DocsCoverageRouteImport } from './routes/docs.coverage'
 import { Route as DocsAuthenticationRouteImport } from './routes/docs.authentication'
+import { Route as PortalCheckoutReturnRouteImport } from './routes/portal.checkout.return'
+import { Route as PortalBillingPlansRouteImport } from './routes/portal.billing.plans'
 import { Route as DocsEndpointsPositionsRouteImport } from './routes/docs.endpoints.positions'
 import { Route as DocsEndpointsPoolsRouteImport } from './routes/docs.endpoints.pools'
 import { Route as DocsEndpointsMetadataRouteImport } from './routes/docs.endpoints.metadata'
@@ -63,6 +72,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -100,10 +114,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
 const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DocsRoute,
+} as any)
+const PortalUsageRoute = PortalUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSettingsRoute = PortalSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPlaygroundRoute = PortalPlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalKeysRoute = PortalKeysRouteImport.update({
+  id: '/keys',
+  path: '/keys',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalBillingRoute = PortalBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => PortalRoute,
 } as any)
 const LegalTermsRoute = LegalTermsRouteImport.update({
   id: '/legal/terms',
@@ -145,6 +189,16 @@ const DocsAuthenticationRoute = DocsAuthenticationRouteImport.update({
   path: '/authentication',
   getParentRoute: () => DocsRoute,
 } as any)
+const PortalCheckoutReturnRoute = PortalCheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalBillingPlansRoute = PortalBillingPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => PortalBillingRoute,
+} as any)
 const DocsEndpointsPositionsRoute = DocsEndpointsPositionsRouteImport.update({
   id: '/endpoints/positions',
   path: '/endpoints/positions',
@@ -169,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/explore': typeof ExploreRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
@@ -183,10 +238,18 @@ export interface FileRoutesByFullPath {
   '/legal/dpa': typeof LegalDpaRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/portal/billing': typeof PortalBillingRouteWithChildren
+  '/portal/keys': typeof PortalKeysRoute
+  '/portal/playground': typeof PortalPlaygroundRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/usage': typeof PortalUsageRoute
   '/docs/': typeof DocsIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
   '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
   '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
+  '/portal/billing/plans': typeof PortalBillingPlansRoute
+  '/portal/checkout/return': typeof PortalCheckoutReturnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -209,10 +272,18 @@ export interface FileRoutesByTo {
   '/legal/dpa': typeof LegalDpaRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/portal/billing': typeof PortalBillingRouteWithChildren
+  '/portal/keys': typeof PortalKeysRoute
+  '/portal/playground': typeof PortalPlaygroundRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/usage': typeof PortalUsageRoute
   '/docs': typeof DocsIndexRoute
+  '/portal': typeof PortalIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
   '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
   '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
+  '/portal/billing/plans': typeof PortalBillingPlansRoute
+  '/portal/checkout/return': typeof PortalCheckoutReturnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -223,6 +294,7 @@ export interface FileRoutesById {
   '/explore': typeof ExploreRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
@@ -237,10 +309,18 @@ export interface FileRoutesById {
   '/legal/dpa': typeof LegalDpaRoute
   '/legal/privacy': typeof LegalPrivacyRoute
   '/legal/terms': typeof LegalTermsRoute
+  '/portal/billing': typeof PortalBillingRouteWithChildren
+  '/portal/keys': typeof PortalKeysRoute
+  '/portal/playground': typeof PortalPlaygroundRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/usage': typeof PortalUsageRoute
   '/docs/': typeof DocsIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/docs/endpoints/metadata': typeof DocsEndpointsMetadataRoute
   '/docs/endpoints/pools': typeof DocsEndpointsPoolsRoute
   '/docs/endpoints/positions': typeof DocsEndpointsPositionsRoute
+  '/portal/billing/plans': typeof PortalBillingPlansRoute
+  '/portal/checkout/return': typeof PortalCheckoutReturnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -252,6 +332,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/forgot-password'
     | '/login'
+    | '/portal'
     | '/pricing'
     | '/reset-password'
     | '/signup'
@@ -266,10 +347,18 @@ export interface FileRouteTypes {
     | '/legal/dpa'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/portal/billing'
+    | '/portal/keys'
+    | '/portal/playground'
+    | '/portal/settings'
+    | '/portal/usage'
     | '/docs/'
+    | '/portal/'
     | '/docs/endpoints/metadata'
     | '/docs/endpoints/pools'
     | '/docs/endpoints/positions'
+    | '/portal/billing/plans'
+    | '/portal/checkout/return'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -292,10 +381,18 @@ export interface FileRouteTypes {
     | '/legal/dpa'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/portal/billing'
+    | '/portal/keys'
+    | '/portal/playground'
+    | '/portal/settings'
+    | '/portal/usage'
     | '/docs'
+    | '/portal'
     | '/docs/endpoints/metadata'
     | '/docs/endpoints/pools'
     | '/docs/endpoints/positions'
+    | '/portal/billing/plans'
+    | '/portal/checkout/return'
   id:
     | '__root__'
     | '/'
@@ -305,6 +402,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/forgot-password'
     | '/login'
+    | '/portal'
     | '/pricing'
     | '/reset-password'
     | '/signup'
@@ -319,10 +417,18 @@ export interface FileRouteTypes {
     | '/legal/dpa'
     | '/legal/privacy'
     | '/legal/terms'
+    | '/portal/billing'
+    | '/portal/keys'
+    | '/portal/playground'
+    | '/portal/settings'
+    | '/portal/usage'
     | '/docs/'
+    | '/portal/'
     | '/docs/endpoints/metadata'
     | '/docs/endpoints/pools'
     | '/docs/endpoints/positions'
+    | '/portal/billing/plans'
+    | '/portal/checkout/return'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -333,6 +439,7 @@ export interface RootRouteChildren {
   ExploreRoute: typeof ExploreRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  PortalRoute: typeof PortalRouteWithChildren
   PricingRoute: typeof PricingRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
@@ -388,6 +495,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -437,12 +551,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/docs/': {
       id: '/docs/'
       path: '/'
       fullPath: '/docs/'
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRoute
+    }
+    '/portal/usage': {
+      id: '/portal/usage'
+      path: '/usage'
+      fullPath: '/portal/usage'
+      preLoaderRoute: typeof PortalUsageRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/settings': {
+      id: '/portal/settings'
+      path: '/settings'
+      fullPath: '/portal/settings'
+      preLoaderRoute: typeof PortalSettingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/playground': {
+      id: '/portal/playground'
+      path: '/playground'
+      fullPath: '/portal/playground'
+      preLoaderRoute: typeof PortalPlaygroundRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/keys': {
+      id: '/portal/keys'
+      path: '/keys'
+      fullPath: '/portal/keys'
+      preLoaderRoute: typeof PortalKeysRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/billing': {
+      id: '/portal/billing'
+      path: '/billing'
+      fullPath: '/portal/billing'
+      preLoaderRoute: typeof PortalBillingRouteImport
+      parentRoute: typeof PortalRoute
     }
     '/legal/terms': {
       id: '/legal/terms'
@@ -500,6 +656,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsAuthenticationRouteImport
       parentRoute: typeof DocsRoute
     }
+    '/portal/checkout/return': {
+      id: '/portal/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/portal/checkout/return'
+      preLoaderRoute: typeof PortalCheckoutReturnRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/billing/plans': {
+      id: '/portal/billing/plans'
+      path: '/plans'
+      fullPath: '/portal/billing/plans'
+      preLoaderRoute: typeof PortalBillingPlansRouteImport
+      parentRoute: typeof PortalBillingRoute
+    }
     '/docs/endpoints/positions': {
       id: '/docs/endpoints/positions'
       path: '/endpoints/positions'
@@ -550,6 +720,41 @@ const DocsRouteChildren: DocsRouteChildren = {
 
 const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
 
+interface PortalBillingRouteChildren {
+  PortalBillingPlansRoute: typeof PortalBillingPlansRoute
+}
+
+const PortalBillingRouteChildren: PortalBillingRouteChildren = {
+  PortalBillingPlansRoute: PortalBillingPlansRoute,
+}
+
+const PortalBillingRouteWithChildren = PortalBillingRoute._addFileChildren(
+  PortalBillingRouteChildren,
+)
+
+interface PortalRouteChildren {
+  PortalBillingRoute: typeof PortalBillingRouteWithChildren
+  PortalKeysRoute: typeof PortalKeysRoute
+  PortalPlaygroundRoute: typeof PortalPlaygroundRoute
+  PortalSettingsRoute: typeof PortalSettingsRoute
+  PortalUsageRoute: typeof PortalUsageRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+  PortalCheckoutReturnRoute: typeof PortalCheckoutReturnRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalBillingRoute: PortalBillingRouteWithChildren,
+  PortalKeysRoute: PortalKeysRoute,
+  PortalPlaygroundRoute: PortalPlaygroundRoute,
+  PortalSettingsRoute: PortalSettingsRoute,
+  PortalUsageRoute: PortalUsageRoute,
+  PortalIndexRoute: PortalIndexRoute,
+  PortalCheckoutReturnRoute: PortalCheckoutReturnRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChangelogRoute: ChangelogRoute,
@@ -558,6 +763,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExploreRoute: ExploreRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  PortalRoute: PortalRouteWithChildren,
   PricingRoute: PricingRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
