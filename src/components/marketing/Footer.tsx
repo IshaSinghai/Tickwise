@@ -6,8 +6,11 @@ export function MarketingFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-5">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 font-display font-semibold">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-primary text-[10px] font-mono text-primary-foreground">CP</span>
-            Tickwise
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-primary text-[10px] font-mono text-primary-foreground">TW</span>
+            <span>Tickwise</span>
+            <span className="ml-1 rounded-md border border-border/60 bg-surface px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+              Dex API
+            </span>
           </div>
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             The metered API for Uniswap v4 pools and positions on Ethereum and Avalanche. Near-real-time. Built for teams that would rather build product than index chains.

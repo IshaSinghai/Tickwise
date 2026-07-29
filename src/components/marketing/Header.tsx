@@ -23,7 +23,7 @@ export function MarketingHeader() {
           </span>
           <span>Tickwise</span>
           <span className="ml-1 rounded-md border border-border/60 bg-surface px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-            API
+            Dex API
           </span>
         </Link>
         <nav className="ml-4 hidden items-center gap-1 md:flex">

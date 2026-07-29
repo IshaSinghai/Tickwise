@@ -30,7 +30,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow">
             <span className="font-mono text-xs">TW</span>
           </span>
-          Tickwise
+          <span>Tickwise</span>
+          <span className="ml-1 rounded-md border border-sidebar-border bg-background/40 px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+            Dex API
+          </span>
         </div>
         <nav className="flex-1 space-y-1 p-3">
           {items.map((it) => {
