@@ -12,7 +12,7 @@ import { KeyRound, Plus, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/keys")({
-  head: () => ({ meta: [{ title: "API keys — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "API keys — Tickwise portal" }] }),
   component: Keys,
 });
 

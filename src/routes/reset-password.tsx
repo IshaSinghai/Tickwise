@@ -3,7 +3,7 @@ import { AuthShell, Field } from "./signup";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/reset-password")({
-  head: () => ({ meta: [{ title: "Set a new password — CopyPools" }] }),
+  head: () => ({ meta: [{ title: "Set a new password — Tickwise" }] }),
   component: () => (
     <AuthShell title="Set a new password">
       <form className="space-y-4">

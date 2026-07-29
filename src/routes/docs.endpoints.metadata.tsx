@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock } from "@/components/CodeBlock";
 export const Route = createFileRoute("/docs/endpoints/metadata")({
-  head: () => ({ meta: [{ title: "Metadata endpoints — CopyPools docs" }, { name: "description", content: "Free, unmetered endpoints for chains and protocols supported." }] }),
+  head: () => ({ meta: [{ title: "Metadata endpoints — Tickwise docs" }, { name: "description", content: "Free, unmetered endpoints for chains and protocols supported." }] }),
   component: () => (
     <div className="space-y-6">
       <h1 className="font-display text-4xl font-semibold">Metadata</h1>

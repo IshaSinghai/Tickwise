@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export const Route = createFileRoute("/docs/errors")({
-  head: () => ({ meta: [{ title: "Errors — CopyPools docs" }, { name: "description", content: "Every HTTP status code the API returns and what to do about it." }] }),
+  head: () => ({ meta: [{ title: "Errors — Tickwise docs" }, { name: "description", content: "Every HTTP status code the API returns and what to do about it." }] }),
   component: () => (
     <div className="space-y-6">
       <h1 className="font-display text-4xl font-semibold">Errors</h1>

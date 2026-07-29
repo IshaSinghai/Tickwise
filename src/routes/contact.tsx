@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({ meta: [{ title: "Contact sales — CopyPools" }, { name: "description", content: "Talk to us about enterprise, custom chains, or bespoke SLAs." }, { property: "og:title", content: "Contact CopyPools" }, { property: "og:description", content: "Enterprise, custom chain requests, partnerships." }] }),
+  head: () => ({ meta: [{ title: "Contact sales — Tickwise" }, { name: "description", content: "Talk to us about enterprise, custom chains, or bespoke SLAs." }, { property: "og:title", content: "Contact Tickwise" }, { property: "og:description", content: "Enterprise, custom chain requests, partnerships." }] }),
   component: Contact,
 });
 

@@ -3,7 +3,7 @@ import { UNIT_COSTS } from "@/lib/mock";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export const Route = createFileRoute("/docs/units-and-limits")({
-  head: () => ({ meta: [{ title: "Units & limits — CopyPools docs" }, { name: "description", content: "How units are counted, per-endpoint costs, rate limits, and quota headers." }] }),
+  head: () => ({ meta: [{ title: "Units & limits — Tickwise docs" }, { name: "description", content: "How units are counted, per-endpoint costs, rate limits, and quota headers." }] }),
   component: () => (
     <div className="space-y-6">
       <div>

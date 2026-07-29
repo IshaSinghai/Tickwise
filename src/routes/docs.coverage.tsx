@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/docs/coverage")({
-  head: () => ({ meta: [{ title: "Coverage — CopyPools docs" }, { name: "description", content: "Chains and protocols supported today, and what’s on the roadmap." }] }),
+  head: () => ({ meta: [{ title: "Coverage — Tickwise docs" }, { name: "description", content: "Chains and protocols supported today, and what’s on the roadmap." }] }),
   component: () => (
     <div className="space-y-6">
       <h1 className="font-display text-4xl font-semibold">Coverage</h1>

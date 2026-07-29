@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 export const Route = createFileRoute("/signup")({
-  head: () => ({ meta: [{ title: "Create your account — CopyPools" }, { name: "description", content: "Sign up in 30 seconds. Free tier includes 25,000 units/month." }] }),
+  head: () => ({ meta: [{ title: "Create your account — Tickwise" }, { name: "description", content: "Sign up in 30 seconds. Free tier includes 25,000 units/month." }] }),
   component: Signup,
 });
 
@@ -38,7 +38,7 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
       <div className="w-full max-w-sm">
         <Link to="/" className="mb-8 flex items-center justify-center gap-2 font-display font-semibold">
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow"><span className="font-mono text-xs">CP</span></span>
-          CopyPools
+          Tickwise
         </Link>
         <div className="rounded-2xl border border-border/60 bg-surface p-8 shadow-card">
           <h1 className="font-display text-2xl font-semibold">{title}</h1>

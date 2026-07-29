@@ -30,7 +30,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow">
             <span className="font-mono text-xs">CP</span>
           </span>
-          CopyPools
+          Tickwise
         </div>
         <nav className="flex-1 space-y-1 p-3">
           {items.map((it) => {

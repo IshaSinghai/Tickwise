@@ -9,13 +9,13 @@ import { useState } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CopyPools — The metered API for Uniswap v4 pools & positions" },
+      { title: "Tickwise — The metered API for Uniswap v4 pools & positions" },
       {
         name: "description",
         content:
           "Near-real-time Uniswap v4 pools and positions on Ethereum and Avalanche. Get an API key, ship in five minutes.",
       },
-      { property: "og:title", content: "CopyPools API" },
+      { property: "og:title", content: "Tickwise Dex API" },
       {
         property: "og:description",
         content: "Near-real-time Uniswap v4 pools and positions. Built for teams that would rather build product than index chains.",
@@ -133,7 +133,7 @@ function Features() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-20">
       <div className="max-w-2xl">
-        <div className="text-xs uppercase tracking-widest text-primary">Why teams pick CopyPools</div>
+        <div className="text-xs uppercase tracking-widest text-primary">Why teams pick Tickwise</div>
         <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">
           Boring where boring matters. Fast where it doesn’t.
         </h2>
@@ -153,10 +153,10 @@ function Features() {
 
 function Snippet() {
   const [tab, setTab] = useState<"curl" | "js">("curl");
-  const curl = `curl https://api.copypools.io/v1/pools?chain=ethereum \\
+  const curl = `curl https://api.tickwise.io/v1/pools?chain=ethereum \\
   -H "KC-APIKey: kc_live_9f2a4c8e…"`;
   const js = `const res = await fetch(
-  "https://api.copypools.io/v1/pools?chain=ethereum",
+  "https://api.tickwise.io/v1/pools?chain=ethereum",
   { headers: { "KC-APIKey": process.env.CP_KEY! } }
 );
 const pools = await res.json();`;

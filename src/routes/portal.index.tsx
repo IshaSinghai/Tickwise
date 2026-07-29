@@ -4,7 +4,7 @@ import { MOCK_KEYS, PAYMENTS } from "@/lib/mock";
 import { ArrowRight, KeyRound } from "lucide-react";
 
 export const Route = createFileRoute("/portal/")({
-  head: () => ({ meta: [{ title: "Overview — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "Overview — Tickwise portal" }] }),
   component: PortalOverview,
 });
 

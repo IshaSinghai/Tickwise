@@ -7,7 +7,7 @@ export function MarketingFooter() {
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 font-display font-semibold">
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-primary text-[10px] font-mono text-primary-foreground">CP</span>
-            CopyPools
+            Tickwise
           </div>
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             The metered API for Uniswap v4 pools and positions on Ethereum and Avalanche. Near-real-time. Built for teams that would rather build product than index chains.
@@ -35,7 +35,7 @@ export function MarketingFooter() {
       </div>
       <div className="border-t border-border/60">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-6 text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} Doryoku Labs · CopyPools API</div>
+          <div>© {new Date().getFullYear()} Doryoku Labs · Tickwise Dex API</div>
           <div className="font-mono">Uniswap v4 · ETH · AVAX · near-real-time</div>
         </div>
       </div>

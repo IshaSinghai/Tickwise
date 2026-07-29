@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export const Route = createFileRoute("/docs/quickstart")({
-  head: () => ({ meta: [{ title: "Quickstart — CopyPools docs" }, { name: "description", content: "Sign up, create a key, make your first metered request." }] }),
+  head: () => ({ meta: [{ title: "Quickstart — Tickwise docs" }, { name: "description", content: "Sign up, create a key, make your first metered request." }] }),
   component: () => (
     <div className="space-y-6">
       <div>
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/docs/quickstart")({
       <h2 className="font-display text-2xl font-semibold">1 · Create a key</h2>
       <p className="text-sm text-muted-foreground">Free accounts get 25,000 units a month and up to 2 keys. Create a <strong>server</strong> key for server-to-server use.</p>
       <h2 className="font-display text-2xl font-semibold">2 · Make a request</h2>
-      <CodeBlock code={`curl https://api.copypools.io/v1/pools?chain=ethereum&limit=10 \\\n  -H "KC-APIKey: kc_live_…"`} />
+      <CodeBlock code={`curl https://api.tickwise.io/v1/pools?chain=ethereum&limit=10 \\\n  -H "KC-APIKey: kc_live_…"`} />
       <h2 className="font-display text-2xl font-semibold">3 · Read the response</h2>
       <CodeBlock lang="json" code={`{\n  "data": [\n    {\n      "id": "0x…",\n      "chain": "ethereum",\n      "protocol": "uniswap-v4",\n      "pair": "USDC/WETH",\n      "fee_tier": "0.05%",\n      "tvl_usd": 12480322.5,\n      "volume_24h_usd": 984210.1\n    }\n  ],\n  "page": { "cursor": null }\n}`} />
       <h2 className="font-display text-2xl font-semibold">4 · Read the headers</h2>

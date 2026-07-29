@@ -21,7 +21,7 @@ export function MarketingHeader() {
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow">
             <span className="font-mono text-xs">CP</span>
           </span>
-          <span>CopyPools</span>
+          <span>Tickwise</span>
           <span className="ml-1 rounded-md border border-border/60 bg-surface px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
             API
           </span>

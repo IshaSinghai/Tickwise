@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 export const Route = createFileRoute("/legal/terms")({
-  head: () => ({ meta: [{ title: "Terms of Service — CopyPools" }, { name: "description", content: "The rules of using the CopyPools API." }] }),
+  head: () => ({ meta: [{ title: "Terms of Service — Tickwise" }, { name: "description", content: "The rules of using the Tickwise Dex API." }] }),
   component: () => <LegalPage title="Terms of Service" body="These are placeholder terms. Replace with counsel-reviewed copy before charging real money." />,
 });
 

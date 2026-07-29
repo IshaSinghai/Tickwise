@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export const Route = createFileRoute("/admin/login")({
-  head: () => ({ meta: [{ title: "Admin sign in — CopyPools" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Admin sign in — Tickwise" }, { name: "robots", content: "noindex" }] }),
   component: () => {
     const nav = useNavigate();
     const [loading, setLoading] = useState(false);

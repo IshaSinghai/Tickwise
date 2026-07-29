@@ -3,7 +3,7 @@ import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { CHANGELOG } from "@/lib/mock";
 
 export const Route = createFileRoute("/changelog")({
-  head: () => ({ meta: [{ title: "Changelog — CopyPools" }, { name: "description", content: "API changes, new chains, new endpoints." }, { property: "og:title", content: "CopyPools changelog" }, { property: "og:description", content: "What shipped, when." }] }),
+  head: () => ({ meta: [{ title: "Changelog — Tickwise" }, { name: "description", content: "API changes, new chains, new endpoints." }, { property: "og:title", content: "Tickwise changelog" }, { property: "og:description", content: "What shipped, when." }] }),
   component: () => (
     <MarketingShell>
       <div className="mx-auto max-w-3xl px-6 py-16">

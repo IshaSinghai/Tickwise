@@ -4,7 +4,7 @@ import { AuthShell, Field } from "./signup";
 import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Sign in — CopyPools" }, { name: "description", content: "Sign in to your CopyPools developer portal." }] }),
+  head: () => ({ meta: [{ title: "Sign in — Tickwise" }, { name: "description", content: "Sign in to your Tickwise developer portal." }] }),
   component: Login,
 });
 

@@ -4,7 +4,7 @@ import { AuthShell } from "./signup";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/verify-email")({
-  head: () => ({ meta: [{ title: "Verify your email — CopyPools" }] }),
+  head: () => ({ meta: [{ title: "Verify your email — Tickwise" }] }),
   component: () => (
     <AuthShell title="Email verified">
       <div className="flex flex-col items-center text-center">

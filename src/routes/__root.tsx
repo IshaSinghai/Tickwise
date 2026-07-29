@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CopyPools — The metered API for Uniswap v4 pools & positions" },
+      { title: "Tickwise — The metered API for Uniswap v4 pools & positions" },
       {
         name: "description",
         content:
           "Near-real-time Uniswap v4 pools and positions on Ethereum and Avalanche. Sign up, get an API key, start shipping in five minutes.",
       },
       { name: "author", content: "Doryoku Labs" },
-      { property: "og:title", content: "CopyPools API" },
+      { property: "og:title", content: "Tickwise Dex API" },
       {
         property: "og:description",
         content: "Near-real-time Uniswap v4 pools and positions. Built for teams.",
