@@ -19,7 +19,7 @@ export function MarketingHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6">
         <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow">
-            <span className="font-mono text-xs">CP</span>
+            <span className="font-mono text-xs">TW</span>
           </span>
           <span>Tickwise</span>
           <span className="ml-1 rounded-md border border-border/60 bg-surface px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
