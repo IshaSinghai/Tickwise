@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/portal/settings")({
-  head: () => ({ meta: [{ title: "Settings — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "Settings — Tickwise portal" }] }),
   component: () => (
     <div className="space-y-6">
       <h1 className="font-display text-3xl font-semibold">Settings</h1>

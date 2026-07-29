@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export const Route = createFileRoute("/docs/authentication")({
-  head: () => ({ meta: [{ title: "Authentication — CopyPools docs" }, { name: "description", content: "Server vs browser keys, allowed origins, key rotation." }] }),
+  head: () => ({ meta: [{ title: "Authentication — Tickwise docs" }, { name: "description", content: "Server vs browser keys, allowed origins, key rotation." }] }),
   component: () => (
     <div className="space-y-6">
       <div>

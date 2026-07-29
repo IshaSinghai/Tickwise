@@ -10,7 +10,7 @@ function DocsHome() {
     <div className="prose prose-invert max-w-none space-y-6">
       <div>
         <div className="text-xs uppercase tracking-widest text-primary">Documentation</div>
-        <h1 className="font-display text-4xl font-semibold tracking-tight">CopyPools API</h1>
+        <h1 className="font-display text-4xl font-semibold tracking-tight">Tickwise Dex API</h1>
         <p className="text-muted-foreground">
           A metered read API for Uniswap v4 pools and positions on Ethereum and Avalanche. One header of auth,
           near-real-time data, honest quotas. If a page says something we don’t do, treat that as a bug.
@@ -19,7 +19,7 @@ function DocsHome() {
 
       <div>
         <h2 className="mt-8 font-display text-2xl font-semibold">Base URL</h2>
-        <CodeBlock code="https://api.copypools.io/v1" lang="text" />
+        <CodeBlock code="https://api.tickwise.io/v1" lang="text" />
       </div>
 
       <div>
@@ -30,7 +30,7 @@ function DocsHome() {
           <li>Copy it once — we only store its hash.</li>
           <li>Paste the curl below into a terminal.</li>
         </ol>
-        <CodeBlock code={`curl https://api.copypools.io/v1/pools?chain=ethereum \\\n  -H "KC-APIKey: kc_live_…"`} />
+        <CodeBlock code={`curl https://api.tickwise.io/v1/pools?chain=ethereum \\\n  -H "KC-APIKey: kc_live_…"`} />
       </div>
 
       <div>

@@ -9,9 +9,9 @@ import { useState } from "react";
 export const Route = createFileRoute("/explore")({
   head: () => ({
     meta: [
-      { title: "Explore — Live Uniswap v4 pools & positions · CopyPools" },
-      { name: "description", content: "Browse live Uniswap v4 open positions and pools indexed by CopyPools. Free, public preview of the API." },
-      { property: "og:title", content: "CopyPools · Explore live positions" },
+      { title: "Explore — Live Uniswap v4 pools & positions · Tickwise" },
+      { name: "description", content: "Browse live Uniswap v4 open positions and pools indexed by Tickwise. Free, public preview of the API." },
+      { property: "og:title", content: "Tickwise · Explore live positions" },
       { property: "og:description", content: "Live Uniswap v4 positions on Ethereum and Avalanche." },
     ],
   }),

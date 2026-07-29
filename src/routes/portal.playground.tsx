@@ -7,7 +7,7 @@ import { useState } from "react";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export const Route = createFileRoute("/portal/playground")({
-  head: () => ({ meta: [{ title: "API playground — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "API playground — Tickwise portal" }] }),
   component: () => {
     const [endpoint, setEndpoint] = useState("GET /v1/pools");
     const [chain, setChain] = useState("ethereum");

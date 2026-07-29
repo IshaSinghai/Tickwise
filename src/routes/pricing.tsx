@@ -9,9 +9,9 @@ import { useState } from "react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — CopyPools API" },
+      { title: "Pricing — Tickwise Dex API" },
       { name: "description", content: "Simple monthly plans. Metered by units, not by request. Every plan uses the same endpoints." },
-      { property: "og:title", content: "CopyPools pricing" },
+      { property: "og:title", content: "Tickwise pricing" },
       { property: "og:description", content: "Free, Starter, Growth, Scale. Pay in crypto. No surprise overage." },
     ],
   }),

@@ -4,7 +4,7 @@ import { STATUS_ROWS } from "@/lib/mock";
 import { CheckCircle2, AlertCircle } from "lucide-react";
 
 export const Route = createFileRoute("/status")({
-  head: () => ({ meta: [{ title: "Status — CopyPools" }, { name: "description", content: "Indexing freshness and lag by chain. Incident notes." }, { property: "og:title", content: "CopyPools status" }, { property: "og:description", content: "Live indexing freshness per chain." }] }),
+  head: () => ({ meta: [{ title: "Status — Tickwise" }, { name: "description", content: "Indexing freshness and lag by chain. Incident notes." }, { property: "og:title", content: "Tickwise status" }, { property: "og:description", content: "Live indexing freshness per chain." }] }),
   component: () => (
     <MarketingShell>
       <div className="mx-auto max-w-4xl px-6 py-16">

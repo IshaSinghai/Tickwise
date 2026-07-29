@@ -22,9 +22,9 @@ const nav = [
 export const Route = createFileRoute("/docs")({
   head: () => ({
     meta: [
-      { title: "Docs — CopyPools API" },
-      { name: "description", content: "Quickstart, authentication, endpoint reference and error codes for the CopyPools API." },
-      { property: "og:title", content: "CopyPools docs" },
+      { title: "Docs — Tickwise Dex API" },
+      { name: "description", content: "Quickstart, authentication, endpoint reference and error codes for the Tickwise Dex API." },
+      { property: "og:title", content: "Tickwise docs" },
       { property: "og:description", content: "Ship in five minutes. Every endpoint documented with real examples." },
     ],
   }),

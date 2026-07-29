@@ -4,7 +4,7 @@ import { QuotaMeter } from "@/components/QuotaMeter";
 import { USAGE_MONTHLY, UNIT_COSTS } from "@/lib/mock";
 
 export const Route = createFileRoute("/portal/usage")({
-  head: () => ({ meta: [{ title: "Usage — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "Usage — Tickwise portal" }] }),
   component: Usage,
 });
 

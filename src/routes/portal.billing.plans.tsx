@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/portal/billing/plans")({
-  head: () => ({ meta: [{ title: "Change plan — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "Change plan — Tickwise portal" }] }),
   component: () => (
     <div className="space-y-6">
       <h1 className="font-display text-3xl font-semibold">Change plan</h1>

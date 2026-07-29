@@ -4,7 +4,7 @@ import { PAYMENTS } from "@/lib/mock";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/portal/billing")({
-  head: () => ({ meta: [{ title: "Billing — CopyPools portal" }] }),
+  head: () => ({ meta: [{ title: "Billing — Tickwise portal" }] }),
   component: Billing,
 });
 

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 
 export const Route = createFileRoute("/support")({
-  head: () => ({ meta: [{ title: "Support — CopyPools" }, { name: "description", content: "Common issues, error codes, escalation path." }, { property: "og:title", content: "CopyPools support" }, { property: "og:description", content: "How to get help." }] }),
+  head: () => ({ meta: [{ title: "Support — Tickwise" }, { name: "description", content: "Common issues, error codes, escalation path." }, { property: "og:title", content: "Tickwise support" }, { property: "og:description", content: "How to get help." }] }),
   component: () => (
     <MarketingShell>
       <div className="mx-auto max-w-3xl px-6 py-16">
