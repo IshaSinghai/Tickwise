@@ -79,7 +79,7 @@ function Hero() {
       </motion.div>
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-14 px-6 pb-20 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-16 2xl:px-12">
-        <div className="pointer-events-none lg:col-span-6">
+        <div className="pointer-events-none flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
 
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
