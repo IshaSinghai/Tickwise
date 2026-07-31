@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { ReactorScene } from "@/components/home/hero/ReactorScene";
 import { AuroraField } from "@/components/home/hero/AuroraField";
-import { APITerminal } from "@/components/home/hero/APITerminal";
 import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
