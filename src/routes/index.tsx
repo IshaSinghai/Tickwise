@@ -63,7 +63,6 @@ function Hero() {
   const reduce = useSafeReducedMotion();
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
-      <HeroBackdrop />
       <AuroraField />
       <CinematicIntro />
 
