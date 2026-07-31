@@ -313,6 +313,21 @@
 .tw-spin { animation: tw-spin linear infinite; transform-box: fill-box; }
 .tw-mote { animation: tw-mote ease-in-out infinite; }
 
-@media (prefers-reduced-motion: reduce) {
-  .tw-flow, .tw-spin, .tw-mote { animation: none !important; }
+/* ── Hero backdrop plate ─────────────────────────────────────────── */
+@keyframes hero-breathe {
+  0%, 100% { transform: scale(1.04) translate3d(0, 0, 0); }
+  50%      { transform: scale(1.1) translate3d(-1.2%, -1%, 0); }
 }
+@keyframes hero-sweep {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  12%  { opacity: 1; }
+  70%  { opacity: 0.6; }
+  100% { transform: translate3d(460%, 0, 0); opacity: 0; }
+}
+.animate-hero-breathe { animation: hero-breathe 26s ease-in-out infinite; will-change: transform; }
+.animate-hero-sweep { animation: hero-sweep 14s cubic-bezier(0.4, 0, 0.2, 1) infinite; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-flow, .tw-spin, .tw-mote, .animate-hero-breathe, .animate-hero-sweep { animation: none !important; }
+}
+
