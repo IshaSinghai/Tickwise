@@ -1,6 +1,47 @@
 import { motion } from "motion/react";
 import { EASE } from "./primitives";
 
+/** Rotating latitude/longitude wireframe that reads as a glass sphere. */
+function SphereWire({ reduce }: { reduce: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-visible"
+    >
+      <circle cx="50" cy="50" r="34" fill="none" stroke="var(--primary)" strokeOpacity="0.35" strokeWidth="0.4" />
+      {[8, 18, 27, 34].map((r, i) => (
+        <ellipse
+          key={`lat-${i}`}
+          cx="50"
+          cy="50"
+          rx="34"
+          ry={r * 0.55}
+          fill="none"
+          stroke="var(--primary-glow)"
+          strokeOpacity={0.18}
+          strokeWidth="0.35"
+        />
+      ))}
+      {[0, 1, 2, 3].map((i) => (
+        <motion.ellipse
+          key={`lon-${i}`}
+          cx="50"
+          cy="50"
+          rx={34}
+          ry={34}
+          fill="none"
+          stroke="var(--primary-glow)"
+          strokeOpacity={0.16}
+          strokeWidth="0.35"
+          style={{ transformOrigin: "50px 50px", willChange: "transform" }}
+          animate={reduce ? { scaleX: 0.25 + i * 0.25 } : { scaleX: [0.06, 1, 0.06] }}
+          transition={{ duration: 18, delay: i * 4.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+    </svg>
+  );
+}
+
 /** Glowing liquidity core: layered pulses, refraction sheen, inner rotation. */
 export function HolographicCore({ reduce = false }: { reduce?: boolean }) {
   return (
@@ -22,6 +63,28 @@ export function HolographicCore({ reduce = false }: { reduce?: boolean }) {
         animate={reduce ? undefined : { scale: [1, 1.16, 1], opacity: [0.6, 0.95, 0.6] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
+
+      <SphereWire reduce={reduce} />
+
+      {/* scan sweep across the sphere */}
+      {!reduce && (
+        <motion.span
+          className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full"
+          style={{ maskImage: "radial-gradient(closest-side, #000 96%, transparent)" }}
+        >
+          <motion.span
+            className="absolute inset-x-0 h-10"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent, color-mix(in oklab, var(--primary-glow) 30%, transparent), transparent)",
+              willChange: "transform",
+            }}
+            animate={{ y: ["-20%", "420%"] }}
+            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.span>
+      )}
+
       {/* pulse ripple */}
       {!reduce &&
         [0, 1.6].map((d) => (
@@ -33,6 +96,24 @@ export function HolographicCore({ reduce = false }: { reduce?: boolean }) {
             transition={{ duration: 4, delay: d, repeat: Infinity, ease: "easeOut" }}
           />
         ))}
+
+      {/* orbiting validation nodes */}
+      {!reduce &&
+        [0, 1, 2].map((i) => (
+          <motion.div
+            key={`orb-${i}`}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ width: 150 + i * 26, height: 150 + i * 26, marginLeft: -(75 + i * 13), marginTop: -(75 + i * 13), willChange: "transform" }}
+            animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
+            transition={{ duration: 22 + i * 9, repeat: Infinity, ease: "linear" }}
+          >
+            <span
+              className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary-glow"
+              style={{ boxShadow: "0 0 10px 2px color-mix(in oklab, var(--primary-glow) 60%, transparent)" }}
+            />
+          </motion.div>
+        ))}
+
       {/* core body */}
       <motion.div
         className="relative grid h-24 w-24 place-items-center rounded-full border border-primary/50"
