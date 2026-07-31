@@ -7,7 +7,7 @@ import { seeded } from "./motion-primitives";
 
 function Counter({ value, decimals = 0, prefix = "", suffix = "" }: { value: number; decimals?: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-15%" });
+  const inView = useInView(ref, { once: true, amount: 0.1 });
   const reduce = useReducedMotion();
   const [v, setV] = useState(0);
   useEffect(() => {
