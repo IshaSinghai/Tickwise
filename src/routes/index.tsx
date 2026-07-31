@@ -5,8 +5,6 @@ import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { ReactorScene } from "@/components/home/hero/ReactorScene";
-import { AuroraField } from "@/components/home/hero/AuroraField";
-import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
 import { LiveStats } from "@/components/home/LiveStats";
