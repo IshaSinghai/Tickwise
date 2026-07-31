@@ -52,9 +52,49 @@ const stats = [
 export function LiveStats() {
   const reduce = useReducedMotion();
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map((s, i) => (
+    <div className="relative">
+      {/* connection lines travelling down from the hero scene into the cards */}
+      <svg
+        aria-hidden
+        viewBox="0 0 100 10"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute -top-10 left-0 h-10 w-full opacity-70"
+      >
+        <defs>
+          <linearGradient id="stats-feed" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--primary)" stopOpacity="0" />
+            <stop offset="100%" stopColor="var(--primary-glow)" stopOpacity="0.6" />
+          </linearGradient>
+        </defs>
+        {[12.5, 37.5, 62.5, 87.5].map((x, i) => {
+          const d = `M 50 0 Q ${(50 + x) / 2} 6 ${x} 10`;
+          return (
+            <g key={x}>
+              <motion.path
+                d={d}
+                fill="none"
+                stroke="url(#stats-feed)"
+                strokeWidth="0.4"
+                vectorEffect="non-scaling-stroke"
+                initial={reduce ? false : { pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              />
+              {!reduce && (
+                <circle r="0.6" fill="var(--primary-glow)">
+                  <animateMotion dur={`${2.6 + i * 0.4}s`} begin={`${i * 0.5}s`} repeatCount="indefinite" path={d} />
+                  <animate attributeName="opacity" values="0;1;0" dur={`${2.6 + i * 0.4}s`} begin={`${i * 0.5}s`} repeatCount="indefinite" />
+                </circle>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s, i) => (
         <motion.div
+
           key={s.label}
           initial={reduce ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -75,7 +115,9 @@ export function LiveStats() {
             <MicroChart seed={i + 3} />
           </div>
         </motion.div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
+

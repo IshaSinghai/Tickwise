@@ -4,8 +4,9 @@ import { motion, useReducedMotion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
-import { HeroVisualization } from "@/components/home/HeroVisualization";
-import { TerminalCurl } from "@/components/home/TerminalCurl";
+import { HeroScene } from "@/components/home/hero/HeroScene";
+import { APITerminal } from "@/components/home/hero/APITerminal";
+
 import { LiveStats } from "@/components/home/LiveStats";
 import { FeatureCards } from "@/components/home/FeatureCards";
 import { QuickstartEditor } from "@/components/home/QuickstartEditor";
@@ -60,8 +61,8 @@ function Hero() {
   const reduce = useReducedMotion();
   return (
     <section className="relative">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-16 pt-20 md:pb-24 md:pt-28 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-6 xl:col-span-5">
+      <div className="mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-12 px-6 pb-14 pt-16 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-14 2xl:px-12">
+        <div className="lg:col-span-5">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -72,16 +73,20 @@ function Hero() {
             Uniswap v4 · Ethereum &amp; Avalanche · near-real-time
           </motion.div>
 
-          <motion.h1
-            initial={reduce ? false : { opacity: 0, y: 22, filter: "blur(12px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, delay: 0.08, ease: EASE }}
-            className="mt-6 font-display text-[clamp(2.6rem,6.2vw,4.6rem)] font-semibold leading-[1.02] tracking-tight"
-          >
-            <span className="text-gradient">Pools &amp; positions</span>
-            <br />
-            as one clean API.
-          </motion.h1>
+          <h1 className="mt-6 font-display text-[clamp(2.5rem,4.4vw,4.2rem)] font-semibold leading-[1.03] tracking-tight">
+            {["Pools & positions", "as one clean API."].map((line, i) => (
+              <motion.span
+                key={line}
+                className="block overflow-hidden"
+                initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(12px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 1, delay: 0.08 + i * 0.14, ease: EASE }}
+              >
+                <span className={i === 0 ? "text-gradient" : undefined}>{line}</span>
+              </motion.span>
+            ))}
+          </h1>
+
 
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
@@ -129,19 +134,19 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.4, ease: EASE }}
-            className="mt-9"
+            className="mt-9 max-w-xl"
           >
-            <TerminalCurl />
+            <APITerminal reduce={!!reduce} />
           </motion.div>
         </div>
 
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.6, delay: 0.15, ease: EASE }}
-          className="lg:col-span-6 lg:col-start-7 xl:col-span-7"
+          transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
+          className="lg:col-span-7"
         >
-          <HeroVisualization />
+          <HeroScene />
         </motion.div>
       </div>
     </section>
@@ -150,7 +155,7 @@ function Hero() {
 
 function Stats() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-10">
+    <section className="mx-auto w-full max-w-[1680px] px-6 py-10 2xl:px-12">
       <LiveStats />
     </section>
   );
