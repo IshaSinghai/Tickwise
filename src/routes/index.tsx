@@ -7,6 +7,7 @@ import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { ReactorScene } from "@/components/home/hero/ReactorScene";
 import { AuroraField } from "@/components/home/hero/AuroraField";
 import { APITerminal } from "@/components/home/hero/APITerminal";
+import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
 import { LiveStats } from "@/components/home/LiveStats";
@@ -64,6 +65,7 @@ function Hero() {
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
       <AuroraField />
+      <CinematicIntro />
 
       {/* desktop: the scene is the environment — oversized, bleeding behind the copy */}
       <motion.div

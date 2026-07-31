@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { motion } from "motion/react";
 
 type Chain = {
   name: string;
@@ -21,7 +22,7 @@ const chains: Chain[] = [
 
 export function CoverageNetwork() {
   const [active, setActive] = useState<string | null>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-surface/40 shadow-card backdrop-blur-xl">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useInView, useReducedMotion } from "motion/react";
+import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { motion, AnimatePresence, useInView } from "motion/react";
 import { useRef } from "react";
 
 const CODE = `const res = await fetch(
@@ -42,7 +43,7 @@ function highlight(line: string) {
 export function QuickstartEditor() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-20%" });
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const [typed, setTyped] = useState(reduce ? CODE : "");
   const [phase, setPhase] = useState<"idle" | "typing" | "running" | "done">(reduce ? "done" : "idle");
 
