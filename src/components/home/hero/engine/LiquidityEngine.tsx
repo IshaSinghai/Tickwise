@@ -43,7 +43,7 @@ const DEFS: Def[] = [
     tilt: 2.6,
     entryFrom: { x: -70, y: -40, z: -260 },
     entryDelay: 0,
-    className: "w-[23%] min-w-[132px] max-w-[196px]",
+    className: "w-[42%] max-w-[164px] sm:w-[23%] sm:min-w-[132px] sm:max-w-[196px]",
     start: 24.68,
     step: () => (Math.random() - 0.45) * 0.42,
     format: (v) => `${num(v, 2)}%`,
@@ -62,7 +62,7 @@ const DEFS: Def[] = [
     tilt: -2.2,
     entryFrom: { x: 80, y: -46, z: -320 },
     entryDelay: 0.12,
-    className: "w-[23%] min-w-[132px] max-w-[196px]",
+    className: "w-[42%] max-w-[164px] sm:w-[23%] sm:min-w-[132px] sm:max-w-[196px]",
     start: 4.94,
     step: () => (Math.random() - 0.42) * 0.05,
     format: (v) => `$${num(v, 2)}B`,
@@ -81,7 +81,7 @@ const DEFS: Def[] = [
     tilt: 2.1,
     entryFrom: { x: -90, y: 20, z: -200 },
     entryDelay: 0.26,
-    className: "w-[23%] min-w-[132px] max-w-[196px]",
+    className: "w-[42%] max-w-[164px] sm:w-[23%] sm:min-w-[132px] sm:max-w-[196px]",
     start: 1284,
     step: () => Math.round(Math.random() * 3),
     format: (v) => num(Math.round(v)),
@@ -100,7 +100,7 @@ const DEFS: Def[] = [
     tilt: -2.8,
     entryFrom: { x: 96, y: 14, z: -240 },
     entryDelay: 0.38,
-    className: "w-[23%] min-w-[132px] max-w-[196px]",
+    className: "w-[42%] max-w-[164px] sm:w-[23%] sm:min-w-[132px] sm:max-w-[196px]",
     start: 38687,
     step: () => Math.round((Math.random() - 0.4) * 42),
     format: (v) => num(Math.round(v)),
@@ -119,7 +119,7 @@ const DEFS: Def[] = [
     tilt: 1.7,
     entryFrom: { x: -50, y: 90, z: -280 },
     entryDelay: 0.5,
-    className: "w-[23%] min-w-[132px] max-w-[196px]",
+    className: "w-[42%] max-w-[164px] sm:w-[23%] sm:min-w-[132px] sm:max-w-[196px]",
     start: 42318,
     step: () => Math.round((Math.random() - 0.35) * 260),
     format: (v) => num(Math.round(v)),
@@ -138,7 +138,7 @@ const DEFS: Def[] = [
     tilt: -1.9,
     entryFrom: { x: 62, y: 96, z: -220 },
     entryDelay: 0.62,
-    className: "w-[23%] min-w-[132px] max-w-[196px]",
+    className: "w-[42%] max-w-[164px] sm:w-[23%] sm:min-w-[132px] sm:max-w-[196px]",
     start: 18.24,
     step: () => (Math.random() - 0.44) * 0.36,
     format: (v) => `${num(v, 2)}%`,
@@ -225,7 +225,7 @@ export function LiquidityEngine() {
   return (
     <div
       {...pointer.bind}
-      className="relative mx-auto aspect-[4/4.4] w-full max-w-[980px] select-none sm:aspect-[4/3.2] lg:aspect-[4/3]"
+      className="relative mx-auto aspect-[4/5.6] w-full max-w-[980px] select-none sm:aspect-[4/3.2] lg:aspect-[4/3]"
       style={{ perspective: 1500 }}
     >
       {/* cursor-tracked lighting */}
