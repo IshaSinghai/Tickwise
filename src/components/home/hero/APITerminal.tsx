@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, Copy, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 const CMD = `curl https://api.tickwise.io/v1/pools?chain=ethereum \\
@@ -13,7 +13,6 @@ type Phase = "typing" | "sending" | "loading" | "response" | "success" | "units"
 export function APITerminal({ reduce = false }: { reduce?: boolean }) {
   const [typed, setTyped] = useState(reduce ? CMD : "");
   const [phase, setPhase] = useState<Phase>(reduce ? "units" : "typing");
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (reduce) return;
