@@ -54,7 +54,7 @@ export function HeroScene() {
 
       <motion.div className="absolute inset-0" style={{ x: sceneX, y: sceneY, willChange: "transform" }}>
         {/* rings + core */}
-        <OrbitRing size={360} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
+        
         <OrbitRing size={520} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
         <OrbitRing size={380} duration={48} reverse opacity={0.4} delay={0.3} reduce={reduce} />
         <OrbitRing size={250} duration={34} opacity={0.55} delay={0.45} reduce={reduce} />
