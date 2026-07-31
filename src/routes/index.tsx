@@ -169,12 +169,6 @@ function Hero() {
             transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
             className="pointer-events-auto relative z-10 mt-10 w-full max-w-[600px]"
           >
-            <span className="absolute -top-3 left-4 z-10 rounded-full border border-border/60 bg-background/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground backdrop-blur-xl">
-              indexer-04 · syncing
-            </span>
-            <span className="absolute -bottom-3 right-5 z-10 rounded-full border border-success/40 bg-background/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-success backdrop-blur-xl">
-              edge-07 · streaming
-            </span>
             <div className="shadow-[0_40px_120px_-40px_color-mix(in_oklab,var(--primary)_60%,transparent)]">
               <APITerminal reduce={reduce} />
             </div>
