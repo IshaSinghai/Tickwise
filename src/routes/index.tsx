@@ -166,15 +166,18 @@ function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative lg:col-span-6">
+        {/* mobile / tablet: scene in flow */}
+        <div className="relative -mx-6 h-[62vh] lg:hidden">
           <motion.div
+            className="absolute inset-0"
             initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
           >
-            <HeroScene />
+            <ReactorScene />
           </motion.div>
         </div>
+
 
       </div>
 
