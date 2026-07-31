@@ -296,6 +296,56 @@
 .animate-grid-run { animation: grid-run 8s linear infinite; }
 .animate-streak { animation: streak 18s linear infinite; }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-grid-run, .animate-streak { animation: none !important; }
+/* ── Hero: dynamic field layers ──────────────────────────────────── */
+
+@utility hero-floor {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--primary) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--primary) 22%, transparent) 1px, transparent 1px);
+  background-size: 90px 90px;
 }
+@utility hero-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--primary-glow) 7%, transparent) 0px,
+    color-mix(in oklab, var(--primary-glow) 7%, transparent) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+@keyframes floor-run {
+  from { background-position: 0 0; }
+  to   { background-position: 0 90px; }
+}
+@keyframes scan-sweep {
+  0%   { transform: translate3d(0, -20%, 0); opacity: 0; }
+  10%  { opacity: 0.75; }
+  90%  { opacity: 0.75; }
+  100% { transform: translate3d(0, 120vh, 0); opacity: 0; }
+}
+@keyframes beam-breathe {
+  0%, 100% { opacity: 0.12; transform: scaleY(0.9); }
+  50%      { opacity: 0.42; transform: scaleY(1.06); }
+}
+@keyframes ring-out {
+  0%   { transform: translate3d(-50%, -50%, 0) scale(0.25); opacity: 0; }
+  12%  { opacity: 0.5; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(1.9); opacity: 0; }
+}
+@keyframes hue-drift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50%      { filter: hue-rotate(-16deg); }
+}
+
+.animate-floor-run { animation: floor-run 9s linear infinite; }
+.animate-scan-sweep { animation: scan-sweep 11s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+.animate-beam-breathe { animation: beam-breathe 9s ease-in-out infinite; }
+.animate-ring-out { animation: ring-out 9s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.animate-hue-drift { animation: hue-drift 26s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-grid-run, .animate-streak, .animate-floor-run, .animate-scan-sweep,
+  .animate-beam-breathe, .animate-ring-out, .animate-hue-drift { animation: none !important; }
+}
+
