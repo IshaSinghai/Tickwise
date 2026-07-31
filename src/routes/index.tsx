@@ -133,19 +133,19 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.4, ease: EASE }}
-            className="mt-9"
+            className="mt-9 max-w-xl"
           >
-            <TerminalCurl />
+            <APITerminal reduce={!!reduce} />
           </motion.div>
         </div>
 
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.6, delay: 0.15, ease: EASE }}
-          className="lg:col-span-6 lg:col-start-7 xl:col-span-7"
+          transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
+          className="lg:col-span-7"
         >
-          <HeroVisualization />
+          <HeroScene />
         </motion.div>
       </div>
     </section>
@@ -154,7 +154,7 @@ function Hero() {
 
 function Stats() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-10">
+    <section className="mx-auto w-full max-w-[1680px] px-6 py-10 2xl:px-12">
       <LiveStats />
     </section>
   );
