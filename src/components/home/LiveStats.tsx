@@ -115,7 +115,9 @@ export function LiveStats() {
             <MicroChart seed={i + 3} />
           </div>
         </motion.div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
+
