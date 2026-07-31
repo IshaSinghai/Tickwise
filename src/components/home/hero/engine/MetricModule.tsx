@@ -128,8 +128,8 @@ export function MetricModule({
   const color = TONE[tone];
 
   return (
+    <div className={`absolute -translate-x-1/2 -translate-y-1/2 ${className ?? ""}`}>
     <motion.div
-      className={`absolute ${className ?? ""}`}
       style={{ x: px, y: py, willChange: "transform" }}
       initial={
         reduce
@@ -154,7 +154,7 @@ export function MetricModule({
           transition={{ duration: floatDur, repeat: Infinity, ease: "easeInOut", delay: seed * 0.31 }}
           style={{ willChange: "transform" }}
           whileHover={reduce ? undefined : { scale: 1.045, y: -6 }}
-          className="group relative -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border bg-surface/45 p-3 backdrop-blur-xl transition-colors duration-500"
+          className="group relative overflow-hidden rounded-2xl border bg-surface/45 p-3 backdrop-blur-xl transition-colors duration-500"
         >
           {/* border + glow flare on packet arrival */}
           <motion.span
@@ -211,5 +211,6 @@ export function MetricModule({
         </motion.div>
       </motion.div>
     </motion.div>
+    </div>
   );
 }
