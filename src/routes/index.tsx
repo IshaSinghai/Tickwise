@@ -65,8 +65,21 @@ function Hero() {
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
       <AuroraField />
 
+      {/* desktop: the scene is the environment — oversized, bleeding behind the copy */}
+      <motion.div
+        className="pointer-events-none absolute inset-y-[-6%] right-[-10%] hidden w-[76%] lg:block"
+        initial={reduce ? false : { opacity: 0, scale: 0.93, filter: "blur(16px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1.6, delay: 0.1, ease: EASE }}
+      >
+        <div className="pointer-events-auto h-full w-full">
+          <ReactorScene />
+        </div>
+      </motion.div>
+
       <div className="relative z-10 mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-14 px-6 pb-20 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-16 2xl:px-12">
         <div className="pointer-events-none lg:col-span-6">
+
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
