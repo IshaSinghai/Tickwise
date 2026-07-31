@@ -161,17 +161,6 @@ function Hero() {
             ))}
           </motion.ul>
 
-          {/* live shell */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
-            className="pointer-events-auto relative z-10 mt-10 w-full max-w-[600px]"
-          >
-            <div className="shadow-[0_40px_120px_-40px_color-mix(in_oklab,var(--primary)_60%,transparent)]">
-              <APITerminal reduce={reduce} />
-            </div>
-          </motion.div>
         </div>
 
         {/* mobile / tablet: scene in flow */}
