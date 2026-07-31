@@ -82,7 +82,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
 
       {/* breathing bloom */}
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[46%] w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        className="absolute left-1/2 top-1/2 aspect-square w-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
             "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 48%, transparent), transparent 72%)",
@@ -95,7 +95,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
 
       {/* core body */}
       <motion.div
-        className="absolute left-1/2 top-1/2 h-[27%] w-[27%] -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-1/2 top-1/2 aspect-square w-[27%] -translate-x-1/2 -translate-y-1/2"
         initial={reduce ? false : { opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.3, delay: 0.2, ease: EASE }}
