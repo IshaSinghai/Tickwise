@@ -190,7 +190,7 @@ function Quickstart() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
-        <Reveal className="lg:col-span-5 2xl:col-span-4">
+        <Reveal className="lg:col-span-5">
           <div className="text-xs uppercase tracking-widest text-primary">Five-minute quickstart</div>
           <h2 className="mt-3 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
             One header. Real data.
@@ -211,7 +211,7 @@ function Quickstart() {
             </Button>
           </div>
         </Reveal>
-        <Reveal className="lg:col-span-7 2xl:col-span-8" delay={0.1}>
+        <Reveal className="lg:col-span-7" delay={0.1}>
           <QuickstartEditor />
         </Reveal>
       </div>
