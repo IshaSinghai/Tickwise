@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { motion, useReducedMotion } from "motion/react";
 import { Gauge, Layers, Shield, Terminal, Zap } from "lucide-react";
 import { seeded } from "./motion-primitives";
 
@@ -45,7 +44,7 @@ const items = [
 ];
 
 function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number }) {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   if (kind === "meter")
     return (
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-2">
@@ -101,7 +100,7 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
 }
 
 export function FeatureCards() {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {items.map((it, i) => (

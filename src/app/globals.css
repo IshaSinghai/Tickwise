@@ -299,20 +299,3 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-grid-run, .animate-streak { animation: none !important; }
 }
-
-/* ── Reactor scene systems ───────────────────────────────────────── */
-@keyframes tw-flow { to { stroke-dashoffset: -520; } }
-@keyframes tw-spin { to { transform: rotate(360deg); } }
-@keyframes tw-mote {
-  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
-  20%  { opacity: 0.8; }
-  80%  { opacity: 0.5; }
-  100% { transform: translate3d(var(--drift, -40px), var(--drift, -40px), 0); opacity: 0; }
-}
-.tw-flow { animation: tw-flow linear infinite; }
-.tw-spin { animation: tw-spin linear infinite; transform-box: fill-box; }
-.tw-mote { animation: tw-mote ease-in-out infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .tw-flow, .tw-spin, .tw-mote { animation: none !important; }
-}

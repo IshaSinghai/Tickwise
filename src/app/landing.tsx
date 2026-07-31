@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
+import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
-import { ReactorScene } from "@/components/home/hero/ReactorScene";
-import { AuroraField } from "@/components/home/hero/AuroraField";
-import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { HeroScene } from "@/components/home/hero/HeroScene";
+import { APITerminal } from "@/components/home/hero/APITerminal";
 
 import { LiveStats } from "@/components/home/LiveStats";
 import { FeatureCards } from "@/components/home/FeatureCards";
@@ -37,36 +36,20 @@ export function Landing() {
 function Hero() {
   const reduce = useSafeReducedMotion();
   return (
-    <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
-      <AuroraField />
-      <CinematicIntro />
-
-      {/* desktop: the scene is the environment — oversized, bleeding behind the copy */}
-      <motion.div
-        className="pointer-events-none absolute inset-y-[-8%] right-[-6%] hidden w-[66%] lg:block [mask-image:linear-gradient(to_right,transparent,black_22%,black_92%,transparent)]"
-        initial={reduce ? false : { opacity: 0, scale: 0.93, filter: "blur(16px)" }}
-        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 1.6, delay: 0.1, ease: EASE }}
-      >
-        <div className="pointer-events-auto h-full w-full">
-          <ReactorScene />
-        </div>
-      </motion.div>
-
-      <div className="relative z-10 mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-14 px-6 pb-20 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-16 2xl:px-12">
-        <div className="pointer-events-none flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
-
+    <section className="relative">
+      <div className="mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-12 px-6 pb-14 pt-16 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-14 2xl:px-12">
+        <div className="lg:col-span-5">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.9, ease: EASE }}
-            className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-border/60 bg-surface/50 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground backdrop-blur-xl"
+            className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-surface/50 px-3 py-1 text-xs text-muted-foreground backdrop-blur-xl"
           >
             <span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />
             Uniswap v4 · Ethereum &amp; Avalanche · near-real-time
           </motion.div>
 
-          <h1 className="mt-6 font-display text-[clamp(2.75rem,5.2vw,4.9rem)] font-semibold leading-[1.02] tracking-tight">
+          <h1 className="mt-6 font-display text-[clamp(2.5rem,4.4vw,4.2rem)] font-semibold leading-[1.03] tracking-tight">
             {["Pools & positions", "as one clean API."].map((line, i) => (
               <motion.span
                 key={line}
@@ -79,6 +62,7 @@ function Hero() {
               </motion.span>
             ))}
           </h1>
+
 
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
@@ -94,7 +78,7 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
-            className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
+            className="mt-8 flex flex-wrap items-center gap-3"
           >
             <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.02]">
               <Link href="/signup">
@@ -122,55 +106,28 @@ function Hero() {
             </Link>
           </motion.div>
 
-          <motion.ul
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.42, ease: EASE }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80 lg:justify-start"
-          >
-            {["1,284 v4 pools", "2 chains live", "~42s index lag", "142 ms p50"].map((t) => (
-              <li key={t} className="flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-primary-glow/80" />
-                {t}
-              </li>
-            ))}
-          </motion.ul>
-
-        </div>
-
-        {/* mobile / tablet: scene in flow */}
-        <div className="relative -mx-6 h-[62vh] lg:hidden">
           <motion.div
-            className="absolute inset-0"
-            initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
+            initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.4, ease: EASE }}
+            className="mt-9 max-w-xl"
           >
-            <ReactorScene />
+            <APITerminal reduce={!!reduce} />
           </motion.div>
         </div>
 
-
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
+          className="lg:col-span-7"
+        >
+          <HeroScene />
+        </motion.div>
       </div>
-
-      <motion.div
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.1 }}
-        className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center"
-      >
-        <span className="flex h-9 w-5 items-start justify-center rounded-full border border-border/60 p-1">
-          <motion.span
-            className="h-1.5 w-1 rounded-full bg-primary-glow"
-            animate={reduce ? undefined : { y: [0, 12, 0], opacity: [1, 0.2, 1] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </span>
-      </motion.div>
     </section>
   );
 }
-
 
 function Stats() {
   return (

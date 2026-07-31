@@ -1,12 +1,11 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { motion, useReducedMotion } from "motion/react";
 
 const logos = ["Meridian", "Bloomrail", "Tesseract", "Northwind", "Halcyon", "Vantage"];
 
 export function TrustedBy() {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">

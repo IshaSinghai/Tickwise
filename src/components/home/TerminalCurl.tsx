@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 import { Check, Copy } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 const CMD = `curl https://api.tickwise.io/v1/pools?chain=ethereum \\
   -H "KC-APIKey: kc_live_9f2a4c8e…"`;
@@ -14,7 +13,7 @@ type Phase = "typing" | "sending" | "done";
 
 /** Premium terminal: types the request, sends it, resolves, loops. */
 export function TerminalCurl() {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   const [typed, setTyped] = useState(reduce ? CMD : "");
   const [phase, setPhase] = useState<Phase>(reduce ? "done" : "typing");
   const [copied, setCopied] = useState(false);

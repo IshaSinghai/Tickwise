@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "motion/react";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { useSafeReducedMotion } from "./hero/primitives";
 import type { ReactNode } from "react";
 
 /** Deterministic pseudo-random so SSR and client agree. */
