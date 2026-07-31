@@ -1,11 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
-import { LiquidityEngine } from "@/components/home/hero/engine/LiquidityEngine";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { HeroScene } from "@/components/home/hero/HeroScene";
 import { APITerminal } from "@/components/home/hero/APITerminal";
 
 import { LiveStats } from "@/components/home/LiveStats";
@@ -59,11 +58,11 @@ function Landing() {
 }
 
 function Hero() {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   return (
     <section className="relative">
       <div className="mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-12 px-6 pb-14 pt-16 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-14 2xl:px-12">
-        <div className="lg:col-span-5 2xl:col-span-4">
+        <div className="lg:col-span-5">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -145,9 +144,9 @@ function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
-          className="lg:col-span-7 2xl:col-span-8"
+          className="lg:col-span-7"
         >
-          <LiquidityEngine />
+          <HeroScene />
         </motion.div>
       </div>
     </section>
