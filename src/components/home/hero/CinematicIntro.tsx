@@ -47,7 +47,7 @@ export function CinematicIntro() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: [0, 1, 1, 1], opacity: [0, 1, 0.9, 0] }}
             transition={{ duration: 2.2, times: [0, 0.35, 0.6, 1], ease: EASE }}
-            style={{ boxShadow: "0 0 60px 8px hsl(var(--primary) / 0.55)" }}
+            style={{ boxShadow: "0 0 60px 8px color-mix(in oklab, var(--primary) 55%, transparent)" }}
           />
 
           {/* volumetric bloom expanding from the horizon */}
@@ -55,7 +55,7 @@ export function CinematicIntro() {
             className="absolute left-1/2 top-1/2 h-[70vh] w-[70vw] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl [will-change:transform,opacity]"
             style={{
               background:
-                "radial-gradient(closest-side, hsl(var(--primary) / 0.45), transparent 70%)",
+                "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 45%, transparent), transparent 70%)",
             }}
             initial={{ scale: 0.2, opacity: 0 }}
             animate={{ scale: [0.2, 1.15, 1.6], opacity: [0, 0.8, 0] }}
