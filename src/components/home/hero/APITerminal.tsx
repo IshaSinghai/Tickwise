@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Zap } from "lucide-react";
+import { Check, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 const CMD = `curl https://api.tickwise.io/v1/pools?chain=ethereum \\
