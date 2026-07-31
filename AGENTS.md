@@ -20,6 +20,80 @@ component beside it, so every route keeps real server-rendered metadata.
 > editor, which expects the original Vite + TanStack Start project. The
 > pre-migration Vite app remains on `main`.
 
+## Branches
+
+| Branch | Stack | Role |
+| --- | --- | --- |
+| `main` | Vite + TanStack Start | **Lovable's connected branch.** Design source of truth. Never hand-edit; never merge Next.js into it. |
+| `develop` | Next.js | Where development happens, and where Lovable design changes are merged in. |
+| `qa` | Next.js | QA validates here and deploys from here. Keep it holding still while QA reviews. |
+
+Releases are marked with tags rather than a `production` branch — a branch that
+only ever fast-forwards from `qa` stores nothing a tag doesn't, and a tag names
+the exact deployed commit for rollback.
+
+```sh
+git tag -a v0.1.0 -m "QA approved 2026-07-31"
+git push origin v0.1.0
+```
+
+> [!NOTE]
+> `qa` is both the QA and the production state. That is fine pre-launch. Once
+> customers are live you will want QA on cycle N+1 while production stays on
+> cycle N — at that point add a `production` branch, because one branch can
+> only ever represent one deployed state.
+
+## Development cycle
+
+```
+Lovable edits main ──┐
+                     ├──> develop ──> qa ──> deploy + tag
+your work ───────────┘
+```
+
+1. Merge any new Lovable design forward (see below).
+2. Do your work on `develop`.
+3. When the cycle is done: `git checkout qa && git merge develop`.
+4. QA validates `qa`; on approval, deploy and tag.
+
+## Merging Lovable design changes into `develop`
+
+The design layer is deliberately near-identical between the two stacks — only
+~200 lines differ across the 60 shared files in `src/components`, and 50 of
+those differ by just the `"use client"` line. Every route file was moved with
+`git mv`, so git's rename detection carries page-level design edits from
+`src/routes/*.tsx` across into `src/app/**` automatically.
+
+```sh
+git fetch origin
+git checkout develop
+git merge origin/main
+```
+
+Rules that keep this cheap:
+
+- **Never hand-edit design files on `develop`.** All UI changes go through
+  Lovable on `main`, then merge forward. Editing both sides erodes the file
+  similarity that rename detection depends on, and it fails *silently* — page
+  edits simply stop arriving.
+- **Merge after every Lovable session, not in big batches.** Frequent small
+  merges keep rename detection healthy.
+
+Conflicts, when they happen, are almost always the import block — keep the
+`"use client"` line and `next/link`, take Lovable's other imports. Two other
+shapes to expect:
+
+- *modify/delete* — Lovable removed a component you only touched to add
+  `"use client"`. Accept the deletion (`git rm`).
+- A **new route** on `main` lands in `src/routes/` and Next ignores it; add the
+  matching `src/app/<path>/page.tsx` by hand.
+
+After any merge from `main`, always run:
+
+```sh
+npx tsc --noEmit && npm run build
+```
+
 <!-- LOVABLE:BEGIN -->
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
