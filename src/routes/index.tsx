@@ -146,24 +146,13 @@ function Hero() {
               </li>
             ))}
           </motion.ul>
-        </div>
 
-        <div className="relative lg:col-span-6">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
-            className="opacity-90"
-          >
-            <HeroScene />
-          </motion.div>
-
-          {/* floating live shell, overlapping the scene */}
+          {/* live shell */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
-            className="relative z-10 mx-auto mt-4 w-full max-w-[560px] lg:mr-0 lg:ml-auto"
+            className="pointer-events-auto relative z-10 mt-10 w-full max-w-[600px]"
           >
             <span className="absolute -top-3 left-4 z-10 rounded-full border border-border/60 bg-background/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground backdrop-blur-xl">
               indexer-04 · syncing
@@ -176,6 +165,17 @@ function Hero() {
             </div>
           </motion.div>
         </div>
+
+        <div className="relative lg:col-span-6">
+          <motion.div
+            initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
+          >
+            <HeroScene />
+          </motion.div>
+        </div>
+
       </div>
 
       <motion.div
