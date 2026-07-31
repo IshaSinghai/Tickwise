@@ -24,7 +24,7 @@ function Ribbon({
       d={d}
       fill="none"
       stroke={color}
-      strokeWidth={30}
+      strokeWidth={52}
       strokeLinecap="round"
       opacity={opacity}
     >
@@ -118,7 +118,7 @@ export function AuroraField() {
           viewBox="0 0 1200 700"
           preserveAspectRatio="xMidYMid slice"
           className="h-full w-full"
-          style={{ filter: "blur(38px)" }}
+          style={{ filter: "blur(46px)" }}
         >
           <defs>
             <linearGradient id="aurora-1" x1="0" y1="0" x2="1" y2="0">
@@ -142,7 +142,7 @@ export function AuroraField() {
             d="M -80 250 C 220 130, 520 380, 780 210 S 1180 180, 1320 250"
             alt="M -80 300 C 240 200, 500 240, 800 300 S 1160 240, 1320 190"
             color="url(#aurora-1)"
-            opacity={0.42}
+            opacity={0.5}
             duration={22}
             delay={0}
             reduce={reduce}
@@ -151,7 +151,7 @@ export function AuroraField() {
             d="M -80 420 C 260 330, 560 540, 860 400 S 1180 380, 1320 430"
             alt="M -80 380 C 300 470, 540 350, 880 470 S 1200 430, 1320 370"
             color="url(#aurora-2)"
-            opacity={0.3}
+            opacity={0.38}
             duration={28}
             delay={1.2}
             reduce={reduce}
@@ -160,7 +160,7 @@ export function AuroraField() {
             d="M -80 560 C 300 470, 620 660, 900 540 S 1220 520, 1320 570"
             alt="M -80 520 C 280 610, 600 480, 940 600 S 1220 560, 1320 520"
             color="url(#aurora-3)"
-            opacity={0.22}
+            opacity={0.3}
             duration={34}
             delay={2.4}
             reduce={reduce}
