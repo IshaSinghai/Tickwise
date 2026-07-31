@@ -257,8 +257,8 @@ export function LiquidityEngine() {
         >
           <defs>
             <linearGradient id="lq-line" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="var(--primary-glow)" stopOpacity="0.55" />
-              <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.08" />
+              <stop offset="0%" stopColor="var(--primary-glow)" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.25" />
             </linearGradient>
           </defs>
 
@@ -274,7 +274,7 @@ export function LiquidityEngine() {
                   strokeWidth="0.4"
                   vectorEffect="non-scaling-stroke"
                   initial={reduce ? false : { pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: lit ? 1 : 0.5 }}
+                  animate={{ pathLength: 1, opacity: lit ? 1 : 0.7 }}
                   transition={{
                     pathLength: { duration: 1.1, delay: 0.55 + i * 0.09, ease: EASE },
                     opacity: { duration: 0.6 },

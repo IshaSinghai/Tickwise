@@ -86,7 +86,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
         style={{
           background:
             "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 48%, transparent), transparent 72%)",
-          filter: "blur(34px)",
+          filter: "blur(46px)",
           willChange: "transform, opacity",
         }}
         animate={reduce ? undefined : { scale: [1, 1.18, 1], opacity: [0.55, 0.95, 0.55] }}
@@ -112,7 +112,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
           animate={reduce ? undefined : { rotate: 360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
-        <div className="absolute inset-[7px] rounded-full bg-background/90 backdrop-blur-xl" />
+        <div className="absolute inset-[8px] rounded-full bg-background shadow-[inset_0_0_40px_-10px_color-mix(in_oklab,var(--primary)_60%,transparent)] backdrop-blur-xl" />
 
         {/* animated radial gradient */}
         <motion.div
@@ -128,7 +128,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
         {/* inner rotating geometry */}
         <motion.svg
           viewBox="0 0 100 100"
-          className="absolute inset-[14%]"
+          className="absolute inset-[19%]"
           animate={reduce ? undefined : { rotate: -360 }}
           transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
           style={{ willChange: "transform" }}
