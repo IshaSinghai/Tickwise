@@ -92,8 +92,9 @@ export function LiveStats() {
         })}
       </svg>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-
+        {stats.map((s, i) => (
         <motion.div
+
           key={s.label}
           initial={reduce ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
