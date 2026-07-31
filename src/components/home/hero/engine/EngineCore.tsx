@@ -112,7 +112,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
           animate={reduce ? undefined : { rotate: 360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
-        <div className="absolute inset-[8px] rounded-full bg-background shadow-[inset_0_0_40px_-10px_color-mix(in_oklab,var(--primary)_60%,transparent)] backdrop-blur-xl" />
+        <div className="absolute inset-[8px] rounded-full bg-background backdrop-blur-xl" />
 
         {/* animated radial gradient */}
         <motion.div
