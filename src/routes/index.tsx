@@ -1,10 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Zap, Shield, Gauge, Terminal, Layers, Copy, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
-import { CodeBlock } from "@/components/CodeBlock";
-import { LIVE_STATS } from "@/lib/mock";
-import { useState } from "react";
+import { AmbientBackground } from "@/components/home/AmbientBackground";
+import { HeroVisualization } from "@/components/home/HeroVisualization";
+import { TerminalCurl } from "@/components/home/TerminalCurl";
+import { LiveStats } from "@/components/home/LiveStats";
+import { FeatureCards } from "@/components/home/FeatureCards";
+import { QuickstartEditor } from "@/components/home/QuickstartEditor";
+import { CoverageNetwork } from "@/components/home/CoverageNetwork";
+import { TrustedBy } from "@/components/home/TrustedBy";
+import { PricingBanner } from "@/components/home/PricingBanner";
+import { Reveal, EASE } from "@/components/home/motion-primitives";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -15,10 +23,18 @@ export const Route = createFileRoute("/")({
         content:
           "Near-real-time Uniswap v4 pools and positions on Ethereum and Avalanche. Get an API key, ship in five minutes.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "Tickwise Dex API" },
       {
         property: "og:description",
-        content: "Near-real-time Uniswap v4 pools and positions. Built for teams that would rather build product than index chains.",
+        content:
+          "Near-real-time Uniswap v4 pools and positions. Built for teams that would rather build product than index chains.",
+      },
+      { name: "twitter:title", content: "Tickwise Dex API" },
+      {
+        name: "twitter:description",
+        content: "Live DeFi intelligence as one clean, metered API.",
       },
     ],
   }),
@@ -28,10 +44,12 @@ export const Route = createFileRoute("/")({
 function Landing() {
   return (
     <MarketingShell>
+      <AmbientBackground />
       <Hero />
+      <Stats />
       <Proof />
       <Features />
-      <Snippet />
+      <Quickstart />
       <Coverage />
       <CTA />
     </MarketingShell>
@@ -39,219 +57,174 @@ function Landing() {
 }
 
 function Hero() {
+  const reduce = useReducedMotion();
   return (
-    <section className="relative overflow-hidden bg-hero">
-      <div className="pointer-events-none absolute inset-0 opacity-40 grid-lines" />
-      <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
-        <div className="max-w-3xl">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border/60 bg-surface/70 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-success" />
-            Uniswap v4 · Ethereum & Avalanche · near-real-time
-          </div>
-          <h1 className="font-display text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
-            <span className="text-gradient">Pools & positions</span>
+    <section className="relative">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-16 pt-20 md:pb-24 md:pt-28 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-6 xl:col-span-5">
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.9, ease: EASE }}
+            className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-surface/50 px-3 py-1 text-xs text-muted-foreground backdrop-blur-xl"
+          >
+            <span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />
+            Uniswap v4 · Ethereum &amp; Avalanche · near-real-time
+          </motion.div>
+
+          <motion.h1
+            initial={reduce ? false : { opacity: 0, y: 22, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1.1, delay: 0.08, ease: EASE }}
+            className="mt-6 font-display text-[clamp(2.6rem,6.2vw,4.6rem)] font-semibold leading-[1.02] tracking-tight"
+          >
+            <span className="text-gradient">Pools &amp; positions</span>
             <br />
             as one clean API.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-            We index Uniswap v4 so you don’t have to. Metered endpoints, honest quotas, one header of auth.
-            Ship a positions dashboard, a portfolio tracker, or a research tool in an afternoon.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="bg-gradient-primary shadow-glow">
+          </motion.h1>
+
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.18, ease: EASE }}
+            className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground"
+          >
+            We index Uniswap v4 so you don’t have to. Metered endpoints, honest quotas, one header of auth. Ship a
+            positions dashboard, a portfolio tracker, or a research tool in an afternoon.
+          </motion.p>
+
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
+            className="mt-8 flex flex-wrap items-center gap-3"
+          >
+            <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.02]">
               <Link to="/signup">
-                Get an API key <ArrowRight className="ml-1 h-4 w-4" />
+                <span className="relative z-10 inline-flex items-center">
+                  Get an API key
+                  <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-border/70 bg-surface/40 backdrop-blur-xl transition-all duration-300 hover:border-primary/50 hover:shadow-glow"
+            >
               <Link to="/docs/quickstart">Read the quickstart</Link>
             </Button>
-            <Link to="/explore" className="ml-2 text-sm text-muted-foreground hover:text-foreground">
-              or try the live data →
+            <Link
+              to="/explore"
+              className="group ml-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              or try the live data{" "}
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
-          </div>
+          </motion.div>
+
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.4, ease: EASE }}
+            className="mt-9"
+          >
+            <TerminalCurl />
+          </motion.div>
         </div>
+
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.6, delay: 0.15, ease: EASE }}
+          className="lg:col-span-6 lg:col-start-7 xl:col-span-7"
+        >
+          <HeroVisualization />
+        </motion.div>
       </div>
+    </section>
+  );
+}
+
+function Stats() {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-10">
+      <LiveStats />
     </section>
   );
 }
 
 function Proof() {
-  const stats = [
-    { label: "Pools tracked", value: LIVE_STATS.poolsTracked.toLocaleString() },
-    { label: "Positions tracked", value: LIVE_STATS.positionsTracked.toLocaleString() },
-    { label: "Indexing lag", value: `~${LIVE_STATS.indexingLagMinutes} min` },
-    { label: "Chains live", value: "2" },
-  ];
   return (
-    <section className="border-y border-border/60 bg-surface/40">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 divide-border/60 px-6 py-10 md:grid-cols-4 md:divide-x">
-        {stats.map((s, i) => (
-          <div key={s.label} className={`px-4 py-2 ${i > 0 ? "md:pl-8" : ""}`}>
-            <div className="font-display text-3xl font-semibold tracking-tight">{s.value}</div>
-            <div className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">{s.label}</div>
-          </div>
-        ))}
-      </div>
-    </section>
+    <Reveal as="section" className="mx-auto max-w-7xl px-6 py-16">
+      <TrustedBy />
+    </Reveal>
   );
 }
 
 function Features() {
-  const items = [
-    {
-      icon: Zap,
-      title: "Near-real-time",
-      body: "Positions re-price about every 5 minutes. On-chain fee state refreshes roughly hourly on Ethereum.",
-    },
-    {
-      icon: Gauge,
-      title: "Metered, not throttled to death",
-      body: "Per-endpoint unit costs and monthly quotas. Every response carries X-Quota-* and X-RateLimit-* headers.",
-    },
-    {
-      icon: Shield,
-      title: "Two key types",
-      body: "Server keys are 403’d from browsers. Browser keys ship with allowed-origin lists. Both explained in the docs.",
-    },
-    {
-      icon: Layers,
-      title: "One shape across chains",
-      body: "The same JSON on Ethereum and Avalanche. Add a chain with one query param.",
-    },
-    {
-      icon: Terminal,
-      title: "curl-first",
-      body: "One header of auth. Every endpoint is copy-pasteable from the docs. No SDK required.",
-    },
-    {
-      icon: Zap,
-      title: "Honest about what we don’t do",
-      body: "No fake uptime, no invented accuracy scores. See the coverage page for the true footprint.",
-    },
-  ];
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20">
-      <div className="max-w-2xl">
+    <section className="mx-auto max-w-7xl px-6 py-24">
+      <Reveal className="max-w-2xl">
         <div className="text-xs uppercase tracking-widest text-primary">Why teams pick Tickwise</div>
-        <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">
+        <h2 className="mt-3 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
           Boring where boring matters. Fast where it doesn’t.
         </h2>
-      </div>
-      <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {items.map((it) => (
-          <div key={it.title} className="rounded-2xl border border-border/60 bg-surface p-6 shadow-card transition-colors hover:border-primary/40">
-            <it.icon className="h-5 w-5 text-primary" />
-            <div className="mt-3 font-display text-lg font-semibold">{it.title}</div>
-            <p className="mt-1 text-sm text-muted-foreground">{it.body}</p>
-          </div>
-        ))}
+      </Reveal>
+      <div className="mt-12">
+        <FeatureCards />
       </div>
     </section>
   );
 }
 
-function Snippet() {
-  const [tab, setTab] = useState<"curl" | "js">("curl");
-  const curl = `curl https://api.tickwise.io/v1/pools?chain=ethereum \\
-  -H "KC-APIKey: kc_live_9f2a4c8e…"`;
-  const js = `const res = await fetch(
-  "https://api.tickwise.io/v1/pools?chain=ethereum",
-  { headers: { "KC-APIKey": process.env.CP_KEY! } }
-);
-const pools = await res.json();`;
+function Quickstart() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20">
-      <div className="grid gap-10 md:grid-cols-2 md:items-center">
-        <div>
+    <section className="mx-auto max-w-7xl px-6 py-24">
+      <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+        <Reveal className="lg:col-span-5">
           <div className="text-xs uppercase tracking-widest text-primary">Five-minute quickstart</div>
-          <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">One header. Real data.</h2>
-          <p className="mt-4 text-muted-foreground">
-            Sign up, create a key in the portal, drop this into your terminal. If the response returns pools, you’re done.
+          <h2 className="mt-3 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
+            One header. Real data.
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+            Sign up, create a key in the portal, drop this into your terminal. If the response returns pools, you’re
+            done.
           </p>
-          <div className="mt-6 flex gap-3">
-            <Button asChild className="bg-gradient-primary"><Link to="/signup">Get a free key</Link></Button>
-            <Button asChild variant="outline"><Link to="/docs/quickstart">Full quickstart</Link></Button>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild className="group relative overflow-hidden bg-gradient-primary shadow-glow">
+              <Link to="/signup">
+                <span className="relative z-10">Get a free key</span>
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="border-border/70 bg-surface/40 backdrop-blur hover:border-primary/50">
+              <Link to="/docs/quickstart">Full quickstart</Link>
+            </Button>
           </div>
-        </div>
-        <div>
-          <div className="mb-2 flex gap-1">
-            {(["curl", "js"] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`rounded-md px-3 py-1 text-xs font-mono uppercase ${
-                  tab === t ? "bg-surface-2 text-foreground" : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-          <CodeBlock code={tab === "curl" ? curl : js} lang={tab} />
-        </div>
+        </Reveal>
+        <Reveal className="lg:col-span-7" delay={0.1}>
+          <QuickstartEditor />
+        </Reveal>
       </div>
     </section>
   );
 }
 
 function Coverage() {
-  const rows = [
-    { chain: "Ethereum", protocol: "Uniswap v4", state: "live" },
-    { chain: "Avalanche", protocol: "Uniswap v4", state: "live" },
-    { chain: "Arbitrum", protocol: "Uniswap v4", state: "indexed, not servable" },
-    { chain: "Optimism", protocol: "Uniswap v4", state: "indexed, not servable" },
-  ];
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20">
-      <div className="rounded-2xl border border-border/60 bg-surface shadow-card">
-        <div className="border-b border-border/60 p-6">
-          <div className="text-xs uppercase tracking-widest text-primary">Coverage — kept honest</div>
-          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">What’s actually live today</h2>
-        </div>
-        <div className="divide-y divide-border/60">
-          {rows.map((r) => (
-            <div key={r.chain} className="flex items-center justify-between px-6 py-4">
-              <div>
-                <div className="font-medium">{r.chain}</div>
-                <div className="text-xs text-muted-foreground">{r.protocol}</div>
-              </div>
-              <span
-                className={`rounded-full px-2.5 py-1 text-xs ${
-                  r.state === "live"
-                    ? "border border-success/40 bg-success/10 text-success"
-                    : "border border-border/60 bg-surface-2 text-muted-foreground"
-                }`}
-              >
-                {r.state}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <Reveal as="section" className="mx-auto max-w-7xl px-6 py-24">
+      <CoverageNetwork />
+    </Reveal>
   );
 }
 
 function CTA() {
   return (
-    <section className="mx-auto max-w-7xl px-6 pb-20">
-      <div className="overflow-hidden rounded-3xl border border-border/60 bg-gradient-primary p-10 text-primary-foreground shadow-glow">
-        <div className="grid gap-6 md:grid-cols-2 md:items-center">
-          <div>
-            <h3 className="font-display text-3xl font-semibold tracking-tight">Start on Free. Upgrade when it hurts.</h3>
-            <p className="mt-2 text-primary-foreground/80">
-              25,000 units a month at no cost. Every plan uses the same endpoints — just more of them.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3 md:justify-end">
-            <Button asChild size="lg" variant="secondary"><Link to="/signup">Create free account</Link></Button>
-            <Button asChild size="lg" variant="outline" className="border-white/30 bg-transparent text-primary-foreground hover:bg-white/10">
-              <Link to="/pricing">See pricing</Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Reveal as="section" className="mx-auto max-w-7xl px-6 pb-24">
+      <PricingBanner />
+    </Reveal>
   );
 }
