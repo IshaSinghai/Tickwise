@@ -151,7 +151,7 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.42, ease: EASE }}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80"
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80 lg:justify-start"
           >
             {["1,284 v4 pools", "2 chains live", "~42s index lag", "142 ms p50"].map((t) => (
               <li key={t} className="flex items-center gap-2">
