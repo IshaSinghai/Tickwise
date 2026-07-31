@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 
 export function MarketingFooter() {
   return (
@@ -53,7 +53,7 @@ function FooterCol({ title, links }: { title: string; links: [string, string][] 
       <ul className="space-y-2 text-sm">
         {links.map(([label, to]) => (
           <li key={to}>
-            <Link to={to} className="text-foreground/80 transition-colors hover:text-foreground">
+            <Link href={to} className="text-foreground/80 transition-colors hover:text-foreground">
               {label}
             </Link>
           </li>

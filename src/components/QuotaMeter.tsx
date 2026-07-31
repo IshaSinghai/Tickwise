@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { CURRENT_USAGE } from "@/lib/mock";
 
 export function QuotaMeter({ compact = false }: { compact?: boolean }) {
@@ -20,7 +20,7 @@ export function QuotaMeter({ compact = false }: { compact?: boolean }) {
         <div className="text-right text-xs text-muted-foreground">
           Resets 1 Aug · UTC
           <div>
-            <Link to="/docs/units-and-limits" className="text-primary hover:underline">
+            <Link href="/docs/units-and-limits" className="text-primary hover:underline">
               What’s a unit?
             </Link>
           </div>

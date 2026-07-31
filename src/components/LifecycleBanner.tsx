@@ -1,5 +1,7 @@
+"use client";
+
 import { AlertCircle, Info } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -68,7 +70,7 @@ export function LifecycleBanner({ initial = "renewal_due" as State }) {
         </div>
         {c.cta && (
           <Button asChild size="sm" className="bg-gradient-primary">
-            <Link to={c.cta.to}>{c.cta.label}</Link>
+            <Link href={c.cta.to}>{c.cta.label}</Link>
           </Button>
         )}
       </div>

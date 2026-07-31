@@ -1,4 +1,6 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ArrowRight } from "lucide-react";
@@ -62,7 +64,7 @@ export function PricingBanner() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow">
-                <Link to="/signup">
+                <Link href="/signup">
                   <span className="relative z-10 inline-flex items-center">
                     Create free account
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -71,7 +73,7 @@ export function PricingBanner() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-border/70 bg-surface/40 backdrop-blur transition-colors hover:border-primary/50">
-                <Link to="/pricing">See pricing</Link>
+                <Link href="/pricing">See pricing</Link>
               </Button>
             </div>
           </div>

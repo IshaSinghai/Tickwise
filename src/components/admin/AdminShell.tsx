@@ -1,5 +1,8 @@
+"use client";
+
 import type { ReactNode } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Users, Package, Zap, Repeat, Receipt, LineChart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -13,7 +16,7 @@ const items = [
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const pathname = usePathname();
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="hidden w-60 shrink-0 flex-col border-r border-border/60 bg-sidebar md:flex">
@@ -29,7 +32,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             return (
               <Link
                 key={it.to}
-                to={it.to}
+                href={it.to}
                 className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                   active
                     ? "bg-sidebar-accent text-sidebar-accent-foreground"
@@ -44,7 +47,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         </nav>
         <div className="border-t border-sidebar-border p-3">
           <Button asChild variant="ghost" size="sm" className="w-full justify-start">
-            <Link to="/admin/login">
+            <Link href="/admin/login">
               <LogOut className="mr-2 h-4 w-4" /> Sign out
             </Link>
           </Button>
@@ -53,7 +56,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b border-border/60 bg-background/70 px-6 backdrop-blur-xl">
           <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Internal · Admin</div>
-          <Link to="/" className="text-xs text-muted-foreground hover:text-foreground">← Back to site</Link>
+          <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">← Back to site</Link>
         </header>
         <main className="mx-auto w-full max-w-7xl flex-1 space-y-6 p-6">{children}</main>
       </div>

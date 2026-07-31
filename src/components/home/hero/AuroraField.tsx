@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useTransform } from "motion/react";
 import { rnd, usePointer, useSafeReducedMotion, type Pointer } from "./primitives";
 

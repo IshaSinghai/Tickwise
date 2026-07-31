@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 import { Check, Copy } from "lucide-react";

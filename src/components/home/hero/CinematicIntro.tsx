@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { EASE, useSafeReducedMotion } from "./primitives";

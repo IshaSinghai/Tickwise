@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, type Variants } from "motion/react";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 import type { ReactNode } from "react";

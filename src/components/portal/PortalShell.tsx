@@ -1,5 +1,8 @@
+"use client";
+
 import type { ReactNode } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   KeyRound,
@@ -22,7 +25,7 @@ const items = [
 ];
 
 export function PortalShell({ children }: { children: ReactNode }) {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const pathname = usePathname();
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="hidden w-64 shrink-0 flex-col border-r border-border/60 bg-sidebar text-sidebar-foreground md:flex">
@@ -41,7 +44,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             return (
               <Link
                 key={it.to}
-                to={it.to}
+                href={it.to}
                 className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                   active
                     ? "bg-sidebar-accent text-sidebar-accent-foreground"
@@ -60,7 +63,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             <div className="truncate font-mono text-sidebar-foreground">alex@doryoku.io</div>
           </div>
           <Button asChild variant="ghost" size="sm" className="w-full justify-start">
-            <Link to="/login">
+            <Link href="/login">
               <LogOut className="mr-2 h-4 w-4" /> Sign out
             </Link>
           </Button>
@@ -69,7 +72,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b border-border/60 bg-background/70 px-6 backdrop-blur-xl">
           <div className="text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-foreground">Home</Link> <span className="mx-1">/</span>{" "}
+            <Link href="/" className="hover:text-foreground">Home</Link> <span className="mx-1">/</span>{" "}
             <span className="text-foreground">Portal</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">

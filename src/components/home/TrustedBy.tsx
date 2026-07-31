@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "motion/react";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 

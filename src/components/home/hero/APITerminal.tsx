@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Check, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";

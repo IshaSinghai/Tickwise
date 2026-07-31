@@ -1,3 +1,5 @@
+"use client";
+
 import { useSafeReducedMotion } from "./hero/primitives";
 import { seeded } from "./motion-primitives";
 

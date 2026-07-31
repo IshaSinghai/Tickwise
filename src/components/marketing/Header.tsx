@@ -1,4 +1,7 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,7 +15,7 @@ const nav = [
 ];
 
 export function MarketingHeader() {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -32,7 +35,7 @@ export function MarketingHeader() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6">
-        <Link to="/" className="group flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
+        <Link href="/" className="group flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow transition-transform duration-500 group-hover:rotate-[8deg] group-hover:scale-110">
             <span className="font-mono text-xs">TW</span>
           </span>
@@ -47,7 +50,7 @@ export function MarketingHeader() {
             return (
               <Link
                 key={n.to}
-                to={n.to}
+                href={n.to}
                 className={`group relative rounded-md px-3 py-1.5 text-sm transition-colors ${
                   active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
@@ -64,14 +67,14 @@ export function MarketingHeader() {
         </nav>
         <div className="ml-auto hidden items-center gap-2 md:flex">
           <Button asChild variant="ghost" size="sm" className="transition-colors hover:bg-surface/60">
-            <Link to="/login">Sign in</Link>
+            <Link href="/login">Sign in</Link>
           </Button>
           <Button
             asChild
             size="sm"
             className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.03]"
           >
-            <Link to="/signup">
+            <Link href="/signup">
               <span className="relative z-10">Get an API key</span>
               <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
             </Link>
@@ -91,7 +94,7 @@ export function MarketingHeader() {
             {nav.map((n) => (
               <Link
                 key={n.to}
-                to={n.to}
+                href={n.to}
                 onClick={() => setOpen(false)}
                 className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
               >
@@ -99,8 +102,8 @@ export function MarketingHeader() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2 px-1">
-              <Button asChild variant="outline" className="flex-1"><Link to="/login">Sign in</Link></Button>
-              <Button asChild className="flex-1 bg-gradient-primary"><Link to="/signup">Get key</Link></Button>
+              <Button asChild variant="outline" className="flex-1"><Link href="/login">Sign in</Link></Button>
+              <Button asChild className="flex-1 bg-gradient-primary"><Link href="/signup">Get key</Link></Button>
             </div>
           </nav>
         </div>

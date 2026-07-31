@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 import { motion } from "motion/react";
