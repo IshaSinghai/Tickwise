@@ -34,7 +34,7 @@ function Counter({ value, decimals = 0, prefix = "", suffix = "" }: { value: num
 
 function MicroChart({ seed }: { seed: number }) {
   const pts = Array.from({ length: 20 }, (_, i) => seeded(i, seed));
-  const d = pts.map((p, i) => `${(i / 19) * 100},${24 - p * 18 - 2}`).join(" ");
+  const d = pts.map((p, i) => `${((i / 19) * 100).toFixed(2)},${(24 - p * 18 - 2).toFixed(2)}`).join(" ");
   return (
     <svg viewBox="0 0 100 24" className="h-full w-full">
       <polyline points={d} fill="none" stroke="var(--primary-glow)" strokeWidth="1.5" strokeLinejoin="round" />

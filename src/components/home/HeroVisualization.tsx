@@ -26,7 +26,7 @@ function Spark({ seed = 1, tone = "primary" }: { seed?: number; tone?: "primary"
   const reduce = useReducedMotion();
   const pts = Array.from({ length: 18 }, (_, i) => seeded(i, seed));
   const d = pts
-    .map((p, i) => `${(i / (pts.length - 1)) * 100},${26 - p * 20 - 3}`)
+    .map((p, i) => `${((i / (pts.length - 1)) * 100).toFixed(2)},${(26 - p * 20 - 3).toFixed(2)}`)
     .join(" ");
   const stroke =
     tone === "success" ? "var(--success)" : tone === "accent" ? "var(--chart-5)" : "var(--primary-glow)";
@@ -269,7 +269,7 @@ export function HeroVisualization() {
                 <motion.span
                   key={i}
                   className="w-full rounded-sm bg-gradient-primary"
-                  style={{ height: 8 + seeded(i, 7) * 26 }}
+                  style={{ height: Number((8 + seeded(i, 7) * 26).toFixed(2)) }}
                   animate={reduce ? undefined : { scaleY: [0.7, 1, 0.75, 1], opacity: [0.6, 1, 0.7, 1] }}
                   transition={{ duration: 4 + seeded(i, 8) * 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.12 }}
                 />

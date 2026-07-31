@@ -88,7 +88,7 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
   return (
     <svg viewBox="0 0 100 20" className="h-5 w-full">
       <polyline
-        points={Array.from({ length: 16 }, (_, i) => `${(i / 15) * 100},${18 - seeded(i, seed) * 14}`).join(" ")}
+        points={Array.from({ length: 16 }, (_, i) => `${((i / 15) * 100).toFixed(2)},${(18 - seeded(i, seed) * 14).toFixed(2)}`).join(" ")}
         fill="none"
         stroke="var(--success)"
         strokeWidth="1.4"
