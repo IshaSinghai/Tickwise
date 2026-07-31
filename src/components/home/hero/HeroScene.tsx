@@ -213,6 +213,7 @@ export function HeroScene() {
           <DataPulse key={i} {...p} reduce={reduce} />
         ))}
       </motion.div>
-    </div>
+    </motion.div>
+
   );
 }
