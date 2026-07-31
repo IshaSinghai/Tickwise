@@ -11,6 +11,8 @@ import { rnd, usePointer, useSafeReducedMotion, EASE, type Pointer } from "./pri
  * Everything is generated in code (SVG + CSS), every system runs on its own clock.
  */
 
+const r2 = (n: number) => Math.round(n * 100) / 100;
+
 const V = 1000; // svg viewBox square
 
 /* ── narrative topology: liquidity → index → positions → yield → api → devs ── */
@@ -73,7 +75,7 @@ function Stream({ s, i, reduce }: { s: (typeof STREAMS)[number]; i: number; redu
         strokeWidth={s.w}
         strokeLinecap="round"
         initial={reduce ? false : { pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 0.55 }}
+        animate={{ pathLength: 1, opacity: 0.75 }}
         transition={{ duration: 1.6, delay: 0.9 + i * 0.07, ease: EASE }}
       />
       {!reduce && (
@@ -197,10 +199,10 @@ function Reactor({ reduce }: { reduce: boolean }) {
         return (
           <line
             key={i}
-            x1={c.x + Math.cos(ang) * r0}
-            y1={c.y + Math.sin(ang) * r0}
-            x2={c.x + Math.cos(ang) * r1}
-            y2={c.y + Math.sin(ang) * r1}
+            x1={r2(c.x + Math.cos(ang) * r0)}
+            y1={r2(c.y + Math.sin(ang) * r0)}
+            x2={r2(c.x + Math.cos(ang) * r1)}
+            y2={r2(c.y + Math.sin(ang) * r1)}
             stroke="var(--primary-glow)"
             strokeWidth={0.8}
             opacity={0.18 + rnd(i, 47) * 0.25}

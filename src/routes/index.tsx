@@ -67,7 +67,7 @@ function Hero() {
 
       {/* desktop: the scene is the environment — oversized, bleeding behind the copy */}
       <motion.div
-        className="pointer-events-none absolute inset-y-[-6%] right-[-10%] hidden w-[76%] lg:block"
+        className="pointer-events-none absolute inset-y-[-8%] right-[-6%] hidden w-[66%] lg:block [mask-image:linear-gradient(to_right,transparent,black_22%,black_92%,transparent)]"
         initial={reduce ? false : { opacity: 0, scale: 0.93, filter: "blur(16px)" }}
         animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.6, delay: 0.1, ease: EASE }}
