@@ -5,8 +5,6 @@ import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { ReactorScene } from "@/components/home/hero/ReactorScene";
-import { AuroraField } from "@/components/home/hero/AuroraField";
-import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
 import { LiveStats } from "@/components/home/LiveStats";
@@ -63,9 +61,6 @@ function Hero() {
   const reduce = useSafeReducedMotion();
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
-      <AuroraField />
-      <CinematicIntro />
-
       {/* desktop: the scene is the environment — oversized, bleeding behind the copy */}
       <motion.div
         className="pointer-events-none absolute inset-y-[-8%] right-[-6%] hidden w-[66%] lg:block [mask-image:linear-gradient(to_right,transparent,black_22%,black_92%,transparent)]"
