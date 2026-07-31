@@ -119,7 +119,7 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
-            className="pointer-events-auto mt-8 flex flex-wrap items-center gap-3"
+            className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
           >
             <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.02]">
               <Link to="/signup">
