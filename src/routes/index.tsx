@@ -60,8 +60,8 @@ function Hero() {
   const reduce = useReducedMotion();
   return (
     <section className="relative">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-16 pt-20 md:pb-24 md:pt-28 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-6 xl:col-span-5">
+      <div className="mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-12 px-6 pb-14 pt-16 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-14 2xl:px-12">
+        <div className="lg:col-span-5">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
