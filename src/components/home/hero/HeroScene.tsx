@@ -35,7 +35,7 @@ export function HeroScene() {
   return (
     <div
       {...pointer.bind}
-      className="relative mx-auto aspect-[4/3.1] w-full max-w-[820px] select-none sm:aspect-[4/2.9]"
+      className="relative mx-auto aspect-[4/4.3] w-full max-w-[820px] select-none sm:aspect-[4/3.1] lg:aspect-[4/2.9]"
       style={{ perspective: 1400 }}
     >
       {/* pointer-tracked lighting */}
@@ -54,6 +54,7 @@ export function HeroScene() {
 
       <motion.div className="absolute inset-0" style={{ x: sceneX, y: sceneY, willChange: "transform" }}>
         {/* rings + core */}
+        <OrbitRing size={360} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
         <OrbitRing size={520} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
         <OrbitRing size={380} duration={48} reverse opacity={0.4} delay={0.3} reduce={reduce} />
         <OrbitRing size={250} duration={34} opacity={0.55} delay={0.45} reduce={reduce} />
@@ -152,7 +153,7 @@ export function HeroScene() {
 
         <FloatingMetricCard
           pointer={pointer}
-          className="left-1/2 top-[0%] w-[32%] max-w-[176px] -translate-x-1/2"
+          className="left-1/2 top-[0%] hidden w-[32%] max-w-[176px] -translate-x-1/2 sm:block"
           depth={0.55}
           delay={4}
           duration={10.4}
@@ -168,7 +169,7 @@ export function HeroScene() {
 
         <FloatingMetricCard
           pointer={pointer}
-          className="left-1/2 bottom-[0%] w-[38%] max-w-[210px] -translate-x-1/2"
+          className="left-1/2 bottom-[0%] hidden w-[38%] max-w-[210px] -translate-x-1/2 sm:block"
           depth={0.7}
           delay={5}
           duration={11.2}
@@ -184,8 +185,8 @@ export function HeroScene() {
         </FloatingMetricCard>
 
         {/* chain nodes */}
-        <TokenNode pointer={pointer} label="Ethereum" symbol="ETH" className="left-[6%] top-[45%]" delay={0.15} duration={9.6} reduce={reduce} />
-        <TokenNode pointer={pointer} label="Avalanche" symbol="AVX" className="right-[6%] top-[42%]" delay={0.45} duration={8.2} reduce={reduce} />
+        <TokenNode pointer={pointer} label="Ethereum" symbol="ETH" className="left-[2%] top-[46%]" delay={0.15} duration={9.6} reduce={reduce} />
+        <TokenNode pointer={pointer} label="Avalanche" symbol="AVX" className="right-[2%] top-[40%]" delay={0.45} duration={8.2} reduce={reduce} />
 
         {/* free-floating data pulses */}
         {pulses.map((p, i) => (
