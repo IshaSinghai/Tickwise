@@ -35,7 +35,7 @@ export function HeroScene() {
   return (
     <div
       {...pointer.bind}
-      className="relative mx-auto aspect-[4/4.3] w-full max-w-[820px] select-none sm:aspect-[4/3.1] lg:aspect-[4/2.9]"
+      className="relative mx-auto aspect-[3/4.2] w-full max-w-[820px] select-none sm:aspect-[4/3.1] lg:aspect-[4/2.9]"
       style={{ perspective: 1400 }}
     >
       {/* pointer-tracked lighting */}
