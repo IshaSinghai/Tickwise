@@ -4,7 +4,8 @@ import type { ReactNode } from "react";
 /** Deterministic pseudo-random so SSR and client agree. */
 export function seeded(i: number, salt = 1) {
   const x = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
-  return x - Math.floor(x);
+  // Round so SSR and client stringify identically (avoids hydration mismatch).
+  return Math.round((x - Math.floor(x)) * 1e4) / 1e4;
 }
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
