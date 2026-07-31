@@ -4,8 +4,9 @@ import { motion, useReducedMotion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
-import { HeroVisualization } from "@/components/home/HeroVisualization";
-import { TerminalCurl } from "@/components/home/TerminalCurl";
+import { HeroScene } from "@/components/home/hero/HeroScene";
+import { APITerminal } from "@/components/home/hero/APITerminal";
+
 import { LiveStats } from "@/components/home/LiveStats";
 import { FeatureCards } from "@/components/home/FeatureCards";
 import { QuickstartEditor } from "@/components/home/QuickstartEditor";
