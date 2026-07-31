@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
-import { HeroScene } from "@/components/home/hero/HeroScene";
+import { ReactorScene } from "@/components/home/hero/ReactorScene";
 import { AuroraField } from "@/components/home/hero/AuroraField";
 import { APITerminal } from "@/components/home/hero/APITerminal";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
