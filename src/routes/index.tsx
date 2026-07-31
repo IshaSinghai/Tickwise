@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { HeroScene } from "@/components/home/hero/HeroScene";
+import { AuroraField } from "@/components/home/hero/AuroraField";
 import { APITerminal } from "@/components/home/hero/APITerminal";
+import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
 import { LiveStats } from "@/components/home/LiveStats";
 import { FeatureCards } from "@/components/home/FeatureCards";
