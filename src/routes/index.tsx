@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { ReactorScene } from "@/components/home/hero/ReactorScene";
 import { AuroraField } from "@/components/home/hero/AuroraField";
-import { HeroBackdrop } from "@/components/home/hero/HeroBackdrop";
 import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
@@ -64,7 +63,6 @@ function Hero() {
   const reduce = useSafeReducedMotion();
   return (
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
-      <HeroBackdrop />
       <AuroraField />
       <CinematicIntro />
 
