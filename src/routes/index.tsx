@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
 import { ReactorScene } from "@/components/home/hero/ReactorScene";
 import { AuroraField } from "@/components/home/hero/AuroraField";
-import { APITerminal } from "@/components/home/hero/APITerminal";
 import { CinematicIntro } from "@/components/home/hero/CinematicIntro";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
 
@@ -80,7 +79,7 @@ function Hero() {
       </motion.div>
 
       <div className="relative z-10 mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-14 px-6 pb-20 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-16 2xl:px-12">
-        <div className="pointer-events-none lg:col-span-6">
+        <div className="pointer-events-none flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
 
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
@@ -120,7 +119,7 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
-            className="pointer-events-auto mt-8 flex flex-wrap items-center gap-3"
+            className="pointer-events-auto mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
           >
             <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.02]">
               <Link to="/signup">
@@ -152,7 +151,7 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.42, ease: EASE }}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80"
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80 lg:justify-start"
           >
             {["1,284 v4 pools", "2 chains live", "~42s index lag", "142 ms p50"].map((t) => (
               <li key={t} className="flex items-center gap-2">
@@ -162,17 +161,6 @@ function Hero() {
             ))}
           </motion.ul>
 
-          {/* live shell */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
-            className="pointer-events-auto relative z-10 mt-10 w-full max-w-[600px]"
-          >
-            <div className="shadow-[0_40px_120px_-40px_color-mix(in_oklab,var(--primary)_60%,transparent)]">
-              <APITerminal reduce={reduce} />
-            </div>
-          </motion.div>
         </div>
 
         {/* mobile / tablet: scene in flow */}
