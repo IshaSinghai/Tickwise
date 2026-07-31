@@ -20,22 +20,30 @@ function Ribbon({
   reduce: boolean;
 }) {
   return (
-    <motion.path
+    <path
       d={d}
       fill="none"
       stroke={color}
-      strokeWidth={reduce ? 26 : 30}
+      strokeWidth={30}
       strokeLinecap="round"
-      initial={reduce ? false : { opacity: 0 }}
-      animate={reduce ? { opacity } : { opacity, d: [d, alt, d] }}
-      transition={{
-        opacity: { duration: 2.2, delay },
-        d: { duration, delay, repeat: Infinity, ease: "easeInOut" },
-      }}
-      style={{ willChange: "d, opacity" }}
-    />
+      opacity={opacity}
+    >
+      {!reduce && (
+        <animate
+          attributeName="d"
+          values={`${d};${alt};${d}`}
+          dur={`${duration}s`}
+          begin={`${delay}s`}
+          repeatCount="indefinite"
+          calcMode="spline"
+          keyTimes="0;0.5;1"
+          keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+        />
+      )}
+    </path>
   );
 }
+
 
 /** Wireframe monolith — isometric depth object drifting in the field. */
 function Monolith({
