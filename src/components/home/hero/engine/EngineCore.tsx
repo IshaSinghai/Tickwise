@@ -112,7 +112,7 @@ export function EngineCore({ reduce = false, pulse = 0 }: { reduce?: boolean; pu
           animate={reduce ? undefined : { rotate: 360 }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         />
-        <div className="absolute inset-[6px] rounded-full bg-background/75 backdrop-blur-xl" />
+        <div className="absolute inset-[7px] rounded-full bg-background/90 backdrop-blur-xl" />
 
         {/* animated radial gradient */}
         <motion.div
