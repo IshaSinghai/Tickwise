@@ -1,6 +1,8 @@
 import { useReducedMotion } from "motion/react";
 import { seeded } from "./motion-primitives";
 
+const r = (n: number) => Math.round(n * 100) / 100;
+
 /**
  * Living environment behind the whole page: volumetric light, depth fog,
  * a very slowly drifting grid, network lines and tiny stars.
@@ -9,11 +11,11 @@ import { seeded } from "./motion-primitives";
 export function AmbientBackground() {
   const reduce = useReducedMotion();
   const stars = Array.from({ length: 46 }, (_, i) => ({
-    left: seeded(i, 1) * 100,
-    top: seeded(i, 2) * 100,
-    size: 1 + seeded(i, 3) * 1.6,
-    delay: seeded(i, 4) * 12,
-    dur: 7 + seeded(i, 5) * 11,
+    left: r(seeded(i, 1) * 100),
+    top: r(seeded(i, 2) * 100),
+    size: r(1 + seeded(i, 3) * 1.6),
+    delay: r(seeded(i, 4) * 12),
+    dur: r(7 + seeded(i, 5) * 11),
   }));
 
   return (
@@ -46,7 +48,7 @@ export function AmbientBackground() {
               x1="-5%"
               y1={`${y}%`}
               x2="105%"
-              y2={`${y + (seeded(i, 9) * 18 - 9)}%`}
+              y2={`${r(y + (seeded(i, 9) * 18 - 9))}%`}
               stroke="url(#ambient-line)"
               strokeWidth="1"
             />
@@ -62,8 +64,8 @@ export function AmbientBackground() {
           style={{
             left: `${s.left}%`,
             top: `${s.top}%`,
-            width: s.size,
-            height: s.size,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
             animationDelay: `${s.delay}s`,
             animationDuration: `${s.dur}s`,
           }}
