@@ -1,5 +1,8 @@
-import { motion, useTransform } from "motion/react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { rnd, usePointer, useSafeReducedMotion } from "./primitives";
+import { YieldStream } from "./YieldStream";
+import { PipelineArc } from "./PipelineArc";
 import { FloatingMetricCard, MetricHeader } from "./FloatingMetricCard";
 import { HolographicCore } from "./HolographicCore";
 import { OrbitRing } from "./OrbitRing";
@@ -16,6 +19,13 @@ import { CountingValue } from "./CountingValue";
 export function HeroScene() {
   const reduce = useSafeReducedMotion();
   const pointer = usePointer();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+
+  // cinematic scroll: the camera pushes in slightly and layers separate
+  const scrollScale = useTransform(scrollYProgress, [0, 1], [1, 1.14]);
+  const scrollY = useTransform(scrollYProgress, [0, 1], [0, -70]);
+  const scrollFade = useTransform(scrollYProgress, [0, 0.85], [1, 0.15]);
 
   const sceneX = useTransform(pointer.x, [-1, 1], [10, -10]);
   const sceneY = useTransform(pointer.y, [-1, 1], [8, -8]);
@@ -33,10 +43,16 @@ export function HeroScene() {
   }));
 
   return (
-    <div
+    <motion.div
+      ref={ref}
       {...pointer.bind}
       className="relative mx-auto aspect-[3/4.2] w-full max-w-[820px] select-none sm:aspect-[4/3.1] lg:aspect-[4/2.9]"
-      style={{ perspective: 1400 }}
+      style={{
+        perspective: 1400,
+        scale: reduce ? 1 : scrollScale,
+        y: reduce ? 0 : scrollY,
+        opacity: reduce ? 1 : scrollFade,
+      }}
     >
       {/* pointer-tracked lighting */}
       <motion.div
@@ -54,11 +70,15 @@ export function HeroScene() {
 
       <motion.div className="absolute inset-0" style={{ x: sceneX, y: sceneY, willChange: "transform" }}>
         {/* rings + core */}
-        
+
         <OrbitRing size={520} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
         <OrbitRing size={380} duration={48} reverse opacity={0.4} delay={0.3} reduce={reduce} />
         <OrbitRing size={250} duration={34} opacity={0.55} delay={0.45} reduce={reduce} />
+        <YieldStream reduce={reduce} />
         <HolographicCore reduce={reduce} />
+        <PipelineArc reduce={reduce} />
+
+
 
         {/* connection mesh */}
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
@@ -193,6 +213,7 @@ export function HeroScene() {
           <DataPulse key={i} {...p} reduce={reduce} />
         ))}
       </motion.div>
-    </div>
+    </motion.div>
+
   );
 }
