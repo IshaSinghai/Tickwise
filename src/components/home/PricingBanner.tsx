@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +10,7 @@ const tiers = [
 ];
 
 export function PricingBanner() {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 60, damping: 20 });

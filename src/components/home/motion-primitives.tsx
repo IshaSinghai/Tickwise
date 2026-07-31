@@ -1,5 +1,4 @@
-import { motion, type Variants } from "motion/react";
-import { useSafeReducedMotion } from "@/components/home/hero/primitives";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
 /** Deterministic pseudo-random so SSR and client agree. */
@@ -28,7 +27,7 @@ export function Reveal({
   y?: number;
   as?: "div" | "section";
 }) {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   const Comp = as === "section" ? motion.section : motion.div;
   return (
     <Comp
@@ -54,7 +53,7 @@ export const staggerChild: Variants = {
 };
 
 export function StaggerGroup({ children, className }: { children: ReactNode; className?: string }) {
-  const reduce = useSafeReducedMotion();
+  const reduce = useReducedMotion();
   return (
     <motion.div
       className={className}
