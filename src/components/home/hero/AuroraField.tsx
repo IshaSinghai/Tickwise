@@ -120,7 +120,7 @@ export function AuroraField() {
           className="absolute inset-0 origin-bottom mask-fade-floor"
           style={{ transform: "rotateX(74deg) scale(2.2)", x: gridX }}
         >
-          <div className="h-full w-full hero-floor animate-floor-run opacity-[0.5]" />
+          <div className="h-full w-full hero-floor animate-floor-run opacity-90" />
         </motion.div>
       </div>
 
