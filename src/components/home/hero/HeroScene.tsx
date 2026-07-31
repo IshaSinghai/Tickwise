@@ -1,5 +1,8 @@
-import { motion, useTransform } from "motion/react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { rnd, usePointer, useSafeReducedMotion } from "./primitives";
+import { YieldStream } from "./YieldStream";
+import { PipelineArc } from "./PipelineArc";
 import { FloatingMetricCard, MetricHeader } from "./FloatingMetricCard";
 import { HolographicCore } from "./HolographicCore";
 import { OrbitRing } from "./OrbitRing";
