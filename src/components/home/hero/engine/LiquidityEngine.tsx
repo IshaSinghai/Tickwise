@@ -43,7 +43,7 @@ const DEFS: Def[] = [
     tilt: 2.6,
     entryFrom: { x: -70, y: -40, z: -260 },
     entryDelay: 0,
-    className: "left-[14%] top-[15%] w-[24%] min-w-[150px] max-w-[212px]",
+    className: "w-[24%] min-w-[150px] max-w-[212px]",
     start: 24.68,
     step: () => (Math.random() - 0.45) * 0.42,
     format: (v) => `${num(v, 2)}%`,
@@ -62,7 +62,7 @@ const DEFS: Def[] = [
     tilt: -2.2,
     entryFrom: { x: 80, y: -46, z: -320 },
     entryDelay: 0.12,
-    className: "right-[-2%] top-[13%] w-[24%] min-w-[150px] max-w-[212px]",
+    className: "w-[24%] min-w-[150px] max-w-[212px]",
     start: 4.94,
     step: () => (Math.random() - 0.42) * 0.05,
     format: (v) => `$${num(v, 2)}B`,
@@ -81,7 +81,7 @@ const DEFS: Def[] = [
     tilt: 2.1,
     entryFrom: { x: -90, y: 20, z: -200 },
     entryDelay: 0.26,
-    className: "left-[7%] top-[52%] w-[23%] min-w-[146px] max-w-[204px]",
+    className: "w-[23%] min-w-[146px] max-w-[204px]",
     start: 1284,
     step: () => Math.round(Math.random() * 3),
     format: (v) => num(Math.round(v)),
@@ -100,7 +100,7 @@ const DEFS: Def[] = [
     tilt: -2.8,
     entryFrom: { x: 96, y: 14, z: -240 },
     entryDelay: 0.38,
-    className: "right-[-4%] top-[50%] w-[24%] min-w-[150px] max-w-[212px]",
+    className: "w-[24%] min-w-[150px] max-w-[212px]",
     start: 38687,
     step: () => Math.round((Math.random() - 0.4) * 42),
     format: (v) => num(Math.round(v)),
@@ -119,7 +119,7 @@ const DEFS: Def[] = [
     tilt: 1.7,
     entryFrom: { x: -50, y: 90, z: -280 },
     entryDelay: 0.5,
-    className: "left-[22%] top-[88%] w-[23%] min-w-[146px] max-w-[204px]",
+    className: "w-[23%] min-w-[146px] max-w-[204px]",
     start: 42318,
     step: () => Math.round((Math.random() - 0.35) * 260),
     format: (v) => num(Math.round(v)),
@@ -138,7 +138,7 @@ const DEFS: Def[] = [
     tilt: -1.9,
     entryFrom: { x: 62, y: 96, z: -220 },
     entryDelay: 0.62,
-    className: "right-[10%] top-[90%] w-[23%] min-w-[146px] max-w-[204px]",
+    className: "w-[23%] min-w-[146px] max-w-[204px]",
     start: 18.24,
     step: () => (Math.random() - 0.44) * 0.36,
     format: (v) => `${num(v, 2)}%`,
@@ -342,6 +342,7 @@ export function LiquidityEngine() {
             entryFrom={d.entryFrom}
             entryDelay={d.entryDelay}
             className={d.className}
+            style={{ left: `${d.p.x}%`, top: `${d.p.y}%` }}
             reduce={reduce}
           />
         ))}

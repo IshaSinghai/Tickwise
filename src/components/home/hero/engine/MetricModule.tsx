@@ -102,6 +102,7 @@ export function MetricModule({
   entryFrom,
   entryDelay,
   className,
+  style,
   reduce = false,
 }: {
   pointer: Pointer;
@@ -119,6 +120,7 @@ export function MetricModule({
   entryFrom: { x: number; y: number; z: number };
   entryDelay: number;
   className?: string;
+  style?: React.CSSProperties;
   reduce?: boolean;
 }) {
   const px = useTransform(pointer.x, [-1, 1], [-20 * depth, 20 * depth]);
@@ -128,7 +130,7 @@ export function MetricModule({
   const color = TONE[tone];
 
   return (
-    <div className={`absolute -translate-x-1/2 -translate-y-1/2 ${className ?? ""}`}>
+    <div className={`absolute -translate-x-1/2 -translate-y-1/2 ${className ?? ""}`} style={style}>
     <motion.div
       style={{ x: px, y: py, willChange: "transform" }}
       initial={
