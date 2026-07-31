@@ -271,3 +271,31 @@
   }
   * { scroll-behavior: auto !important; }
 }
+
+/* ── Hero: OS-grade environment ──────────────────────────────────── */
+
+@utility mask-fade-floor {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+}
+@utility bg-vignette {
+  background: radial-gradient(ellipse 90% 70% at 50% 40%, transparent 40%, color-mix(in oklab, var(--background) 85%, transparent) 100%);
+}
+
+@keyframes grid-run {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 96px, 0 96px; }
+}
+@keyframes streak {
+  0%   { transform: translate3d(-30vw, 0, 0); opacity: 0; }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.9; }
+  100% { transform: translate3d(130vw, 0, 0); opacity: 0; }
+}
+
+.animate-grid-run { animation: grid-run 8s linear infinite; }
+.animate-streak { animation: streak 18s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-grid-run, .animate-streak { animation: none !important; }
+}
