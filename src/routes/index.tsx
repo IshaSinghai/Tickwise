@@ -163,7 +163,7 @@ function Hero() {
             initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
-            className="relative z-10 mx-auto -mt-6 w-full max-w-[560px] lg:absolute lg:bottom-[-4%] lg:right-[-2%] lg:mt-0"
+            className="relative z-10 mx-auto mt-4 w-full max-w-[560px] lg:mr-0 lg:ml-auto"
           >
             <span className="absolute -top-3 left-4 z-10 rounded-full border border-border/60 bg-background/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground backdrop-blur-xl">
               indexer-04 · syncing
