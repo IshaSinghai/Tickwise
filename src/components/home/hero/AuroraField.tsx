@@ -102,6 +102,7 @@ export function AuroraField() {
 
   const fieldX = useTransform(pointer.x, [-1, 1], [24, -24]);
   const fieldY = useTransform(pointer.y, [-1, 1], [16, -16]);
+  const gridX = useTransform(pointer.x, [-1, 1], [40, -40]);
 
   const motes = Array.from({ length: 26 }, (_, i) => ({
     left: rnd(i, 31) * 100,
@@ -113,7 +114,18 @@ export function AuroraField() {
 
   return (
     <div {...pointer.bind} aria-hidden className="pointer-events-auto absolute inset-0 overflow-hidden">
-      <motion.div className="absolute -inset-24" style={{ x: fieldX, y: fieldY }}>
+      {/* perspective floor: runs toward the viewer */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] [perspective:640px]">
+        <motion.div
+          className="absolute inset-0 origin-bottom mask-fade-floor"
+          style={{ transform: "rotateX(74deg) scale(2.2)", x: gridX }}
+        >
+          <div className="h-full w-full hero-floor animate-floor-run opacity-90" />
+        </motion.div>
+      </div>
+
+      {/* aurora ribbons */}
+      <motion.div className="absolute -inset-24 animate-hue-drift" style={{ x: fieldX, y: fieldY }}>
         <svg
           viewBox="0 0 1200 700"
           preserveAspectRatio="xMidYMid slice"
@@ -168,6 +180,58 @@ export function AuroraField() {
         </svg>
       </motion.div>
 
+      {/* volumetric light beams */}
+      {!reduce && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {[
+            { left: "18%", w: 160, delay: "0s", tint: "var(--primary)" },
+            { left: "52%", w: 220, delay: "3.2s", tint: "var(--primary-glow)" },
+            { left: "78%", w: 140, delay: "6.1s", tint: "var(--chart-5)" },
+          ].map((b) => (
+            <span
+              key={b.left}
+              className="absolute -top-1/4 h-[150%] origin-top animate-beam-breathe"
+              style={{
+                left: b.left,
+                width: b.w,
+                animationDelay: b.delay,
+                transform: "rotate(14deg)",
+                background: `linear-gradient(to bottom, color-mix(in oklab, ${b.tint} 40%, transparent), transparent 70%)`,
+                filter: "blur(34px)",
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* emanating signal rings from the engine core */}
+      {!reduce && (
+        <div className="pointer-events-none absolute inset-0 hidden lg:block">
+          {[0, 3, 6].map((d) => (
+            <span
+              key={d}
+              className="absolute left-[75%] top-1/2 h-[420px] w-[420px] rounded-full border border-primary/25 animate-ring-out"
+              style={{ animationDelay: `${d}s` }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* horizon scan sweep */}
+      {!reduce && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute inset-x-0 h-24 animate-scan-sweep hero-scanlines" />
+          <div
+            className="absolute inset-x-0 h-px animate-scan-sweep"
+            style={{
+              animationDelay: "0.15s",
+              background:
+                "linear-gradient(to right, transparent, color-mix(in oklab, var(--primary-glow) 70%, transparent), transparent)",
+            }}
+          />
+        </div>
+      )}
+
       {/* wireframe monoliths */}
       <div className="absolute inset-0 [perspective:1200px]">
         <Monolith pointer={pointer} className="left-[6%] top-[18%] hidden lg:block" depth={0.7} w={130} h={130} delay={0} duration={13} reduce={reduce} />
@@ -194,8 +258,29 @@ export function AuroraField() {
         />
       ))}
 
+      {/* horizontal data streaks */}
+      {!reduce &&
+        [
+          { top: "24%", delay: "0s", dur: "16s" },
+          { top: "58%", delay: "6s", dur: "22s" },
+          { top: "80%", delay: "11s", dur: "19s" },
+        ].map((s) => (
+          <span
+            key={s.top}
+            className="pointer-events-none absolute h-px w-[22vw] animate-streak"
+            style={{
+              top: s.top,
+              animationDelay: s.delay,
+              animationDuration: s.dur,
+              background:
+                "linear-gradient(to right, transparent, color-mix(in oklab, var(--primary-glow) 85%, transparent), transparent)",
+            }}
+          />
+        ))}
+
       <div className="pointer-events-none absolute inset-0 bg-vignette" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
     </div>
   );
 }
+
