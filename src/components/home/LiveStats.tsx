@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { Activity, Database, Layers, Timer } from "lucide-react";
 import { LIVE_STATS } from "@/lib/mock";
 import { seeded } from "./motion-primitives";
+import { useSafeReducedMotion } from "./hero/primitives";
 
 function Counter({ value, decimals = 0, prefix = "", suffix = "" }: { value: number; decimals?: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.1 });
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   const [v, setV] = useState(0);
   useEffect(() => {
     if (reduce) return setV(value);
@@ -50,7 +51,7 @@ const stats = [
 ];
 
 export function LiveStats() {
-  const reduce = useReducedMotion();
+  const reduce = useSafeReducedMotion();
   return (
     <div className="relative">
       {/* connection lines travelling down from the hero scene into the cards */}

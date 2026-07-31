@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/home/AmbientBackground";
-import { HeroScene } from "@/components/home/hero/HeroScene";
+import { ReactorScene } from "@/components/home/hero/ReactorScene";
 import { AuroraField } from "@/components/home/hero/AuroraField";
 import { APITerminal } from "@/components/home/hero/APITerminal";
 import { useSafeReducedMotion } from "@/components/home/hero/primitives";
@@ -65,8 +65,21 @@ function Hero() {
     <section className="relative isolate flex min-h-[92vh] items-center overflow-hidden">
       <AuroraField />
 
+      {/* desktop: the scene is the environment — oversized, bleeding behind the copy */}
+      <motion.div
+        className="pointer-events-none absolute inset-y-[-8%] right-[-6%] hidden w-[66%] lg:block [mask-image:linear-gradient(to_right,transparent,black_22%,black_92%,transparent)]"
+        initial={reduce ? false : { opacity: 0, scale: 0.93, filter: "blur(16px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1.6, delay: 0.1, ease: EASE }}
+      >
+        <div className="pointer-events-auto h-full w-full">
+          <ReactorScene />
+        </div>
+      </motion.div>
+
       <div className="relative z-10 mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-14 px-6 pb-20 pt-16 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-16 2xl:px-12">
         <div className="pointer-events-none lg:col-span-6">
+
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -166,15 +179,18 @@ function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative lg:col-span-6">
+        {/* mobile / tablet: scene in flow */}
+        <div className="relative -mx-6 h-[62vh] lg:hidden">
           <motion.div
+            className="absolute inset-0"
             initial={reduce ? false : { opacity: 0, scale: 0.94, filter: "blur(14px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
           >
-            <HeroScene />
+            <ReactorScene />
           </motion.div>
         </div>
+
 
       </div>
 
