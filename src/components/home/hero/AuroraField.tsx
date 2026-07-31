@@ -102,6 +102,7 @@ export function AuroraField() {
 
   const fieldX = useTransform(pointer.x, [-1, 1], [24, -24]);
   const fieldY = useTransform(pointer.y, [-1, 1], [16, -16]);
+  const gridX = useTransform(pointer.x, [-1, 1], [40, -40]);
 
   const motes = Array.from({ length: 26 }, (_, i) => ({
     left: rnd(i, 31) * 100,
