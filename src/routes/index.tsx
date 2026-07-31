@@ -72,16 +72,20 @@ function Hero() {
             Uniswap v4 · Ethereum &amp; Avalanche · near-real-time
           </motion.div>
 
-          <motion.h1
-            initial={reduce ? false : { opacity: 0, y: 22, filter: "blur(12px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.1, delay: 0.08, ease: EASE }}
-            className="mt-6 font-display text-[clamp(2.6rem,6.2vw,4.6rem)] font-semibold leading-[1.02] tracking-tight"
-          >
-            <span className="text-gradient">Pools &amp; positions</span>
-            <br />
-            as one clean API.
-          </motion.h1>
+          <h1 className="mt-6 font-display text-[clamp(2.5rem,4.4vw,4.2rem)] font-semibold leading-[1.03] tracking-tight">
+            {["Pools & positions", "as one clean API."].map((line, i) => (
+              <motion.span
+                key={line}
+                className="block overflow-hidden"
+                initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(12px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 1, delay: 0.08 + i * 0.14, ease: EASE }}
+              >
+                <span className={i === 0 ? "text-gradient" : undefined}>{line}</span>
+              </motion.span>
+            ))}
+          </h1>
+
 
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
