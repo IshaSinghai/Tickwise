@@ -185,8 +185,8 @@ export function HeroScene() {
         </FloatingMetricCard>
 
         {/* chain nodes */}
-        <TokenNode pointer={pointer} label="Ethereum" symbol="ETH" className="left-[2%] top-[46%]" delay={0.15} duration={9.6} reduce={reduce} />
-        <TokenNode pointer={pointer} label="Avalanche" symbol="AVX" className="right-[2%] top-[40%]" delay={0.45} duration={8.2} reduce={reduce} />
+        <TokenNode pointer={pointer} label="Ethereum" symbol="ETH" className="left-[2%] top-[38%] sm:top-[46%]" delay={0.15} duration={9.6} reduce={reduce} />
+        <TokenNode pointer={pointer} label="Avalanche" symbol="AVX" className="right-[2%] top-[34%] sm:top-[40%]" delay={0.45} duration={8.2} reduce={reduce} />
 
         {/* free-floating data pulses */}
         {pulses.map((p, i) => (
