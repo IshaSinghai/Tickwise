@@ -4,7 +4,7 @@ import { isAllowlistedError } from "./allowlist";
 test.describe("Accordion (/pricing FAQ) — single-open exclusivity", () => {
   test("opening one item closes any other, and re-clicking the open one closes it", async ({ page }) => {
     const errors: string[] = [];
-    page.on("pageerror", (err) => { if (!isAllowlistedError(err.message)) errors.push(err.message); });
+    page.on("pageerror", (err) => { if (!isAllowlistedError(err.message, "/pricing")) errors.push(err.message); });
 
     await page.goto("/pricing");
     const q1 = page.getByRole("button", { name: /how do i pay/i });
@@ -31,7 +31,7 @@ test.describe("Accordion (/pricing FAQ) — single-open exclusivity", () => {
 test.describe("Switch (/admin/plans)", () => {
   test("toggles visual state on click with no console error", async ({ page }) => {
     const errors: string[] = [];
-    page.on("pageerror", (err) => { if (!isAllowlistedError(err.message)) errors.push(err.message); });
+    page.on("pageerror", (err) => { if (!isAllowlistedError(err.message, "/admin/plans")) errors.push(err.message); });
 
     await page.goto("/admin/plans");
     const firstSwitch = page.getByRole("switch").first();
@@ -46,7 +46,7 @@ test.describe("Switch (/admin/plans)", () => {
 test.describe("Toast (/contact)", () => {
   test("submitting the contact form fires a success toast that auto-dismisses cleanly", async ({ page }) => {
     const errors: string[] = [];
-    page.on("pageerror", (err) => { if (!isAllowlistedError(err.message)) errors.push(err.message); });
+    page.on("pageerror", (err) => { if (!isAllowlistedError(err.message, "/contact")) errors.push(err.message); });
 
     await page.goto("/contact");
     await page.locator('input[name="name"]').fill("Playwright Test");

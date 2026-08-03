@@ -16,7 +16,7 @@ test.beforeEach(async ({ context }) => {
 
 test("create-key dialog to key-reveal: full acknowledgment gate", async ({ page }) => {
   const errors: string[] = [];
-  page.on("pageerror", (err) => { if (!isAllowlistedError(err.message)) errors.push(err.message); });
+  page.on("pageerror", (err) => { if (!isAllowlistedError(err.message, "/portal/keys")) errors.push(err.message); });
 
   await page.goto("/portal/keys");
   await page.getByRole("button", { name: /new key/i }).click();

@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // The Playwright harness sets NEXT_DIST_DIR so its dev server builds into its
+  // own directory. Two Next processes sharing one .next (e.g. your `npm run dev`
+  // plus a `next build` or the e2e server) overwrite each other's manifests and
+  // the survivor fails with "Expected clientReferenceManifest to be defined".
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   // Lint is its own step (`npm run lint`), as it was under Vite — `next build`
   // should not fail on style rules.
   eslint: { ignoreDuringBuilds: true },

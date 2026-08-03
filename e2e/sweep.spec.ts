@@ -31,10 +31,10 @@ for (const route of ROUTES) {
   test(`sweep ${route}`, async ({ page }) => {
     const errors: string[] = [];
     page.on("console", (msg) => {
-      if (msg.type() === "error" && !isAllowlistedError(msg.text())) errors.push(msg.text());
+      if (msg.type() === "error" && !isAllowlistedError(msg.text(), route)) errors.push(msg.text());
     });
     page.on("pageerror", (err) => {
-      if (!isAllowlistedError(err.message)) errors.push(err.message);
+      if (!isAllowlistedError(err.message, route)) errors.push(err.message);
     });
 
     const response = await page.goto(route, { waitUntil: "networkidle" });
