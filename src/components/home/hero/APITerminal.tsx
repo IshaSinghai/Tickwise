@@ -145,7 +145,9 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
                     </motion.span>
                   )}
                 </AnimatePresence>
-                <span className="text-muted-foreground">142 ms</span>
+                {/* No response-time figure here: §8 bans latency numbers, and
+                    there is no monitoring to source a real one from. The unit
+                    cost is true and is the point the terminal is making. */}
               </div>
             </motion.div>
           )}

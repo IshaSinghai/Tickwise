@@ -103,6 +103,35 @@ function stub<T>(value: T): Promise<T> {
   return Promise.resolve(value);
 }
 
+/**
+ * Unauthenticated request against a capability URL.
+ *
+ * Separate from apiRequest because §4.2's checkout-status endpoint must work
+ * with no session at all: the customer often finishes paying inside a wallet's
+ * in-app browser, and the processor's redirect lands them on a page where they
+ * were never signed in. The opaque `ref` in the path is the credential, so
+ * attaching a realm token here would be both useless and misleading.
+ */
+async function publicRequest<T>(path: string, signal?: AbortSignal): Promise<T> {
+  const response = await fetch(`${BASE_URL}${path}`, {
+    headers: { Accept: "application/json" },
+    signal,
+  });
+
+  if (!response.ok) {
+    let message = `Request failed with ${response.status}`;
+    try {
+      const payload = (await response.json()) as { message?: string; error?: string };
+      message = payload.message ?? payload.error ?? message;
+    } catch {
+      /* non-JSON error body */
+    }
+    throw new ApiError(response.status, message);
+  }
+
+  return (await response.json()) as T;
+}
+
 // ── Types the UI consumes ────────────────────────────────────────────────────
 
 export type AccountOverview = {
@@ -179,6 +208,39 @@ export function getAccountUsage(signal?: AbortSignal): Promise<UsageResponse> {
 export function getAccountPayments(signal?: AbortSignal): Promise<typeof PAYMENTS> {
   if (!hasBackend()) return stub(PAYMENTS);
   return apiRequest<typeof PAYMENTS>("portal", "/account/payments", { signal });
+}
+
+// ── Checkout status (public capability URL, no session) ──────────────────────
+
+/** The five outcomes §4.2 requires the return page to distinguish. */
+export type CheckoutState = "pending" | "confirmed" | "underpaid" | "expired" | "failed";
+
+export type CheckoutStatusResponse = {
+  state: CheckoutState;
+  /** Present when underpaid: what is still owed, and where to send it. */
+  remaining?: { amount: string; address: string };
+};
+
+/**
+ * Reads a checkout's status. Throws ApiError(503) when no backend is configured,
+ * which the return page renders as "cannot confirm yet" — deliberately NOT as a
+ * success or a failure, because §4.2 forbids claiming an outcome we have not
+ * been told. There is no stub happy-path here on purpose: a fake "confirmed"
+ * is exactly the bug the brief warns about.
+ */
+export function getCheckoutStatus(
+  ref: string,
+  signal?: AbortSignal,
+): Promise<CheckoutStatusResponse> {
+  if (!hasBackend()) {
+    return Promise.reject(
+      new ApiError(503, "We can’t reach the payment processor from this environment yet."),
+    );
+  }
+  return publicRequest<CheckoutStatusResponse>(
+    `/public/checkout/${encodeURIComponent(ref)}/status`,
+    signal,
+  );
 }
 
 // ── Admin endpoints ──────────────────────────────────────────────────────────

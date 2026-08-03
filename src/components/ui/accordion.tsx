@@ -90,7 +90,10 @@ export function AccordionItem({
 
   return (
     <ItemContext.Provider value={{ value, triggerId, contentId }}>
-      <div data-state={openValue === value ? "open" : "closed"} className={cn("border-b", className)}>
+      <div
+        data-state={openValue === value ? "open" : "closed"}
+        className={cn("border-b", className)}
+      >
         {children}
       </div>
     </ItemContext.Provider>

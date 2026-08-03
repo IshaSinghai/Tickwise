@@ -14,8 +14,10 @@ import { cn } from "@/lib/utils";
  * against them (data-[state=checked]:…), so the styling is unchanged.
  */
 
-export interface SwitchProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange" | "value"> {
+export interface SwitchProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "onChange" | "value"
+> {
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;

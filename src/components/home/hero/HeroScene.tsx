@@ -247,7 +247,8 @@ export function HeroScene() {
             <div className="font-mono text-[10px] text-muted-foreground">positions</div>
           </div>
           <div className="mt-2 flex items-center gap-2 font-mono text-[10px] text-muted-foreground">
-            <span className="rounded border border-border/60 px-1">142 ms</span>
+            {/* A response-time chip used to sit here. Removed: §8 bans latency
+                numbers, and there is no monitoring to source a real one from. */}
             <span className="rounded border border-border/60 px-1">1 unit</span>
           </div>
         </FloatingMetricCard>

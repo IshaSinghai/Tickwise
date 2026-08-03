@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
+/*
+ * No `latency` field, deliberately. The brief (§8) forbids showing any uptime,
+ * SLA or latency number because there is no status monitoring behind it — a
+ * figure here would be invented. Indexing lag is real and measured, so that is
+ * what this surfaces instead.
+ */
 type Chain = {
   name: string;
   state: "live" | "indexed";
@@ -11,7 +17,6 @@ type Chain = {
   tvl: string;
   pools: string;
   indexing: string;
-  latency: string;
 };
 
 const chains: Chain[] = [
@@ -23,7 +28,6 @@ const chains: Chain[] = [
     tvl: "$1.02B",
     pools: "4,820",
     indexing: "~5 min",
-    latency: "142 ms",
   },
   {
     name: "Avalanche",
@@ -33,7 +37,6 @@ const chains: Chain[] = [
     tvl: "$264M",
     pools: "1,190",
     indexing: "~4 min",
-    latency: "118 ms",
   },
   {
     name: "Arbitrum",
@@ -43,7 +46,6 @@ const chains: Chain[] = [
     tvl: "$318M",
     pools: "2,140",
     indexing: "backfilling",
-    latency: "—",
   },
   {
     name: "Optimism",
@@ -53,7 +55,6 @@ const chains: Chain[] = [
     tvl: "$141M",
     pools: "980",
     indexing: "backfilling",
-    latency: "—",
   },
 ];
 
@@ -159,8 +160,8 @@ export function CoverageNetwork() {
                 <div className="flex h-full min-h-40 flex-col justify-center text-sm text-muted-foreground">
                   <div className="font-display text-lg text-foreground">Hover a chain node</div>
                   <p className="mt-1">
-                    TVL, pool count, indexing state and latency for every network we touch —
-                    including the ones we index but don’t serve yet.
+                    TVL, pool count and indexing state for every network we touch — including the
+                    ones we index but don’t serve yet.
                   </p>
                 </div>
               );
@@ -188,7 +189,6 @@ export function CoverageNetwork() {
                   ["TVL", c.tvl],
                   ["Pools", c.pools],
                   ["Indexing", c.indexing],
-                  ["Latency", c.latency],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <dt className="text-[10px] uppercase tracking-widest text-muted-foreground">

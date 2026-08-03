@@ -151,7 +151,7 @@ export function QuickstartEditor() {
                   <span className="rounded-full border border-success/40 bg-success/10 px-2 py-0.5 text-success">
                     200 OK
                   </span>
-                  <span className="text-muted-foreground">168 ms</span>
+                  {/* No response-time figure: §8 bans latency numbers. */}
                   <motion.span
                     className="text-muted-foreground"
                     initial={{ opacity: 0 }}

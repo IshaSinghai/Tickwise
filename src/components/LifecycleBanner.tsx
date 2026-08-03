@@ -3,7 +3,6 @@
 import { AlertCircle, Info } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 type State = "active" | "renewal_due" | "grace" | "downgraded" | "canceled";
 
@@ -47,8 +46,16 @@ const COPY: Record<
   },
 };
 
-export function LifecycleBanner({ initial = "renewal_due" as State }) {
-  const [state, setState] = useState<State>(initial);
+/*
+ * §4.3's five-state banner. `state` is a prop rather than internal state: the
+ * real value comes from GET /account/subscription, which is backend-planned, so
+ * for now the portal shell passes the state it wants to show.
+ *
+ * A "preview state" switcher used to render underneath this, letting anyone
+ * click through all five states. Useful while designing, but it shipped to
+ * customers on every portal page — removed.
+ */
+export function LifecycleBanner({ state = "renewal_due" as State }) {
   const c = COPY[state];
   const tone =
     c.tone === "info"
@@ -80,21 +87,6 @@ export function LifecycleBanner({ initial = "renewal_due" as State }) {
             <Link href={c.cta.to}>{c.cta.label}</Link>
           </Button>
         )}
-      </div>
-      {/* Dev helper — cycle states so the design of all 5 is easy to review */}
-      <div className="flex flex-wrap gap-1 text-[10px] text-muted-foreground">
-        <span className="mr-1 uppercase tracking-widest">preview state:</span>
-        {(Object.keys(COPY) as State[]).map((s) => (
-          <button
-            key={s}
-            onClick={() => setState(s)}
-            className={`rounded border border-border/60 px-1.5 py-0.5 font-mono transition-colors ${
-              state === s ? "bg-surface-2 text-foreground" : "hover:text-foreground"
-            }`}
-          >
-            {s}
-          </button>
-        ))}
       </div>
     </div>
   );
