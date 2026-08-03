@@ -29,3 +29,11 @@ next-env.d.ts
 
 # TypeScript
 *.tsbuildinfo
+
+# Playwright (dev-only verification harness — see e2e/)
+/test-results/
+/e2e-report/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/e2e/manual-review/
