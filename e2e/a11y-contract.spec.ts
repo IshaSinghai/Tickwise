@@ -83,16 +83,19 @@ test.describe("RadioGroup (create-key dialog)", () => {
     await page.getByRole("button", { name: /new key/i }).click();
 
     const radios = page.getByRole("radio");
-    // Focusing the group lands on the checked radio, per radio-group semantics.
-    await page.getByRole("radiogroup").focus();
+
+    // Focus the checked option directly rather than the group wrapper. The
+    // earlier version focused the [role=radiogroup] element, which only worked
+    // because Radix made that wrapper focusable (tabindex="0") — an internal
+    // detail, not an accessibility requirement. A native radio group makes the
+    // checked input itself the single tab stop, so focusing a plain wrapper div
+    // correctly does nothing.
+    await radios.nth(0).focus();
     await expect(radios.nth(0)).toBeFocused();
 
-    await page.keyboard.press("ArrowDown");
     // Arrow navigation is the behaviour a set of clickable divs would silently
-    // lose. Only focus movement is asserted, because that is all the current
-    // implementation does — Radix here moves focus without changing selection.
-    // Native radio inputs additionally select on arrow, which is an improvement
-    // over this baseline, so the assertion is deliberately not "still unchecked".
+    // lose, and it is the substance of the contract.
+    await page.keyboard.press("ArrowDown");
     await expect(radios.nth(1)).toBeFocused();
   });
 
