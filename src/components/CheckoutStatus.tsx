@@ -67,14 +67,18 @@ export function CheckoutStatus() {
       )}
 
       <div className="border-t border-border/60 pt-4">
-        <div className="text-[10px] uppercase tracking-widest text-muted-foreground">preview status</div>
+        <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+          preview status
+        </div>
         <div className="mt-2 flex flex-wrap gap-1">
           {(Object.keys(CONFIG) as Status[]).map((s) => (
             <button
               key={s}
               onClick={() => setStatus(s)}
               className={`rounded border border-border/60 px-2 py-1 font-mono text-[10px] transition-colors ${
-                s === status ? "bg-surface-2 text-foreground" : "text-muted-foreground hover:text-foreground"
+                s === status
+                  ? "bg-surface-2 text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {s}

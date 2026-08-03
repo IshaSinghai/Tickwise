@@ -3,17 +3,9 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  KeyRound,
-  Gauge,
-  CreditCard,
-  Settings,
-  PlayCircle,
-  LogOut,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { LayoutDashboard, KeyRound, Gauge, CreditCard, Settings, PlayCircle } from "lucide-react";
 import { LifecycleBanner } from "@/components/LifecycleBanner";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 
 const items = [
   { to: "/portal", label: "Overview", icon: LayoutDashboard, exact: true },
@@ -62,18 +54,16 @@ export function PortalShell({ children }: { children: ReactNode }) {
             signed in as
             <div className="truncate font-mono text-sidebar-foreground">alex@doryoku.io</div>
           </div>
-          <Button asChild variant="ghost" size="sm" className="w-full justify-start">
-            <Link href="/login">
-              <LogOut className="mr-2 h-4 w-4" /> Sign out
-            </Link>
-          </Button>
+          <SignOutButton realm="portal" />
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b border-border/60 bg-background/70 px-6 backdrop-blur-xl">
           <div className="text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-foreground">Home</Link> <span className="mx-1">/</span>{" "}
-            <span className="text-foreground">Portal</span>
+            <Link href="/" className="hover:text-foreground">
+              Home
+            </Link>{" "}
+            <span className="mx-1">/</span> <span className="text-foreground">Portal</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-surface px-2 py-1">

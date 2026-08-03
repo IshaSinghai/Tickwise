@@ -9,7 +9,12 @@ type State = "active" | "renewal_due" | "grace" | "downgraded" | "canceled";
 
 const COPY: Record<
   State,
-  { tone: "info" | "warn" | "danger" | "muted"; title: string; body: string; cta?: { label: string; to: string } }
+  {
+    tone: "info" | "warn" | "danger" | "muted";
+    title: string;
+    body: string;
+    cta?: { label: string; to: string };
+  }
 > = {
   active: {
     tone: "muted",
@@ -49,14 +54,16 @@ export function LifecycleBanner({ initial = "renewal_due" as State }) {
     c.tone === "info"
       ? "border-primary/40 bg-primary/10 text-foreground"
       : c.tone === "warn"
-      ? "border-warning/40 bg-warning/10 text-foreground"
-      : c.tone === "danger"
-      ? "border-destructive/40 bg-destructive/10 text-foreground"
-      : "border-border/60 bg-surface text-muted-foreground";
+        ? "border-warning/40 bg-warning/10 text-foreground"
+        : c.tone === "danger"
+          ? "border-destructive/40 bg-destructive/10 text-foreground"
+          : "border-border/60 bg-surface text-muted-foreground";
 
   return (
     <div className="space-y-2">
-      <div className={`flex flex-col gap-3 rounded-lg border p-4 md:flex-row md:items-center md:justify-between ${tone}`}>
+      <div
+        className={`flex flex-col gap-3 rounded-lg border p-4 md:flex-row md:items-center md:justify-between ${tone}`}
+      >
         <div className="flex items-start gap-3">
           {c.tone === "warn" || c.tone === "danger" ? (
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />

@@ -53,7 +53,10 @@ export function CountingValue({
   return (
     <span className="tabular-nums">
       {prefix}
-      {v.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
+      {v.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
       {suffix}
     </span>
   );

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { AuthShell, Field } from "@/components/auth/AuthShell";
+import { issuePlaceholderSession } from "@/lib/auth";
 import { useState } from "react";
 
 export function Login() {
@@ -16,18 +17,32 @@ export function Login() {
         onSubmit={(e) => {
           e.preventDefault();
           setLoading(true);
+          // Real credential checking arrives with POST /account/auth/login; the
+          // session it establishes here is already the real mechanism the portal
+          // guard reads.
+          issuePlaceholderSession("portal");
           setTimeout(() => router.push("/portal"), 400);
         }}
       >
         <Field label="Email" name="email" type="email" required />
         <Field label="Password" name="password" type="password" required />
         <div className="text-right">
-          <Link href="/forgot-password" className="text-xs text-muted-foreground hover:text-foreground">Forgot password?</Link>
+          <Link
+            href="/forgot-password"
+            className="text-xs text-muted-foreground hover:text-foreground"
+          >
+            Forgot password?
+          </Link>
         </div>
-        <Button className="w-full bg-gradient-primary" disabled={loading}>{loading ? "Signing in…" : "Sign in"}</Button>
+        <Button className="w-full bg-gradient-primary" disabled={loading}>
+          {loading ? "Signing in…" : "Sign in"}
+        </Button>
       </form>
       <div className="mt-4 text-center text-sm text-muted-foreground">
-        No account? <Link href="/signup" className="text-primary hover:underline">Create one</Link>
+        No account?{" "}
+        <Link href="/signup" className="text-primary hover:underline">
+          Create one
+        </Link>
       </div>
     </AuthShell>
   );

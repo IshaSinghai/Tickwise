@@ -8,7 +8,15 @@ function SphereWire({ reduce }: { reduce: boolean }) {
       viewBox="0 0 100 100"
       className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-visible"
     >
-      <circle cx="50" cy="50" r="34" fill="none" stroke="var(--primary)" strokeOpacity="0.35" strokeWidth="0.4" />
+      <circle
+        cx="50"
+        cy="50"
+        r="34"
+        fill="none"
+        stroke="var(--primary)"
+        strokeOpacity="0.35"
+        strokeWidth="0.4"
+      />
       {[8, 18, 27, 34].map((r, i) => (
         <ellipse
           key={`lat-${i}`}
@@ -103,13 +111,21 @@ export function HolographicCore({ reduce = false }: { reduce?: boolean }) {
           <motion.div
             key={`orb-${i}`}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            style={{ width: 150 + i * 26, height: 150 + i * 26, marginLeft: -(75 + i * 13), marginTop: -(75 + i * 13), willChange: "transform" }}
+            style={{
+              width: 150 + i * 26,
+              height: 150 + i * 26,
+              marginLeft: -(75 + i * 13),
+              marginTop: -(75 + i * 13),
+              willChange: "transform",
+            }}
             animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
             transition={{ duration: 22 + i * 9, repeat: Infinity, ease: "linear" }}
           >
             <span
               className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary-glow"
-              style={{ boxShadow: "0 0 10px 2px color-mix(in oklab, var(--primary-glow) 60%, transparent)" }}
+              style={{
+                boxShadow: "0 0 10px 2px color-mix(in oklab, var(--primary-glow) 60%, transparent)",
+              }}
             />
           </motion.div>
         ))}
@@ -138,8 +154,12 @@ export function HolographicCore({ reduce = false }: { reduce?: boolean }) {
         />
       </motion.div>
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-        <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-foreground/80">liquidity</div>
-        <div className="font-display text-xs font-semibold tracking-tight text-foreground">core</div>
+        <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-foreground/80">
+          liquidity
+        </div>
+        <div className="font-display text-xs font-semibold tracking-tight text-foreground">
+          core
+        </div>
       </div>
     </motion.div>
   );

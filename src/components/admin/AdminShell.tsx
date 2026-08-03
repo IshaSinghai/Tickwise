@@ -3,8 +3,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, Package, Zap, Repeat, Receipt, LineChart, LogOut } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Users, Package, Zap, Repeat, Receipt, LineChart } from "lucide-react";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 
 const items = [
   { to: "/admin", label: "Clients", icon: Users, exact: true },
@@ -46,17 +46,17 @@ export function AdminShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="border-t border-sidebar-border p-3">
-          <Button asChild variant="ghost" size="sm" className="w-full justify-start">
-            <Link href="/admin/login">
-              <LogOut className="mr-2 h-4 w-4" /> Sign out
-            </Link>
-          </Button>
+          <SignOutButton realm="admin" />
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b border-border/60 bg-background/70 px-6 backdrop-blur-xl">
-          <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Internal · Admin</div>
-          <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">← Back to site</Link>
+          <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            Internal · Admin
+          </div>
+          <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
+            ← Back to site
+          </Link>
         </header>
         <main className="mx-auto w-full max-w-7xl flex-1 space-y-6 p-6">{children}</main>
       </div>

@@ -35,7 +35,14 @@ export function FloatingMetricCard({
   return (
     <motion.div
       className={`absolute ${className}`}
-      style={{ x: px, y: py, rotateX: rx, rotateY: ry, transformPerspective: 1200, willChange: "transform" }}
+      style={{
+        x: px,
+        y: py,
+        rotateX: rx,
+        rotateY: ry,
+        transformPerspective: 1200,
+        willChange: "transform",
+      }}
       initial={reduce ? false : { opacity: 0, scale: 0.82, filter: "blur(10px)" }}
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       transition={{ duration: 1.1, delay: 0.5 + delay * 0.12, ease: EASE }}
@@ -64,7 +71,9 @@ export function FloatingMetricCard({
 export function MetricHeader({ label, badge }: { label: string; badge?: ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
+      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+        {label}
+      </span>
       {badge}
     </div>
   );

@@ -68,7 +68,10 @@ export function HeroScene() {
         }}
       />
 
-      <motion.div className="absolute inset-0" style={{ x: sceneX, y: sceneY, willChange: "transform" }}>
+      <motion.div
+        className="absolute inset-0"
+        style={{ x: sceneX, y: sceneY, willChange: "transform" }}
+      >
         {/* rings + core */}
 
         <OrbitRing size={520} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
@@ -78,16 +81,62 @@ export function HeroScene() {
         <HolographicCore reduce={reduce} />
         <PipelineArc reduce={reduce} />
 
-
-
         {/* connection mesh */}
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
-          <ConnectionLine id="a" from={{ x: 18, y: 26 }} to={{ x: 50, y: 50 }} bend={10} delay={0.1} reduce={reduce} />
-          <ConnectionLine id="b" from={{ x: 84, y: 20 }} to={{ x: 50, y: 50 }} bend={-8} delay={0.35} packets={2} reduce={reduce} />
-          <ConnectionLine id="c" from={{ x: 14, y: 74 }} to={{ x: 50, y: 50 }} bend={-14} delay={0.6} reduce={reduce} />
-          <ConnectionLine id="d" from={{ x: 86, y: 78 }} to={{ x: 50, y: 50 }} bend={12} delay={0.85} packets={2} reduce={reduce} />
-          <ConnectionLine id="e" from={{ x: 50, y: 8 }} to={{ x: 50, y: 50 }} bend={16} delay={1.05} reduce={reduce} />
-          <ConnectionLine id="f" from={{ x: 50, y: 50 }} to={{ x: 50, y: 96 }} bend={-16} delay={1.2} reduce={reduce} />
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          className="absolute inset-0 h-full w-full"
+        >
+          <ConnectionLine
+            id="a"
+            from={{ x: 18, y: 26 }}
+            to={{ x: 50, y: 50 }}
+            bend={10}
+            delay={0.1}
+            reduce={reduce}
+          />
+          <ConnectionLine
+            id="b"
+            from={{ x: 84, y: 20 }}
+            to={{ x: 50, y: 50 }}
+            bend={-8}
+            delay={0.35}
+            packets={2}
+            reduce={reduce}
+          />
+          <ConnectionLine
+            id="c"
+            from={{ x: 14, y: 74 }}
+            to={{ x: 50, y: 50 }}
+            bend={-14}
+            delay={0.6}
+            reduce={reduce}
+          />
+          <ConnectionLine
+            id="d"
+            from={{ x: 86, y: 78 }}
+            to={{ x: 50, y: 50 }}
+            bend={12}
+            delay={0.85}
+            packets={2}
+            reduce={reduce}
+          />
+          <ConnectionLine
+            id="e"
+            from={{ x: 50, y: 8 }}
+            to={{ x: 50, y: 50 }}
+            bend={16}
+            delay={1.05}
+            reduce={reduce}
+          />
+          <ConnectionLine
+            id="f"
+            from={{ x: 50, y: 50 }}
+            to={{ x: 50, y: 96 }}
+            bend={-16}
+            delay={1.2}
+            reduce={reduce}
+          />
         </svg>
 
         {/* floating panels */}
@@ -106,7 +155,14 @@ export function HeroScene() {
             badge={<span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />}
           />
           <div className="mt-2 font-display text-2xl font-semibold tracking-tight">
-            <CountingValue from={22.14} to={24.68} decimals={2} suffix="%" duration={6.5} reduce={reduce} />
+            <CountingValue
+              from={22.14}
+              to={24.68}
+              decimals={2}
+              suffix="%"
+              duration={6.5}
+              reduce={reduce}
+            />
           </div>
           <AnimatedChart seed={3} duration={16} height={36} reduce={reduce} />
         </FloatingMetricCard>
@@ -123,7 +179,15 @@ export function HeroScene() {
         >
           <MetricHeader label="TVL indexed" />
           <div className="mt-2 font-display text-2xl font-semibold tracking-tight">
-            <CountingValue from={4.81} to={4.94} decimals={2} prefix="$" suffix="B" duration={8} reduce={reduce} />
+            <CountingValue
+              from={4.81}
+              to={4.94}
+              decimals={2}
+              prefix="$"
+              suffix="B"
+              duration={8}
+              reduce={reduce}
+            />
           </div>
           <div className="mt-1 text-[11px] text-muted-foreground">across 1,284 v4 pools</div>
         </FloatingMetricCard>
@@ -140,9 +204,22 @@ export function HeroScene() {
         >
           <MetricHeader label="Yield · fee APR" />
           <div className="mt-2 font-display text-2xl font-semibold tracking-tight text-success">
-            <CountingValue from={17.82} to={18.24} decimals={2} suffix="%" duration={7} reduce={reduce} />
+            <CountingValue
+              from={17.82}
+              to={18.24}
+              decimals={2}
+              suffix="%"
+              duration={7}
+              reduce={reduce}
+            />
           </div>
-          <AnimatedChart seed={7} color="var(--success)" duration={21} height={30} reduce={reduce} />
+          <AnimatedChart
+            seed={7}
+            color="var(--success)"
+            duration={21}
+            height={30}
+            reduce={reduce}
+          />
         </FloatingMetricCard>
 
         <FloatingMetricCard
@@ -157,7 +234,11 @@ export function HeroScene() {
         >
           <MetricHeader
             label="GET /v1/positions"
-            badge={<span className="rounded-full border border-success/40 bg-success/10 px-1.5 text-[9px] text-success">200</span>}
+            badge={
+              <span className="rounded-full border border-success/40 bg-success/10 px-1.5 text-[9px] text-success">
+                200
+              </span>
+            }
           />
           <div className="mt-2 flex items-end justify-between gap-3">
             <div className="font-display text-2xl font-semibold tracking-tight">
@@ -183,7 +264,15 @@ export function HeroScene() {
         >
           <MetricHeader label="Indexing lag" />
           <div className="mt-1.5 font-display text-lg font-semibold tracking-tight">
-            ~<CountingValue from={38} to={44} decimals={0} suffix="s" duration={5.5} reduce={reduce} />
+            ~
+            <CountingValue
+              from={38}
+              to={44}
+              decimals={0}
+              suffix="s"
+              duration={5.5}
+              reduce={reduce}
+            />
           </div>
         </FloatingMetricCard>
 
@@ -199,14 +288,45 @@ export function HeroScene() {
         >
           <MetricHeader label="Pool metrics · 24h vol" />
           <div className="mt-1.5 font-display text-lg font-semibold tracking-tight">
-            <CountingValue from={612.4} to={648.9} decimals={1} prefix="$" suffix="M" duration={9.5} reduce={reduce} />
+            <CountingValue
+              from={612.4}
+              to={648.9}
+              decimals={1}
+              prefix="$"
+              suffix="M"
+              duration={9.5}
+              reduce={reduce}
+            />
           </div>
-          <AnimatedChart seed={12} color="var(--chart-5)" duration={26} height={26} fill={false} reduce={reduce} />
+          <AnimatedChart
+            seed={12}
+            color="var(--chart-5)"
+            duration={26}
+            height={26}
+            fill={false}
+            reduce={reduce}
+          />
         </FloatingMetricCard>
 
         {/* chain nodes */}
-        <TokenNode pointer={pointer} label="Ethereum" symbol="ETH" className="left-[2%] top-[38%] sm:top-[46%]" delay={0.15} duration={9.6} reduce={reduce} />
-        <TokenNode pointer={pointer} label="Avalanche" symbol="AVX" className="right-[2%] top-[34%] sm:top-[40%]" delay={0.45} duration={8.2} reduce={reduce} />
+        <TokenNode
+          pointer={pointer}
+          label="Ethereum"
+          symbol="ETH"
+          className="left-[2%] top-[38%] sm:top-[46%]"
+          delay={0.15}
+          duration={9.6}
+          reduce={reduce}
+        />
+        <TokenNode
+          pointer={pointer}
+          label="Avalanche"
+          symbol="AVX"
+          className="right-[2%] top-[34%] sm:top-[40%]"
+          delay={0.45}
+          duration={8.2}
+          reduce={reduce}
+        />
 
         {/* free-floating data pulses */}
         {pulses.map((p, i) => (
@@ -214,6 +334,5 @@ export function HeroScene() {
         ))}
       </motion.div>
     </motion.div>
-
   );
 }

@@ -30,24 +30,39 @@ export function AmbientBackground() {
       <div className="absolute inset-0 bg-background" />
 
       {/* volumetric lights */}
-      <div className={`ambient-orb absolute -top-[28vh] left-1/2 h-[85vh] w-[95vw] -translate-x-1/2 rounded-full ${reduce ? "" : "animate-drift-a"}`} />
-      <div className={`ambient-orb-2 absolute top-[40vh] -left-[20vw] h-[60vh] w-[60vw] rounded-full ${reduce ? "" : "animate-drift-b"}`} />
-      <div className={`ambient-orb-3 absolute top-[95vh] -right-[15vw] h-[55vh] w-[55vw] rounded-full ${reduce ? "" : "animate-drift-c"}`} />
+      <div
+        className={`ambient-orb absolute -top-[28vh] left-1/2 h-[85vh] w-[95vw] -translate-x-1/2 rounded-full ${reduce ? "" : "animate-drift-a"}`}
+      />
+      <div
+        className={`ambient-orb-2 absolute top-[40vh] -left-[20vw] h-[60vh] w-[60vw] rounded-full ${reduce ? "" : "animate-drift-b"}`}
+      />
+      <div
+        className={`ambient-orb-3 absolute top-[95vh] -right-[15vw] h-[55vh] w-[55vw] rounded-full ${reduce ? "" : "animate-drift-c"}`}
+      />
 
       {/* perspective floor grid */}
       <div className="absolute inset-x-0 bottom-0 h-[62vh] [perspective:640px] [perspective-origin:50%_0%]">
-        <div className={`absolute inset-0 origin-top grid-lines [transform:rotateX(72deg)_scale(2.4)] opacity-40 mask-fade-floor ${reduce ? "" : "animate-grid-run"}`} />
+        <div
+          className={`absolute inset-0 origin-top grid-lines [transform:rotateX(72deg)_scale(2.4)] opacity-40 mask-fade-floor ${reduce ? "" : "animate-grid-run"}`}
+        />
       </div>
 
       {/* upper depth grid */}
-      <div className={`absolute inset-0 grid-lines opacity-[0.35] mask-fade ${reduce ? "" : "animate-grid-pan"}`} />
+      <div
+        className={`absolute inset-0 grid-lines opacity-[0.35] mask-fade ${reduce ? "" : "animate-grid-pan"}`}
+      />
 
       {/* light streaks */}
       {streaks.map((s, i) => (
         <span
           key={i}
           className={`absolute h-px bg-gradient-to-r from-transparent via-primary-glow/50 to-transparent ${reduce ? "opacity-10" : "animate-streak"}`}
-          style={{ top: `${s.top}%`, width: `${s.w}vw`, animationDelay: `${s.delay}s`, animationDuration: `${s.dur}s` }}
+          style={{
+            top: `${s.top}%`,
+            width: `${s.w}vw`,
+            animationDelay: `${s.delay}s`,
+            animationDuration: `${s.dur}s`,
+          }}
         />
       ))}
 

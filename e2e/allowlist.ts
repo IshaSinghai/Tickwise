@@ -31,7 +31,8 @@ const ALLOWLIST: AllowEntry[] = [
     // In dev the same bug reports as the unminified "Hydration failed because
     // the server rendered text didn't match the client" — both forms listed so
     // the harness works against either server.
-    pattern: /Minified React error #418|Hydration failed because the server rendered text didn't match the client/,
+    pattern:
+      /Minified React error #418|Hydration failed because the server rendered text didn't match the client/,
     routes: ["/pricing", "/explore"],
     why: "pre-existing unlocalized toLocaleString() hydration mismatch",
   },

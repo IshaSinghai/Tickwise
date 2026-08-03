@@ -5,9 +5,13 @@ import { Check } from "lucide-react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
 import { PLANS, UNIT_COSTS } from "@/lib/mock";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useState } from "react";
-
 
 export function Pricing() {
   const [cycle, setCycle] = useState<"monthly" | "annual">("monthly");
@@ -19,7 +23,8 @@ export function Pricing() {
           One API. Four price points.
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-          Metered by units. Different endpoints cost different amounts — see the unit table below. Quotas reset the 1st of each month, UTC.
+          Metered by units. Different endpoints cost different amounts — see the unit table below.
+          Quotas reset the 1st of each month, UTC.
         </p>
         <div className="mt-8 inline-flex rounded-full border border-border/60 bg-surface p-1 text-sm">
           {(["monthly", "annual"] as const).map((c) => (
@@ -27,7 +32,9 @@ export function Pricing() {
               key={c}
               onClick={() => setCycle(c)}
               className={`rounded-full px-4 py-1.5 transition-colors ${
-                cycle === c ? "bg-gradient-primary text-primary-foreground" : "text-muted-foreground"
+                cycle === c
+                  ? "bg-gradient-primary text-primary-foreground"
+                  : "text-muted-foreground"
               }`}
             >
               {c === "monthly" ? "Monthly" : "Annual · save 16%"}
@@ -41,7 +48,9 @@ export function Pricing() {
           <div
             key={p.id}
             className={`relative flex flex-col rounded-2xl border p-6 shadow-card ${
-              p.featured ? "border-primary/60 bg-surface shadow-glow" : "border-border/60 bg-surface"
+              p.featured
+                ? "border-primary/60 bg-surface shadow-glow"
+                : "border-border/60 bg-surface"
             }`}
           >
             {p.featured && (
@@ -57,7 +66,9 @@ export function Pricing() {
               <span className="text-sm text-muted-foreground">/mo</span>
             </div>
             <div className="text-xs text-muted-foreground">
-              {cycle === "annual" && p.annualPrice > 0 ? `Billed $${p.annualPrice}/yr` : "Billed monthly"}
+              {cycle === "annual" && p.annualPrice > 0
+                ? `Billed $${p.annualPrice}/yr`
+                : "Billed monthly"}
             </div>
             <div className="mt-5 space-y-1 border-y border-border/60 py-4 text-sm">
               <Row label="Units / month" value={p.quota.toLocaleString()} />
@@ -73,7 +84,11 @@ export function Pricing() {
                 </li>
               ))}
             </ul>
-            <Button asChild className={`mt-6 ${p.featured ? "bg-gradient-primary" : ""}`} variant={p.featured ? "default" : "outline"}>
+            <Button
+              asChild
+              className={`mt-6 ${p.featured ? "bg-gradient-primary" : ""}`}
+              variant={p.featured ? "default" : "outline"}
+            >
               <Link href={`/signup?plan=${p.id}`}>{p.cta}</Link>
             </Button>
           </div>
@@ -114,11 +129,26 @@ export function Pricing() {
         <h2 className="mb-6 text-center font-display text-3xl font-semibold">Frequently asked</h2>
         <Accordion type="single" collapsible>
           {[
-            ["How do I pay?", "Crypto only, on a hosted checkout page. USDC on Ethereum by default. We never touch your wallet — you pay to a one-time address and we confirm on-chain."],
-            ["What happens when I hit my quota?", "Requests over quota return 429 with a clear reason header. Your keys keep working next month or as soon as you upgrade — nothing is destroyed."],
-            ["Do you rate-limit per key or per account?", "Rate limits are per account. Quota is per account. Keys are just credentials."],
-            ["Can I cancel any time?", "Yes. Your plan runs to the end of the current period and then drops to Free. Keys keep working at free-tier limits."],
-            ["Is there an SLA?", "Not yet. We won’t claim uptime numbers we can’t back up. See the status page for indexing lag."],
+            [
+              "How do I pay?",
+              "Crypto only, on a hosted checkout page. USDC on Ethereum by default. We never touch your wallet — you pay to a one-time address and we confirm on-chain.",
+            ],
+            [
+              "What happens when I hit my quota?",
+              "Requests over quota return 429 with a clear reason header. Your keys keep working next month or as soon as you upgrade — nothing is destroyed.",
+            ],
+            [
+              "Do you rate-limit per key or per account?",
+              "Rate limits are per account. Quota is per account. Keys are just credentials.",
+            ],
+            [
+              "Can I cancel any time?",
+              "Yes. Your plan runs to the end of the current period and then drops to Free. Keys keep working at free-tier limits.",
+            ],
+            [
+              "Is there an SLA?",
+              "Not yet. We won’t claim uptime numbers we can’t back up. See the status page for indexing lag.",
+            ],
           ].map(([q, a], i) => (
             <AccordionItem value={`i${i}`} key={q}>
               <AccordionTrigger className="text-left">{q}</AccordionTrigger>

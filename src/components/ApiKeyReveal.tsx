@@ -2,7 +2,13 @@
 
 import { AlertTriangle, Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "@/components/ui/toast";
 
@@ -41,13 +47,17 @@ export function ApiKeyReveal({
         </DialogHeader>
         <div className="space-y-4">
           <div className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
-            <div className="font-medium text-foreground">This is the only time you will see this key.</div>
+            <div className="font-medium text-foreground">
+              This is the only time you will see this key.
+            </div>
             <div className="mt-1 text-muted-foreground">
               We store only its hash. If you lose it, you must revoke and create a new one.
             </div>
           </div>
           <div>
-            <div className="mb-1 text-xs uppercase tracking-widest text-muted-foreground">{label}</div>
+            <div className="mb-1 text-xs uppercase tracking-widest text-muted-foreground">
+              {label}
+            </div>
             <div className="flex items-center gap-2 rounded-md border border-border bg-surface-2 px-3 py-2 font-mono text-sm break-all">
               <span className="flex-1">{fullKey}</span>
               <Button size="sm" variant="ghost" onClick={copy}>

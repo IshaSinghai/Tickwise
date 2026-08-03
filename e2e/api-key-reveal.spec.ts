@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { isAllowlistedError } from "./allowlist";
+import { seedPortalSession } from "./auth";
 
 /*
  * Flagship security-property test (docs/frontend-surface-spec.md §4.1): the
@@ -10,13 +11,17 @@ import { isAllowlistedError } from "./allowlist";
  * migration's history broke silently (an `insertBefore` crash) — this test
  * exists so that class of regression fails a build instead of reaching a user.
  */
-test.beforeEach(async ({ context }) => {
+test.beforeEach(async ({ context, page }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  // /portal/keys is behind the portal auth guard.
+  await seedPortalSession(page);
 });
 
 test("create-key dialog to key-reveal: full acknowledgment gate", async ({ page }) => {
   const errors: string[] = [];
-  page.on("pageerror", (err) => { if (!isAllowlistedError(err.message, "/portal/keys")) errors.push(err.message); });
+  page.on("pageerror", (err) => {
+    if (!isAllowlistedError(err.message, "/portal/keys")) errors.push(err.message);
+  });
 
   await page.goto("/portal/keys");
   await page.getByRole("button", { name: /new key/i }).click();

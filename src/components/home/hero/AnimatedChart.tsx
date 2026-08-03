@@ -44,9 +44,7 @@ export function AnimatedChart({
             <stop offset="100%" stopColor={color} stopOpacity="0" />
           </linearGradient>
         </defs>
-        {fill && (
-          <polygon points={`0,30 ${line} 200,30`} fill={`url(#chart-fill-${seed})`} />
-        )}
+        {fill && <polygon points={`0,30 ${line} 200,30`} fill={`url(#chart-fill-${seed})`} />}
         <polyline
           points={line}
           fill="none"

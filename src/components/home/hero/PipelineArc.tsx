@@ -13,11 +13,20 @@ const STAGES = [
  * capital in → indexed → strategy → yield → rewards.
  * One stage illuminates at a time so the loop reads as a live pipeline.
  */
-export function PipelineArc({ radius = 132, reduce = false }: { radius?: number; reduce?: boolean }) {
+export function PipelineArc({
+  radius = 132,
+  reduce = false,
+}: {
+  radius?: number;
+  reduce?: boolean;
+}) {
   const cycle = STAGES.length * 1.8;
 
   return (
-    <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 sm:block">
+    <div
+      aria-hidden
+      className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 sm:block"
+    >
       {STAGES.map((s, i) => {
         const rad = (s.angle * Math.PI) / 180;
         const x = Math.cos(rad) * radius;
@@ -32,7 +41,11 @@ export function PipelineArc({ radius = 132, reduce = false }: { radius?: number;
                 ? { opacity: 0.6 }
                 : {
                     opacity: [0.35, 1, 0.35],
-                    color: ["var(--muted-foreground)", "var(--primary-glow)", "var(--muted-foreground)"],
+                    color: [
+                      "var(--muted-foreground)",
+                      "var(--primary-glow)",
+                      "var(--muted-foreground)",
+                    ],
                     borderColor: [
                       "color-mix(in oklab, var(--primary) 30%, transparent)",
                       "color-mix(in oklab, var(--primary) 80%, transparent)",
@@ -40,7 +53,13 @@ export function PipelineArc({ radius = 132, reduce = false }: { radius?: number;
                     ],
                   }
             }
-            transition={{ duration: cycle, times: [0, 0.12, 0.3], delay: i * 1.8, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: cycle,
+              times: [0, 0.12, 0.3],
+              delay: i * 1.8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           >
             {s.label}
           </motion.span>

@@ -59,10 +59,15 @@ export function PricingBanner() {
               Start on Free. Upgrade when it hurts.
             </h3>
             <p className="mt-3 max-w-md text-muted-foreground">
-              25,000 units a month at no cost. Every plan uses the same endpoints — just more of them.
+              25,000 units a month at no cost. Every plan uses the same endpoints — just more of
+              them.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow">
+              <Button
+                asChild
+                size="lg"
+                className="group relative overflow-hidden bg-gradient-primary shadow-glow"
+              >
                 <Link href="/signup">
                   <span className="relative z-10 inline-flex items-center">
                     Create free account
@@ -71,7 +76,12 @@ export function PricingBanner() {
                   <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-border/70 bg-surface/40 backdrop-blur transition-colors hover:border-primary/50">
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-border/70 bg-surface/40 backdrop-blur transition-colors hover:border-primary/50"
+              >
                 <Link href="/pricing">See pricing</Link>
               </Button>
             </div>
@@ -83,11 +93,20 @@ export function PricingBanner() {
                 key={t.name}
                 style={{ translateZ: 30 + i * 18 }}
                 animate={reduce ? undefined : { y: [0, -7, 0] }}
-                transition={{ duration: 8 + i * 1.7, repeat: Infinity, ease: "easeInOut", delay: i * 0.7 }}
+                transition={{
+                  duration: 8 + i * 1.7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.7,
+                }}
                 className="rounded-2xl border border-border/60 bg-background/50 p-4 backdrop-blur-xl transition-colors hover:border-primary/50"
               >
-                <div className="text-xs uppercase tracking-widest text-muted-foreground">{t.name}</div>
-                <div className="mt-2 font-display text-2xl font-semibold tabular-nums">{t.units}</div>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                  {t.name}
+                </div>
+                <div className="mt-2 font-display text-2xl font-semibold tabular-nums">
+                  {t.units}
+                </div>
                 <div className="text-[11px] text-muted-foreground">units / month</div>
                 <div className="mt-3 inline-block rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] text-primary-glow">
                   {t.note}

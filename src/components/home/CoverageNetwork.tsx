@@ -15,10 +15,46 @@ type Chain = {
 };
 
 const chains: Chain[] = [
-  { name: "Ethereum", state: "live", x: 26, y: 30, tvl: "$1.02B", pools: "4,820", indexing: "~5 min", latency: "142 ms" },
-  { name: "Avalanche", state: "live", x: 72, y: 26, tvl: "$264M", pools: "1,190", indexing: "~4 min", latency: "118 ms" },
-  { name: "Arbitrum", state: "indexed", x: 22, y: 74, tvl: "$318M", pools: "2,140", indexing: "backfilling", latency: "—" },
-  { name: "Optimism", state: "indexed", x: 76, y: 72, tvl: "$141M", pools: "980", indexing: "backfilling", latency: "—" },
+  {
+    name: "Ethereum",
+    state: "live",
+    x: 26,
+    y: 30,
+    tvl: "$1.02B",
+    pools: "4,820",
+    indexing: "~5 min",
+    latency: "142 ms",
+  },
+  {
+    name: "Avalanche",
+    state: "live",
+    x: 72,
+    y: 26,
+    tvl: "$264M",
+    pools: "1,190",
+    indexing: "~4 min",
+    latency: "118 ms",
+  },
+  {
+    name: "Arbitrum",
+    state: "indexed",
+    x: 22,
+    y: 74,
+    tvl: "$318M",
+    pools: "2,140",
+    indexing: "backfilling",
+    latency: "—",
+  },
+  {
+    name: "Optimism",
+    state: "indexed",
+    x: 76,
+    y: 72,
+    tvl: "$141M",
+    pools: "980",
+    indexing: "backfilling",
+    latency: "—",
+  },
 ];
 
 export function CoverageNetwork() {
@@ -31,12 +67,15 @@ export function CoverageNetwork() {
         className="pointer-events-none absolute inset-0 transition-opacity duration-700"
         style={{
           opacity: active ? 1 : 0.35,
-          background: "radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--primary) 20%, transparent), transparent 72%)",
+          background:
+            "radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--primary) 20%, transparent), transparent 72%)",
         }}
       />
       <div className="relative border-b border-border/60 p-6 md:p-8">
         <div className="text-xs uppercase tracking-widest text-primary">Coverage — kept honest</div>
-        <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl">What’s actually live today</h2>
+        <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+          What’s actually live today
+        </h2>
       </div>
 
       <div className="relative grid gap-6 p-6 md:grid-cols-[1.15fr_1fr] md:p-8">
@@ -48,7 +87,10 @@ export function CoverageNetwork() {
               return (
                 <g key={c.name}>
                   <line
-                    x1="50" y1="50" x2={c.x} y2={c.y}
+                    x1="50"
+                    y1="50"
+                    x2={c.x}
+                    y2={c.y}
                     stroke={c.state === "live" ? "var(--primary-glow)" : "var(--border)"}
                     strokeWidth={on ? 0.8 : 0.4}
                     strokeDasharray={c.state === "live" ? undefined : "2 2"}
@@ -57,7 +99,11 @@ export function CoverageNetwork() {
                   />
                   {c.state === "live" && !reduce && (
                     <circle r="0.9" fill="var(--primary-glow)">
-                      <animateMotion dur="3.6s" repeatCount="indefinite" path={`M50,50 L${c.x},${c.y}`} />
+                      <animateMotion
+                        dur="3.6s"
+                        repeatCount="indefinite"
+                        path={`M50,50 L${c.x},${c.y}`}
+                      />
                     </circle>
                   )}
                 </g>
@@ -68,7 +114,17 @@ export function CoverageNetwork() {
           {/* hub */}
           <motion.div
             className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border border-primary/40 bg-surface/80 font-mono text-[10px] uppercase tracking-widest text-muted-foreground backdrop-blur"
-            animate={reduce ? undefined : { boxShadow: ["0 0 0 0 rgba(0,0,0,0)", "var(--shadow-glow)", "0 0 0 0 rgba(0,0,0,0)"] }}
+            animate={
+              reduce
+                ? undefined
+                : {
+                    boxShadow: [
+                      "0 0 0 0 rgba(0,0,0,0)",
+                      "var(--shadow-glow)",
+                      "0 0 0 0 rgba(0,0,0,0)",
+                    ],
+                  }
+            }
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           >
             api
@@ -102,7 +158,10 @@ export function CoverageNetwork() {
               return (
                 <div className="flex h-full min-h-40 flex-col justify-center text-sm text-muted-foreground">
                   <div className="font-display text-lg text-foreground">Hover a chain node</div>
-                  <p className="mt-1">TVL, pool count, indexing state and latency for every network we touch — including the ones we index but don’t serve yet.</p>
+                  <p className="mt-1">
+                    TVL, pool count, indexing state and latency for every network we touch —
+                    including the ones we index but don’t serve yet.
+                  </p>
                 </div>
               );
             return (
@@ -125,9 +184,16 @@ export function CoverageNetwork() {
                     {c.state === "live" ? "live" : "indexed, not servable"}
                   </span>
                 </div>
-                {[["TVL", c.tvl], ["Pools", c.pools], ["Indexing", c.indexing], ["Latency", c.latency]].map(([k, v]) => (
+                {[
+                  ["TVL", c.tvl],
+                  ["Pools", c.pools],
+                  ["Indexing", c.indexing],
+                  ["Latency", c.latency],
+                ].map(([k, v]) => (
                   <div key={k}>
-                    <dt className="text-[10px] uppercase tracking-widest text-muted-foreground">{k}</dt>
+                    <dt className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                      {k}
+                    </dt>
                     <dd className="mt-1 font-display text-lg tabular-nums">{v}</dd>
                   </div>
                 ))}

@@ -73,7 +73,11 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
           }}
           className="inline-flex shrink-0 items-center gap-1 rounded-md px-2 py-1 font-mono text-[11px] text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
-          {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? (
+            <Check className="h-3.5 w-3.5 text-success" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
           {copied ? "copied" : "copy"}
         </button>
       </div>
@@ -148,7 +152,9 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
         </AnimatePresence>
 
         {phase === "idle" && (
-          <div className="mt-3 font-mono text-[11px] text-muted-foreground/70">idle · awaiting next call</div>
+          <div className="mt-3 font-mono text-[11px] text-muted-foreground/70">
+            idle · awaiting next call
+          </div>
         )}
       </div>
     </div>

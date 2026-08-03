@@ -13,8 +13,13 @@ export function AuthShell({
   return (
     <div className="flex min-h-screen items-center justify-center bg-hero px-6">
       <div className="w-full max-w-sm">
-        <Link href="/" className="mb-8 flex items-center justify-center gap-2 font-display font-semibold">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow"><span className="font-mono text-xs">CP</span></span>
+        <Link
+          href="/"
+          className="mb-8 flex items-center justify-center gap-2 font-display font-semibold"
+        >
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow">
+            <span className="font-mono text-xs">CP</span>
+          </span>
           Tickwise
         </Link>
         <div className="rounded-2xl border border-border/60 bg-surface p-8 shadow-card">
@@ -27,10 +32,15 @@ export function AuthShell({
   );
 }
 
-export function Field({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+export function Field({
+  label,
+  ...props
+}: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
-      <label className="mb-1 block text-xs uppercase tracking-widest text-muted-foreground">{label}</label>
+      <label className="mb-1 block text-xs uppercase tracking-widest text-muted-foreground">
+        {label}
+      </label>
       <Input {...props} />
     </div>
   );

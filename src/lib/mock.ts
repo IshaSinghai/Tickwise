@@ -25,11 +25,7 @@ export const PLANS: Plan[] = [
     rateLimit: "5 req/s",
     maxKeys: 2,
     allowBrowserKeys: false,
-    features: [
-      "All read endpoints",
-      "Uniswap v4 · ETH + AVAX",
-      "Community support",
-    ],
+    features: ["All read endpoints", "Uniswap v4 · ETH + AVAX", "Community support"],
     cta: "Start free",
   },
   {
@@ -41,11 +37,7 @@ export const PLANS: Plan[] = [
     rateLimit: "25 req/s",
     maxKeys: 5,
     allowBrowserKeys: true,
-    features: [
-      "Everything in Free",
-      "Browser keys w/ allowed origins",
-      "Email support · 48h",
-    ],
+    features: ["Everything in Free", "Browser keys w/ allowed origins", "Email support · 48h"],
     cta: "Choose Starter",
   },
   {
@@ -57,11 +49,7 @@ export const PLANS: Plan[] = [
     rateLimit: "100 req/s",
     maxKeys: 20,
     allowBrowserKeys: true,
-    features: [
-      "Everything in Starter",
-      "Higher rate limits",
-      "Priority support · 24h",
-    ],
+    features: ["Everything in Starter", "Higher rate limits", "Priority support · 24h"],
     cta: "Choose Growth",
     featured: true,
   },
@@ -74,11 +62,7 @@ export const PLANS: Plan[] = [
     rateLimit: "500 req/s",
     maxKeys: 100,
     allowBrowserKeys: true,
-    features: [
-      "Everything in Growth",
-      "Custom chain requests",
-      "Dedicated Slack channel",
-    ],
+    features: ["Everything in Growth", "Custom chain requests", "Dedicated Slack channel"],
     cta: "Choose Scale",
   },
 ];
@@ -215,15 +199,48 @@ export const CURRENT_USAGE = {
 };
 
 export const PAYMENTS = [
-  { id: "pay_01", date: "2026-07-01", amount: 49, status: "confirmed", tx: "0xabc…9f21", plan: "Starter" },
-  { id: "pay_02", date: "2026-06-01", amount: 49, status: "confirmed", tx: "0xdd7…41ac", plan: "Starter" },
-  { id: "pay_03", date: "2026-05-01", amount: 49, status: "confirmed", tx: "0x8c1…77e0", plan: "Starter" },
+  {
+    id: "pay_01",
+    date: "2026-07-01",
+    amount: 49,
+    status: "confirmed",
+    tx: "0xabc…9f21",
+    plan: "Starter",
+  },
+  {
+    id: "pay_02",
+    date: "2026-06-01",
+    amount: 49,
+    status: "confirmed",
+    tx: "0xdd7…41ac",
+    plan: "Starter",
+  },
+  {
+    id: "pay_03",
+    date: "2026-05-01",
+    amount: 49,
+    status: "confirmed",
+    tx: "0x8c1…77e0",
+    plan: "Starter",
+  },
 ];
 
 export const CHANGELOG = [
-  { date: "2026-07-20", title: "Avalanche indexing live", body: "Uniswap v4 on Avalanche is now servable via /v1/pools and /v1/positions." },
-  { date: "2026-07-04", title: "Position chart endpoint", body: "New /v1/positions/:id/chart returns a reconstructed, indicative series." },
-  { date: "2026-06-11", title: "Portal beta", body: "Self-serve API keys and usage now available for all customers." },
+  {
+    date: "2026-07-20",
+    title: "Avalanche indexing live",
+    body: "Uniswap v4 on Avalanche is now servable via /v1/pools and /v1/positions.",
+  },
+  {
+    date: "2026-07-04",
+    title: "Position chart endpoint",
+    body: "New /v1/positions/:id/chart returns a reconstructed, indicative series.",
+  },
+  {
+    date: "2026-06-11",
+    title: "Portal beta",
+    body: "Self-serve API keys and usage now available for all customers.",
+  },
 ];
 
 export const STATUS_ROWS = [

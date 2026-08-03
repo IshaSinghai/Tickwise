@@ -12,7 +12,9 @@ export default function ResetPasswordPage() {
       <form className="space-y-4">
         <Field label="New password" type="password" disabled />
         <Field label="Confirm password" type="password" disabled />
-        <Button disabled className="w-full">Save password (coming soon)</Button>
+        <Button disabled className="w-full">
+          Save password (coming soon)
+        </Button>
       </form>
     </AuthShell>
   );

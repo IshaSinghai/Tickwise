@@ -35,7 +35,10 @@ export function MarketingHeader() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6">
-        <Link href="/" className="group flex items-center gap-2 font-display text-lg font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="group flex items-center gap-2 font-display text-lg font-semibold tracking-tight"
+        >
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-gradient-primary text-primary-foreground shadow-glow transition-transform duration-500 group-hover:rotate-[8deg] group-hover:scale-110">
             <span className="font-mono text-xs">TW</span>
           </span>
@@ -66,7 +69,12 @@ export function MarketingHeader() {
           })}
         </nav>
         <div className="ml-auto hidden items-center gap-2 md:flex">
-          <Button asChild variant="ghost" size="sm" className="transition-colors hover:bg-surface/60">
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="transition-colors hover:bg-surface/60"
+          >
             <Link href="/login">Sign in</Link>
           </Button>
           <Button
@@ -102,8 +110,12 @@ export function MarketingHeader() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2 px-1">
-              <Button asChild variant="outline" className="flex-1"><Link href="/login">Sign in</Link></Button>
-              <Button asChild className="flex-1 bg-gradient-primary"><Link href="/signup">Get key</Link></Button>
+              <Button asChild variant="outline" className="flex-1">
+                <Link href="/login">Sign in</Link>
+              </Button>
+              <Button asChild className="flex-1 bg-gradient-primary">
+                <Link href="/signup">Get key</Link>
+              </Button>
             </div>
           </nav>
         </div>

@@ -20,7 +20,11 @@ export function CodeBlock({ code, lang = "bash" }: { code: string; lang?: string
             setTimeout(() => setCopied(false), 1200);
           }}
         >
-          {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? (
+            <Check className="h-3.5 w-3.5 text-success" />
+          ) : (
+            <Copy className="h-3.5 w-3.5" />
+          )}
           {copied ? "copied" : "copy"}
         </Button>
       </div>

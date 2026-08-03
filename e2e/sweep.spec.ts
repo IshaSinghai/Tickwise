@@ -1,6 +1,12 @@
 import { test, expect } from "@playwright/test";
 import { ROUTES } from "./routes";
 import { isAllowlistedError } from "./allowlist";
+import {
+  isGuardedAdminRoute,
+  isGuardedPortalRoute,
+  seedAdminSession,
+  seedPortalSession,
+} from "./auth";
 
 /*
  * Visits every routed page, asserts zero unexpected console/page errors, and
@@ -36,6 +42,13 @@ for (const route of ROUTES) {
     page.on("pageerror", (err) => {
       if (!isAllowlistedError(err.message, route)) errors.push(err.message);
     });
+
+    // Portal and admin routes sit behind client-side auth guards, so this sweep
+    // seeds the relevant realm's token to reach the actual page. The guards
+    // themselves are covered separately in auth-guard.spec.ts — screenshotting a
+    // redirect here would test nothing about the page's own rendering.
+    if (isGuardedPortalRoute(route)) await seedPortalSession(page);
+    if (isGuardedAdminRoute(route)) await seedAdminSession(page);
 
     const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status(), `${route} should return 200`).toBe(200);

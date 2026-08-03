@@ -59,8 +59,12 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
   if (kind === "keys")
     return (
       <div className="flex gap-1.5 font-mono text-[9px]">
-        <span className="rounded border border-success/40 bg-success/10 px-1.5 py-0.5 text-success">server</span>
-        <span className="rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary-glow">browser</span>
+        <span className="rounded border border-success/40 bg-success/10 px-1.5 py-0.5 text-success">
+          server
+        </span>
+        <span className="rounded border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-primary-glow">
+          browser
+        </span>
       </div>
     );
   if (kind === "layers")
@@ -79,7 +83,9 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
       </div>
     );
   if (kind === "curl")
-    return <div className="font-mono text-[10px] text-muted-foreground">KC-APIKey: kc_live_•••</div>;
+    return (
+      <div className="font-mono text-[10px] text-muted-foreground">KC-APIKey: kc_live_•••</div>
+    );
   if (kind === "honest")
     return (
       <div className="flex gap-1.5 font-mono text-[9px] text-muted-foreground">
@@ -90,7 +96,10 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
   return (
     <svg viewBox="0 0 100 20" className="h-5 w-full">
       <polyline
-        points={Array.from({ length: 16 }, (_, i) => `${((i / 15) * 100).toFixed(2)},${(18 - seeded(i, seed) * 14).toFixed(2)}`).join(" ")}
+        points={Array.from(
+          { length: 16 },
+          (_, i) => `${((i / 15) * 100).toFixed(2)},${(18 - seeded(i, seed) * 14).toFixed(2)}`,
+        ).join(" ")}
         fill="none"
         stroke="var(--success)"
         strokeWidth="1.4"
@@ -109,14 +118,21 @@ export function FeatureCards() {
           initial={reduce ? false : { opacity: 0, y: 28, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.95, delay: (i % 3) * 0.1 + Math.floor(i / 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+          transition={{
+            duration: 0.95,
+            delay: (i % 3) * 0.1 + Math.floor(i / 3) * 0.06,
+            ease: [0.16, 1, 0.3, 1],
+          }}
           className="group relative overflow-hidden rounded-2xl border border-border/60 bg-surface/50 p-6 shadow-card backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/45 hover:shadow-glow"
         >
           {/* animated border light */}
           <div className="pointer-events-none absolute inset-x-6 -top-px h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           <div
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-            style={{ background: "radial-gradient(70% 50% at 50% 0%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 70%)" }}
+            style={{
+              background:
+                "radial-gradient(70% 50% at 50% 0%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 70%)",
+            }}
           />
           <div className="relative">
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-surface-2/60 transition-transform duration-500 group-hover:scale-110">

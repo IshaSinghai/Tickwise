@@ -31,11 +31,7 @@ export function DataPulse({
         boxShadow: "0 0 10px 2px color-mix(in oklab, var(--primary-glow) 55%, transparent)",
         willChange: "transform, opacity",
       }}
-      animate={
-        reduce
-          ? { opacity: 0.35 }
-          : { x: [0, dx, 0], y: [0, dy, 0], opacity: [0, 0.9, 0] }
-      }
+      animate={reduce ? { opacity: 0.35 } : { x: [0, dx, 0], y: [0, dy, 0], opacity: [0, 0.9, 0] }}
       transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
     />
   );

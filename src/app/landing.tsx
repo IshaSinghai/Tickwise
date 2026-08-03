@@ -63,15 +63,15 @@ function Hero() {
             ))}
           </h1>
 
-
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.18, ease: EASE }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground"
           >
-            We index Uniswap v4 so you don’t have to. Metered endpoints, honest quotas, one header of auth. Ship a
-            positions dashboard, a portfolio tracker, or a research tool in an afternoon.
+            We index Uniswap v4 so you don’t have to. Metered endpoints, honest quotas, one header
+            of auth. Ship a positions dashboard, a portfolio tracker, or a research tool in an
+            afternoon.
           </motion.p>
 
           <motion.div
@@ -80,7 +80,11 @@ function Hero() {
             transition={{ duration: 0.9, delay: 0.28, ease: EASE }}
             className="mt-8 flex flex-wrap items-center gap-3"
           >
-            <Button asChild size="lg" className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.02]">
+            <Button
+              asChild
+              size="lg"
+              className="group relative overflow-hidden bg-gradient-primary shadow-glow transition-transform duration-300 hover:scale-[1.02]"
+            >
               <Link href="/signup">
                 <span className="relative z-10 inline-flex items-center">
                   Get an API key
@@ -102,7 +106,9 @@ function Hero() {
               className="group ml-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               or try the live data{" "}
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
             </Link>
           </motion.div>
 
@@ -149,7 +155,9 @@ function Features() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <Reveal className="max-w-2xl">
-        <div className="text-xs uppercase tracking-widest text-primary">Why teams pick Tickwise</div>
+        <div className="text-xs uppercase tracking-widest text-primary">
+          Why teams pick Tickwise
+        </div>
         <h2 className="mt-3 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
           Boring where boring matters. Fast where it doesn’t.
         </h2>
@@ -166,22 +174,31 @@ function Quickstart() {
     <section className="mx-auto max-w-7xl px-6 py-24">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
         <Reveal className="lg:col-span-5">
-          <div className="text-xs uppercase tracking-widest text-primary">Five-minute quickstart</div>
+          <div className="text-xs uppercase tracking-widest text-primary">
+            Five-minute quickstart
+          </div>
           <h2 className="mt-3 font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
             One header. Real data.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-            Sign up, create a key in the portal, drop this into your terminal. If the response returns pools, you’re
-            done.
+            Sign up, create a key in the portal, drop this into your terminal. If the response
+            returns pools, you’re done.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild className="group relative overflow-hidden bg-gradient-primary shadow-glow">
+            <Button
+              asChild
+              className="group relative overflow-hidden bg-gradient-primary shadow-glow"
+            >
               <Link href="/signup">
                 <span className="relative z-10">Get a free key</span>
                 <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </Link>
             </Button>
-            <Button asChild variant="outline" className="border-border/70 bg-surface/40 backdrop-blur hover:border-primary/50">
+            <Button
+              asChild
+              variant="outline"
+              className="border-border/70 bg-surface/40 backdrop-blur hover:border-primary/50"
+            >
               <Link href="/docs/quickstart">Full quickstart</Link>
             </Button>
           </div>
