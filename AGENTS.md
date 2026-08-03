@@ -6,7 +6,24 @@ Next.js 15, App Router. Routes live in `src/app`; the shared design system
 
 - `npm run dev` — dev server
 - `npm run build` / `npm start` — production
+- `npm run build:check` — compile check that writes to `.next-verify`
 - `npm run typecheck` — `tsc --noEmit`
+- `npm run e2e` — Playwright suite (builds into `.next-e2e`)
+
+> [!IMPORTANT]
+> **Never run `npm run build` while a dev server is running.** `next build` and
+> `next dev` write the same `.next` directory and put incompatible things in it.
+> The dev server then holds references to manifests and chunks the build replaced,
+> and fails with `Cannot read properties of undefined (reading 'call')`,
+> `Cannot find module './NNNN.js'`, or
+> `Expected clientReferenceManifest to be defined` — or serves pages with no CSS.
+> None of these are app bugs, and the fix is always: stop the servers,
+> `rm -rf .next`, restart.
+>
+> Use `npm run build:check` to verify a build instead; it and the Playwright
+> harness write to their own directories (`.next-verify`, `.next-e2e`) via the
+> `NEXT_DIST_DIR` override in `next.config.ts`, so both are safe to run alongside
+> `npm run dev`.
 - `npm run lint` — ESLint. Note: the repo carries pre-existing
   `prettier/prettier` formatting violations that predate the Next.js
   migration, so lint is deliberately **not** wired into `next build`.
