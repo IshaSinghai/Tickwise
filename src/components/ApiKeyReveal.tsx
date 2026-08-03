@@ -4,7 +4,7 @@ import { AlertTriangle, Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/toast";
 
 export function ApiKeyReveal({
   open,

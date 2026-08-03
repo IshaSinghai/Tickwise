@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { ApiKeyReveal } from "@/components/ApiKeyReveal";
 import { useState } from "react";
 import { KeyRound, Plus, Trash2, X } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/toast";
 
 export function Keys() {
   const [keys, setKeys] = useState(MOCK_KEYS);
