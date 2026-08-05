@@ -6,15 +6,40 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SpringValue, mapRange } from "@/components/home/hero/spring";
+import type { Plan } from "@/lib/mock";
 
-const tiers = [
-  { name: "Free", units: "25,000", note: "no card" },
-  { name: "Growth", units: "1M", note: "most picked" },
-  { name: "Scale", units: "10M", note: "priority lanes" },
-];
+/*
+ * The three cards used to hardcode their quotas — "25,000", "1M", "10M" — and two
+ * of the three were wrong: the catalog has Growth at 3,000,000 and Scale at
+ * 20,000,000, so this panel understated them by 3x and 2x while /pricing, reading
+ * the same catalog, printed the real figures. A visitor scrolling from here to the
+ * pricing page saw two different numbers for one plan.
+ *
+ * The quotas now come from the plan catalog via `getPublicPlans()`, threaded down
+ * from the server component, so the two pages cannot disagree again. Only the
+ * marketing note under each card stays local — that is copy, not data.
+ */
+const NOTES: Record<string, string> = {
+  free: "no card",
+  growth: "most picked",
+  scale: "priority lanes",
+};
 
-export function PricingBanner() {
+/** "25,000" below a million, "3M" above — the two forms this panel already used. */
+function formatUnits(quota: number): string {
+  return quota >= 1_000_000 ? `${quota / 1_000_000}M` : quota.toLocaleString();
+}
+
+export function PricingBanner({ plans }: { plans: Plan[] }) {
   const reduce = useReducedMotion();
+
+  // Three cards, in catalog order, for the ids this panel has always featured.
+  const tiers = ["free", "growth", "scale"]
+    .map((id) => plans.find((p) => p.id === id))
+    .filter((p): p is Plan => p !== undefined)
+    .map((p) => ({ name: p.name, units: formatUnits(p.quota), note: NOTES[p.id] ?? "" }));
+
+  const freeQuota = plans.find((p) => p.id === "free")?.quota;
   const tiltRef = useRef<HTMLDivElement>(null);
 
   // Same physics the `useSpring` here used: stiffness 60, damping 20, and
@@ -95,8 +120,8 @@ export function PricingBanner() {
               Start on Free. Upgrade when it hurts.
             </h3>
             <p className="mt-3 max-w-md text-muted-foreground">
-              25,000 units a month at no cost. Every plan uses the same endpoints — just more of
-              them.
+              {freeQuota === undefined ? "Free" : `${freeQuota.toLocaleString()} units a month`} at
+              no cost. Every plan uses the same endpoints — just more of them.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button

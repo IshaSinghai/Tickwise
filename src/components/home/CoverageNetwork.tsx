@@ -3,62 +3,45 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
+import type { ChainMetricsMap } from "@/lib/public-data";
+
 /*
  * No `latency` field, deliberately. The brief (§8) forbids showing any uptime,
  * SLA or latency number because there is no status monitoring behind it — a
- * figure here would be invented. Indexing lag is real and measured, so that is
- * what this surfaces instead.
+ * figure here would be invented.
+ *
+ * The same rule caught this panel's own numbers. It used to carry `tvl: "$1.02B"`,
+ * `pools: "4,820"` and `indexing: "~5 min"` per chain and render them under a
+ * heading reading "Coverage — kept honest" — three measurements per chain, none of
+ * them measured. They come from `getChainMetrics()` now, threaded down from the
+ * server component, and each cell reports itself unmeasured on its own.
+ *
+ * What stays here is what isn't a measurement: which chains exist, whether each is
+ * servable, and the x/y coordinates its node sits at. Those are product facts and
+ * layout, so the graph draws identically whether or not any figure resolved.
  */
 type Chain = {
   name: string;
   state: "live" | "indexed";
   x: number;
   y: number;
-  tvl: string;
-  pools: string;
-  indexing: string;
 };
 
 const chains: Chain[] = [
-  {
-    name: "Ethereum",
-    state: "live",
-    x: 26,
-    y: 30,
-    tvl: "$1.02B",
-    pools: "4,820",
-    indexing: "~5 min",
-  },
-  {
-    name: "Avalanche",
-    state: "live",
-    x: 72,
-    y: 26,
-    tvl: "$264M",
-    pools: "1,190",
-    indexing: "~4 min",
-  },
-  {
-    name: "Arbitrum",
-    state: "indexed",
-    x: 22,
-    y: 74,
-    tvl: "$318M",
-    pools: "2,140",
-    indexing: "backfilling",
-  },
-  {
-    name: "Optimism",
-    state: "indexed",
-    x: 76,
-    y: 72,
-    tvl: "$141M",
-    pools: "980",
-    indexing: "backfilling",
-  },
+  { name: "Ethereum", state: "live", x: 26, y: 30 },
+  { name: "Avalanche", state: "live", x: 72, y: 26 },
+  { name: "Arbitrum", state: "indexed", x: 22, y: 74 },
+  { name: "Optimism", state: "indexed", x: 76, y: 72 },
 ];
 
-export function CoverageNetwork() {
+/** Matches the "$1.02B" / "$264M" forms this panel has always printed. */
+function formatTvl(usd: number): string {
+  return usd >= 1e9 ? `$${(usd / 1e9).toFixed(2)}B` : `$${Math.round(usd / 1e6)}M`;
+}
+
+const UNMEASURED = "—";
+
+export function CoverageNetwork({ metrics }: { metrics: ChainMetricsMap | null }) {
   const [active, setActive] = useState<string | null>(null);
   const reduce = useReducedMotion();
 
@@ -155,6 +138,7 @@ export function CoverageNetwork() {
         <div className="relative rounded-2xl border border-border/60 bg-background/40 p-5">
           {(() => {
             const c = chains.find((x) => x.name === active);
+            const m = c ? metrics?.[c.name] : undefined;
             if (!c)
               return (
                 <div className="flex h-full min-h-40 flex-col justify-center text-sm text-muted-foreground">
@@ -186,9 +170,19 @@ export function CoverageNetwork() {
                   </span>
                 </div>
                 {[
-                  ["TVL", c.tvl],
-                  ["Pools", c.pools],
-                  ["Indexing", c.indexing],
+                  ["TVL", m?.tvlUsd === undefined ? UNMEASURED : formatTvl(m.tvlUsd)],
+                  ["Pools", m?.pools === undefined ? UNMEASURED : m.pools.toLocaleString()],
+                  [
+                    "Indexing",
+                    /* "backfilling" is a state we know, not a figure we measured, so
+                       the two non-servable chains keep it. A servable chain shows
+                       its measured lag or nothing. */
+                    c.state === "indexed"
+                      ? "backfilling"
+                      : m?.indexingLagMinutes === undefined
+                        ? UNMEASURED
+                        : `~${m.indexingLagMinutes} min`,
+                  ],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <dt className="text-[0.625rem] uppercase tracking-widest text-muted-foreground">

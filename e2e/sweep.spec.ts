@@ -33,6 +33,28 @@ import {
  */
 const CONTINUOUS_ANIMATION_ROUTES = new Set(["/"]);
 
+/*
+ * The browser's "now", pinned.
+ *
+ * Several portal stubs derive a date from the current one rather than carrying a
+ * literal — `getSubscription()` returns `today + 20 days`, `stubCurrentUsage()`
+ * computes the next 1st of the month — precisely so they can't go stale the way the
+ * hardcoded "1 August 2026" they replaced did. Correct for the product, fatal for a
+ * pixel baseline: the banner rendered "renews on 25 August 2026" the day these
+ * snapshots were taken and "26 August 2026" the next, so all eight portal routes
+ * failed by ~145 pixels on a diff containing nothing but that one digit. Every
+ * portal baseline would have gone red daily, forever.
+ *
+ * `setFixedTime` freezes Date.now()/new Date() in the page while leaving timers and
+ * performance.now() alone, so entrance animations, the counting values and the
+ * checkout poller all still run — this pins the calendar, not the clock.
+ *
+ * The instant is the one the current baselines were captured under, so pinning it
+ * cost no re-baselining. Masking the date region would have hidden a real change to
+ * the banner along with the drift.
+ */
+const FIXED_NOW = new Date("2026-08-05T12:00:00.000Z");
+
 for (const route of ROUTES) {
   test(`sweep ${route}`, async ({ page }) => {
     const errors: string[] = [];
@@ -49,6 +71,9 @@ for (const route of ROUTES) {
     // redirect here would test nothing about the page's own rendering.
     if (isGuardedPortalRoute(route)) await seedPortalSession(page);
     if (isGuardedAdminRoute(route)) await seedAdminSession(page);
+
+    // Before the first navigation, so date-derived copy is identical on every run.
+    await page.clock.setFixedTime(FIXED_NOW);
 
     const response = await page.goto(route, { waitUntil: "networkidle" });
     expect(response?.status(), `${route} should return 200`).toBe(200);

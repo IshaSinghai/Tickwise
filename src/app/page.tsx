@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { getPublicStats } from "@/lib/public-data";
+import { getChainMetrics, getPublicPlans, getPublicStats } from "@/lib/public-data";
 
 import { Landing } from "./landing";
 
@@ -29,6 +29,10 @@ export const metadata: Metadata = {
  * landing page four numbers rather than the whole page.
  */
 export default async function HomePage() {
-  const stats = await getPublicStats();
-  return <Landing stats={stats} />;
+  const [stats, chainMetrics, plans] = await Promise.all([
+    getPublicStats(),
+    getChainMetrics(),
+    getPublicPlans(),
+  ]);
+  return <Landing stats={stats} chainMetrics={chainMetrics} plans={plans} />;
 }

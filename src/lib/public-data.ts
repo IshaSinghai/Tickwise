@@ -104,7 +104,26 @@ export type PublicStats = {
   positionsTracked: number;
   indexingLagMinutes: number;
   tvlIndexedUsd: number;
+  /*
+   * The hero scene's three extra readouts: a headline pool's APR, its fee APR,
+   * and 24h volume.
+   *
+   * Optional, unlike the four above, and the distinction is load-bearing. The four
+   * are what §3 names as the page's proof, so the landing cards are all-or-nothing
+   * — one measured number beside three placeholders would read as a broken widget
+   * rather than an honest one. These three belong to individual hero panels that
+   * each stand alone, so each renders its own value or its own placeholder, and a
+   * backend that can serve TVL but not yet volume is not forced to withhold both.
+   */
+  aprEthUsdcPct?: number;
+  feeAprPct?: number;
+  volume24hUsd?: number;
 };
+
+/** Keeps only the numbers the response actually carried. */
+function optionalNumber(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+}
 
 export async function getPublicStats(): Promise<PublicStats | null> {
   const live = await publicGet<Partial<PublicStats>>("/public/stats", 300);
@@ -120,7 +139,41 @@ export async function getPublicStats(): Promise<PublicStats | null> {
   ) {
     return null;
   }
-  return { poolsTracked, positionsTracked, indexingLagMinutes, tvlIndexedUsd };
+  return {
+    poolsTracked,
+    positionsTracked,
+    indexingLagMinutes,
+    tvlIndexedUsd,
+    aprEthUsdcPct: optionalNumber(live.aprEthUsdcPct),
+    feeAprPct: optionalNumber(live.feeAprPct),
+    volume24hUsd: optionalNumber(live.volume24hUsd),
+  };
+}
+
+/**
+ * Per-chain measurements for the landing page's coverage panel, keyed by chain
+ * name ("Ethereum", "Avalanche", …), or null when the source is unreachable.
+ *
+ * Every field is optional for the same reason the hero's three extras are: each
+ * one occupies its own cell in the panel's TVL / Pools / Indexing list, so a
+ * backend that can total TVL but not yet count pools should show the one it has
+ * rather than withhold both.
+ *
+ * Which chains exist, where their nodes sit and whether each is servable are *not*
+ * here — those are product facts and layout, and they stay in the component.
+ */
+export type ChainMetrics = {
+  tvlUsd?: number;
+  pools?: number;
+  indexingLagMinutes?: number;
+};
+
+export type ChainMetricsMap = Record<string, ChainMetrics>;
+
+export async function getChainMetrics(): Promise<ChainMetricsMap | null> {
+  const live = await publicGet<ChainMetricsMap>("/public/chains", 300);
+  if (!live || Object.keys(live).length === 0) return null;
+  return live;
 }
 
 /**

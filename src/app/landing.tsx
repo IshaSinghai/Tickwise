@@ -17,24 +17,36 @@ import { CoverageNetwork } from "@/components/home/CoverageNetwork";
 import { TrustedBy } from "@/components/home/TrustedBy";
 import { PricingBanner } from "@/components/home/PricingBanner";
 import { Reveal, EASE } from "@/components/home/motion-primitives";
-import type { PublicStats } from "@/lib/public-data";
+import type { ChainMetricsMap, PublicStats } from "@/lib/public-data";
+import type { Plan } from "@/lib/mock";
 
-export function Landing({ stats }: { stats: PublicStats | null }) {
+export function Landing({
+  stats,
+  chainMetrics,
+  plans,
+}: {
+  stats: PublicStats | null;
+  chainMetrics: ChainMetricsMap | null;
+  plans: Plan[];
+}) {
   return (
     <MarketingShell>
       <AmbientBackground />
-      <Hero />
+      {/* One fetch, both consumers: the hero panels and the stat cards below read
+          the same `getPublicStats()` result, so the page can't state two different
+          numbers for the same thing. */}
+      <Hero stats={stats} />
       <Stats stats={stats} />
       <Proof />
       <Features />
       <Quickstart />
-      <Coverage />
-      <CTA />
+      <Coverage metrics={chainMetrics} />
+      <CTA plans={plans} />
     </MarketingShell>
   );
 }
 
-function Hero() {
+function Hero({ stats }: { stats: PublicStats | null }) {
   const reduce = useSafeReducedMotion();
   return (
     <section className="relative">
@@ -138,7 +150,7 @@ function Hero() {
           transition={{ duration: 1.4, delay: 0.12, ease: EASE }}
           className="lg:col-span-7"
         >
-          <HeroScene />
+          <HeroScene stats={stats} />
         </motion.div>
       </div>
     </section>
@@ -221,18 +233,18 @@ function Quickstart() {
   );
 }
 
-function Coverage() {
+function Coverage({ metrics }: { metrics: ChainMetricsMap | null }) {
   return (
     <Reveal as="section" className="container-page py-24">
-      <CoverageNetwork />
+      <CoverageNetwork metrics={metrics} />
     </Reveal>
   );
 }
 
-function CTA() {
+function CTA({ plans }: { plans: Plan[] }) {
   return (
     <Reveal as="section" className="container-page pb-24">
-      <PricingBanner />
+      <PricingBanner plans={plans} />
     </Reveal>
   );
 }

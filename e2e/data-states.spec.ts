@@ -64,6 +64,125 @@ test.describe("no invented metrics", () => {
     }
   });
 
+  test("the hero panels report themselves unmeasured too", async ({ page }) => {
+    await page.goto("/", { waitUntil: "load" });
+
+    /*
+     * The hero is the first thing anyone sees, and it used to print six literals
+     * while the cards a few hundred pixels below it read "—" — the page contradicted
+     * itself in one scroll. All six now come from the same getPublicStats().
+     *
+     * Each panel still exists and is still labelled; only the figure is withheld.
+     */
+    for (const label of [
+      "APR · ETH/USDC 0.05%",
+      "TVL indexed",
+      "Yield · fee APR",
+      "GET /v1/positions",
+      "Indexing lag",
+      "Pool metrics · 24h vol",
+    ]) {
+      await expect(page.getByText(label, { exact: true }).first()).toBeVisible();
+    }
+
+    // The pool-count subtitle keeps its line, so the panel height is unchanged.
+    await expect(page.getByText("across — v4 pools")).toBeVisible();
+
+    const body = await page.locator("body").innerText();
+    for (const fixture of [
+      "22.14", // APR
+      "24.68",
+      "4.81", // TVL indexed
+      "1,284", // "across 1,284 v4 pools"
+      "17.82", // fee APR
+      "38,412", // positions
+      "~38s", // indexing lag, previously in seconds
+      "612.4", // 24h volume
+    ]) {
+      expect(body, `the hero must not print the retired fixture "${fixture}"`).not.toContain(
+        fixture,
+      );
+    }
+  });
+
+  test("the coverage panel withholds per-chain TVL, pools and lag", async ({ page }) => {
+    await page.goto("/", { waitUntil: "load" });
+
+    const panel = page.locator("section", {
+      has: page.getByRole("heading", { name: "What’s actually live today" }),
+    });
+
+    /*
+     * focus(), not hover(). The node buttons carry `hover:-translate-y-[55%]`, so
+     * hovering slides the element out from under the pointer, `onMouseLeave` fires,
+     * and the detail panel closes again — this test failed intermittently that way,
+     * getting past "TVL" and then finding the panel gone by the time it asked for
+     * "Pools". The component sets `active` on focus too, and focus survives layout
+     * movement. It also exercises the keyboard path rather than only the mouse one.
+     */
+    await panel.getByRole("button", { name: "Ethereum" }).focus();
+
+    /*
+     * One innerText snapshot rather than a sequence of re-queried locators. Three
+     * separate `expect`s each re-resolve against the live DOM, so a panel that
+     * closes midway makes the assertions disagree with each other; a single read
+     * cannot race.
+     */
+    const detail = panel.locator("dl");
+    await expect(detail).toBeVisible();
+    /*
+     * Upper-cased before comparing, because the `<dt>`s carry Tailwind's
+     * `uppercase` and innerText reports text as rendered — the labels reach the DOM
+     * as "POOLS" and "INDEXING" however they are written in the source. Asserting
+     * the source casing is what made this test fail on "Pools" while passing on
+     * "TVL", which was already uppercase either way.
+     */
+    const shown = (await detail.innerText()).toUpperCase();
+
+    // Servability is a product fact and still shown.
+    expect(shown).toContain("LIVE");
+    // The three measurements are labelled but unmeasured.
+    for (const term of ["TVL", "POOLS", "INDEXING"]) {
+      expect(shown, `the coverage detail should label "${term}"`).toContain(term);
+    }
+    // One dash per measurement, so none of the three is quietly still a figure.
+    expect(shown.match(/—/g) ?? [], "all three measurements read as unmeasured").toHaveLength(3);
+
+    const body = await page.locator("body").innerText();
+    for (const fixture of ["$1.02B", "$264M", "$318M", "$141M", "4,820", "1,190", "2,140"]) {
+      expect(
+        body,
+        `the coverage panel must not print the retired fixture "${fixture}"`,
+      ).not.toContain(fixture);
+    }
+  });
+
+  test("the pricing banner quotes the plan catalog, not its own numbers", async ({ page }) => {
+    await page.goto("/", { waitUntil: "load" });
+
+    const banner = page.locator("section", {
+      has: page.getByRole("heading", { name: /Start on Free/ }),
+    });
+    await banner.scrollIntoViewIfNeeded();
+
+    /*
+     * Positive assertions, unlike the rest of this file, because these are catalog
+     * values rather than metrics — they should be present and correct. The banner
+     * used to hardcode "1M" and "10M" against a catalog holding 3,000,000 and
+     * 20,000,000, so the landing page understated two plans that /pricing reported
+     * correctly. These fail if the two ever drift apart again.
+     */
+    await expect(banner.getByText("25,000", { exact: true })).toBeVisible();
+    await expect(banner.getByText("3M", { exact: true })).toBeVisible();
+    await expect(banner.getByText("20M", { exact: true })).toBeVisible();
+
+    const text = await banner.innerText();
+    expect(text, "the retired 1M quota must not come back").not.toContain("1M units");
+    for (const stale of ["10M", "1M\n"]) {
+      expect(text, `the banner must not print the stale quota "${stale}"`).not.toContain(stale);
+    }
+  });
+
   test("the status page lists chains but claims no lag it hasn't measured", async ({ page }) => {
     await page.goto("/status", { waitUntil: "load" });
 

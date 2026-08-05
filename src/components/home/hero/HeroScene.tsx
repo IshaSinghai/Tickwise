@@ -11,12 +11,69 @@ import { AnimatedChart } from "./AnimatedChart";
 import { TokenNode } from "./TokenNode";
 import { DataPulse } from "./DataPulse";
 import { CountingValue } from "./CountingValue";
+import type { PublicStats } from "@/lib/public-data";
+
+/**
+ * A hero panel's number: the measured value, eased up from zero, or an em-dash.
+ *
+ * `from` and `to` are deliberately the same value, and that is what keeps the
+ * existing animation intact without touching CountingValue. Read its loop: for the
+ * first 2200ms it renders `from * p` on a cubic ease-out — the intro ramp from zero
+ * — and only afterwards does it oscillate on `from + (to - from) * eased`. With the
+ * two equal, the ramp plays exactly as it always did and the trailing oscillation
+ * evaluates to the value itself, so the number settles and stays put. `reduce` still
+ * short-circuits to `to`.
+ *
+ * The oscillation had to go rather than be re-pointed at live data, because it was
+ * the fabrication. A single measurement of "$4.81B" animated endlessly between 4.81
+ * and 4.94 spends almost all of its time displaying a figure nobody measured — the
+ * same §8 problem as the fixture it came from, just moving. One measurement is one
+ * number.
+ */
+function Readout({
+  value,
+  decimals,
+  prefix = "",
+  suffix = "",
+  duration,
+  reduce,
+}: {
+  value: number | undefined;
+  decimals: number;
+  prefix?: string;
+  suffix?: string;
+  duration: number;
+  reduce: boolean;
+}) {
+  if (value === undefined) {
+    // Same placeholder the landing statistic cards use when unmeasured.
+    return <span className="tabular-nums text-muted-foreground/50">—</span>;
+  }
+  return (
+    <CountingValue
+      from={value}
+      to={value}
+      decimals={decimals}
+      prefix={prefix}
+      suffix={suffix}
+      duration={duration}
+      reduce={reduce}
+    />
+  );
+}
 
 /**
  * The DeFi Intelligence Engine: a live holographic scene of floating
  * metric panels, chain nodes and data flow orbiting a liquidity core.
+ *
+ * Every figure on these panels used to be a literal — "$4.81B TVL indexed across
+ * 1,284 v4 pools", "38,412 positions", "~38s indexing lag", an APR and a fee APR.
+ * They now come from the same `getPublicStats()` the landing cards read, threaded
+ * down from the server component in src/app/page.tsx, and each panel reports itself
+ * unmeasured rather than inventing a figure. Nothing about the float, tilt,
+ * parallax, scroll transform or entrance timing changed.
  */
-export function HeroScene() {
+export function HeroScene({ stats }: { stats: PublicStats | null }) {
   const reduce = useSafeReducedMotion();
   const pointer = usePointer();
   const ref = useRef<HTMLDivElement>(null);
@@ -155,12 +212,19 @@ export function HeroScene() {
         >
           <MetricHeader
             label="APR · ETH/USDC 0.05%"
-            badge={<span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />}
+            badge={
+              /* The pulsing green dot is this panel's claim to be live, so it only
+                 earns it when there is a measured number under it. */
+              stats?.aprEthUsdcPct === undefined ? (
+                <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40" />
+              ) : (
+                <span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />
+              )
+            }
           />
           <div className="mt-2 font-display text-2xl font-semibold tracking-tight">
-            <CountingValue
-              from={22.14}
-              to={24.68}
+            <Readout
+              value={stats?.aprEthUsdcPct}
               decimals={2}
               suffix="%"
               duration={6.5}
@@ -182,9 +246,8 @@ export function HeroScene() {
         >
           <MetricHeader label="TVL indexed" />
           <div className="mt-2 font-display text-2xl font-semibold tracking-tight">
-            <CountingValue
-              from={4.81}
-              to={4.94}
+            <Readout
+              value={stats ? stats.tvlIndexedUsd / 1e9 : undefined}
               decimals={2}
               prefix="$"
               suffix="B"
@@ -192,7 +255,11 @@ export function HeroScene() {
               reduce={reduce}
             />
           </div>
-          <div className="mt-1 text-[11px] text-muted-foreground">across 1,284 v4 pools</div>
+          {/* The pool count keeps its line whether or not it has a number, so the
+              panel's height is the same either way. */}
+          <div className="mt-1 text-[11px] text-muted-foreground">
+            across {stats ? stats.poolsTracked.toLocaleString() : "—"} v4 pools
+          </div>
         </FloatingMetricCard>
 
         <FloatingMetricCard
@@ -207,9 +274,8 @@ export function HeroScene() {
         >
           <MetricHeader label="Yield · fee APR" />
           <div className="mt-2 font-display text-2xl font-semibold tracking-tight text-success">
-            <CountingValue
-              from={17.82}
-              to={18.24}
+            <Readout
+              value={stats?.feeAprPct}
               decimals={2}
               suffix="%"
               duration={7}
@@ -245,7 +311,7 @@ export function HeroScene() {
           />
           <div className="mt-2 flex items-end justify-between gap-3">
             <div className="font-display text-2xl font-semibold tracking-tight">
-              <CountingValue from={38412} to={38687} decimals={0} duration={9} reduce={reduce} />
+              <Readout value={stats?.positionsTracked} decimals={0} duration={9} reduce={reduce} />
             </div>
             <div className="font-mono text-[10px] text-muted-foreground">positions</div>
           </div>
@@ -268,15 +334,25 @@ export function HeroScene() {
         >
           <MetricHeader label="Indexing lag" />
           <div className="mt-1.5 font-display text-lg font-semibold tracking-tight">
-            ~
-            <CountingValue
-              from={38}
-              to={44}
-              decimals={0}
-              suffix="s"
-              duration={5.5}
-              reduce={reduce}
-            />
+            {/* Minutes, not the seconds this used to print. The measurement we
+                actually have is `indexingLagMinutes` — the same field the landing
+                card renders as "~5 min" — and inventing a seconds figure from it
+                would be the fabrication all over again. The `~` sits outside the
+                readout so an unmeasured panel shows "—" rather than "~—". */}
+            {stats === null ? (
+              <span className="tabular-nums text-muted-foreground/50">—</span>
+            ) : (
+              <>
+                ~
+                <Readout
+                  value={stats.indexingLagMinutes}
+                  decimals={0}
+                  suffix=" min"
+                  duration={5.5}
+                  reduce={reduce}
+                />
+              </>
+            )}
           </div>
         </FloatingMetricCard>
 
@@ -292,9 +368,8 @@ export function HeroScene() {
         >
           <MetricHeader label="Pool metrics · 24h vol" />
           <div className="mt-1.5 font-display text-lg font-semibold tracking-tight">
-            <CountingValue
-              from={612.4}
-              to={648.9}
+            <Readout
+              value={stats?.volume24hUsd === undefined ? undefined : stats.volume24hUsd / 1e6}
               decimals={1}
               prefix="$"
               suffix="M"
