@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Tickwise">
+  <title>Tickwise</title>
+  <!--
+    Colours are the sRGB equivalents of the --primary / --primary-glow oklch()
+    tokens in src/app/globals.css, and the geometry matches public/favicon.ico
+    (a 100-unit square, 22-unit corner radius, 14-unit round-capped strokes).
+    Literal hex rather than oklch() so the mark renders in every favicon slot.
+  -->
+  <defs>
+    <linearGradient id="tw-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6570FF" />
+      <stop offset="1" stop-color="#8394FF" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="22" ry="22" fill="url(#tw-grad)" />
+  <path
+    d="M26 30 H74 M50 30 V70"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

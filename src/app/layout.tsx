@@ -10,7 +10,23 @@ export const metadata: Metadata = {
   description:
     "Near-real-time Uniswap v4 pools and positions on Ethereum and Avalanche. Sign up, get an API key, start shipping in five minutes.",
   authors: [{ name: "Doryoku Labs" }],
-  icons: [{ rel: "icon", url: "/favicon.ico", type: "image/x-icon" }],
+  /*
+   * The Tickwise mark, replacing the Lovable favicon the migration inherited —
+   * public/favicon.ico was still byte-identical to the one on `main`.
+   *
+   * SVG first so modern browsers get the vector mark at any size; the multi-size
+   * .ico stays as the fallback for older Safari and for Windows shortcuts, and
+   * because browsers request /favicon.ico directly whatever the markup says. The
+   * assets are the ones authored on feat/boot-splash-and-favicon, reused rather
+   * than redrawn so the two branches carry the same mark.
+   */
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title: "Tickwise Dex API",
     description: "Near-real-time Uniswap v4 pools and positions. Built for teams.",
