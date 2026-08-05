@@ -11,7 +11,7 @@ export function AuthShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-hero px-6">
+    <div className="px-gutter flex min-h-screen items-center justify-center bg-hero">
       <div className="w-full max-w-sm">
         <Link
           href="/"

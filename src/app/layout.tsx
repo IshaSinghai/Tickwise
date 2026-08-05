@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import "./globals.css";
 import { Providers } from "./providers";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 export const metadata: Metadata = {
   title: "Tickwise — The metered API for Uniswap v4 pools & positions",
@@ -26,8 +27,13 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  /*
+   * suppressHydrationWarning on <html>: THEME_INIT_SCRIPT sets data-theme on that
+   * element before React hydrates, so the server-rendered markup and the client's
+   * differ by exactly that one attribute, by design.
+   */
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -37,6 +43,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body>
+        {/*
+         * First child of <body>, not a child of <head>: the App Router reconciles
+         * head children during hydration, and this is the placement Next
+         * documents for a pre-paint script. It still runs before any page content
+         * is painted — the stylesheet in <head> is already applied by this point —
+         * so there is no flash of the wrong palette.
+         *
+         * The attribute it sets is re-asserted by ThemeProvider on mount, because
+         * React strips unrecognised attributes from <html> when it hydrates. See
+         * the note there; that is what makes the theme stick, not this placement.
+         */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <Providers>{children}</Providers>
       </body>
     </html>

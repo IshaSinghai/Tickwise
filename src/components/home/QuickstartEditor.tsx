@@ -98,13 +98,13 @@ export function QuickstartEditor() {
           {["pools.ts", "positions.ts"].map((f, i) => (
             <span
               key={f}
-              className={`rounded-md px-2.5 py-1 font-mono text-[11px] ${i === 0 ? "bg-surface-2 text-foreground" : "text-muted-foreground"}`}
+              className={`rounded-md px-2.5 py-1 font-mono text-[0.6875rem] ${i === 0 ? "bg-surface-2 text-foreground" : "text-muted-foreground"}`}
             >
               {f}
             </span>
           ))}
         </div>
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-muted-foreground">
           node 22
         </span>
       </div>
@@ -117,7 +117,7 @@ export function QuickstartEditor() {
               <span className="whitespace-pre-wrap break-all text-foreground/90">
                 {highlight(l)}
                 {phase === "typing" && i === lines.length - 1 && (
-                  <span className="ml-0.5 inline-block h-[1.05em] w-[7px] translate-y-[2px] animate-caret bg-primary-glow" />
+                  <span className="ml-0.5 inline-block h-[1.05em] w-[0.4375rem] translate-y-[0.125rem] animate-caret bg-primary-glow" />
                 )}
               </span>
             </div>
@@ -147,7 +147,7 @@ export function QuickstartEditor() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.7 }}
               >
-                <div className="mb-2 flex flex-wrap items-center gap-3 text-[11px]">
+                <div className="mb-2 flex flex-wrap items-center gap-3 text-[0.6875rem]">
                   <span className="rounded-full border border-success/40 bg-success/10 px-2 py-0.5 text-success">
                     200 OK
                   </span>
@@ -161,7 +161,7 @@ export function QuickstartEditor() {
                     1 unit consumed · 24,999 left
                   </motion.span>
                 </div>
-                <pre className="max-h-56 overflow-auto text-[12px] text-foreground/75">
+                <pre className="max-h-56 overflow-auto text-[0.75rem] text-foreground/75">
                   {JSON_RES}
                 </pre>
               </motion.div>

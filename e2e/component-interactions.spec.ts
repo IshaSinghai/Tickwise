@@ -71,3 +71,92 @@ test.describe("Toast (/contact)", () => {
     expect(errors).toEqual([]);
   });
 });
+
+test.describe("Pointer springs (/) — hand-rolled integrator", () => {
+  /*
+   * These springs replaced motion's `useSpring`. The migration was verified by
+   * running this integrator against motion's own `spring` generator at 1ms
+   * resolution (bit-identical across both configs and mid-flight retargets),
+   * but that check dies with the dependency. What survives is behavioural: the
+   * spring must respond to the pointer, approach its target monotonically
+   * without overshoot (both configs are overdamped — zeta 1.67 and 1.29), and
+   * come to rest at the mapped target rather than drifting or sticking.
+   *
+   * Read the transform AFTER the frame's rAF callbacks. Reading inside the rAF
+   * phase returns a one-frame-stale value depending on callback registration
+   * order, which reads as a spurious lag.
+   */
+  const readTx = async (page: import("@playwright/test").Page, index: number) =>
+    page.evaluate(
+      ([i]) =>
+        new Promise<number>((resolve) => {
+          const hero = document.querySelector(
+            '[class*="max-w-[820px]"][class*="select-none"]',
+          ) as HTMLElement;
+          const el = hero.children[i] as HTMLElement;
+          requestAnimationFrame(() =>
+            setTimeout(() => {
+              const t = getComputedStyle(el).transform;
+              if (!t || t === "none") return resolve(0);
+              const open = t.indexOf("(");
+              const n = t
+                .slice(open + 1, t.lastIndexOf(")"))
+                .split(",")
+                .map(Number);
+              resolve(t.startsWith("matrix3d") ? n[12] : n[4]);
+            }, 0),
+          );
+        }),
+      [index],
+    );
+
+  test("scene parallax tracks the pointer, settles without overshoot, and returns to rest", async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (err) => {
+      if (!isAllowlistedError(err.message, "/")) errors.push(err.message);
+    });
+
+    await page.goto("/");
+    const hero = page.locator('[class*="max-w-[820px]"][class*="select-none"]').first();
+    await hero.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(3000); // entrance animations settle by ~2.2s
+    const box = (await hero.boundingBox())!;
+
+    // at rest in the centre the parallax layer sits at zero
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.waitForTimeout(1500);
+    expect(Math.abs(await readTx(page, 1))).toBeLessThan(0.5);
+
+    // pointer.x = -1 maps to translateX +10px
+    await page.mouse.move(box.x + 2, box.y + box.height / 2);
+    const samples: number[] = [];
+    for (let i = 0; i < 12; i++) {
+      samples.push(await readTx(page, 1));
+      await page.waitForTimeout(120);
+    }
+    await page.waitForTimeout(2500);
+    const settled = await readTx(page, 1);
+
+    // lands on the mapped target
+    expect(settled).toBeGreaterThan(9.5);
+    expect(settled).toBeLessThanOrEqual(10.001);
+
+    // it actually animated rather than snapping in one frame
+    expect(samples.filter((v) => v > 0.05 && v < settled - 0.05).length).toBeGreaterThan(2);
+
+    // overdamped: monotonic approach, never past the target
+    expect(Math.max(...samples)).toBeLessThanOrEqual(10.001);
+    for (let i = 1; i < samples.length; i++) {
+      expect(samples[i]).toBeGreaterThanOrEqual(samples[i - 1] - 0.01);
+    }
+
+    // leaving the scene springs it back to rest
+    await page.mouse.move(5, 5);
+    await page.waitForTimeout(3000);
+    expect(Math.abs(await readTx(page, 1))).toBeLessThan(0.5);
+
+    expect(errors).toEqual([]);
+  });
+});

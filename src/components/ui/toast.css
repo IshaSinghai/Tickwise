@@ -47,11 +47,19 @@
   gap: 6px;
   width: 100%;
   padding: 16px;
-  border: 1px solid #ededed;
+  /*
+   * Design tokens, not the literal #fff / #171717 / #ededed these were.
+   *
+   * Those were sonner's own defaults, carried over when the toast was
+   * hand-rolled. They are light-theme colours, so the toast rendered as a white
+   * card on a dark-first app regardless of theme, and would not have followed
+   * data-theme at all. The tokens track both themes.
+   */
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background-color: #fff;
-  color: #171717;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: var(--shadow-card);
   /* sonner uses its own stack rather than inheriting the app font. */
   font-family:
     ui-sans-serif,

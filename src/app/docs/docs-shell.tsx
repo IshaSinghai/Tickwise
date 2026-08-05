@@ -36,12 +36,12 @@ export function DocsShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   return (
     <MarketingShell>
-      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-10 md:grid-cols-[220px_1fr]">
+      <div className="container-page grid gap-8 py-10 md:grid-cols-[13.75rem_1fr]">
         <aside className="hidden md:block">
           <nav className="sticky top-24 space-y-6">
             {nav.map((g) => (
               <div key={g.section}>
-                <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                <div className="mb-2 text-[0.625rem] font-semibold uppercase tracking-widest text-muted-foreground">
                   {g.section}
                 </div>
                 <ul className="space-y-0.5">
@@ -64,7 +64,7 @@ export function DocsShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
         </aside>
-        <article className="min-w-0 max-w-3xl">{children}</article>
+        <article className="container-prose min-w-0">{children}</article>
       </div>
     </MarketingShell>
   );

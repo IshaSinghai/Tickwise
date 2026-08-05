@@ -26,7 +26,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             <span className="font-mono text-xs">TW</span>
           </span>
           <span>Tickwise</span>
-          <span className="ml-1 rounded-md border border-sidebar-border bg-background/40 px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+          <span className="ml-1 rounded-md border border-sidebar-border bg-background/40 px-1.5 py-0.5 font-sans text-[0.625rem] font-medium uppercase tracking-widest text-muted-foreground">
             Dex API
           </span>
         </div>
@@ -58,20 +58,31 @@ export function PortalShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between border-b border-border/60 bg-background/70 px-6 backdrop-blur-xl">
-          <div className="text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-foreground">
-              Home
-            </Link>{" "}
-            <span className="mx-1">/</span> <span className="text-foreground">Portal</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-surface px-2 py-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-success" /> Starter
-            </span>
+        {/*
+         * Border spans the whole column; the contents sit on the same
+         * `container-page` frame as the `main` below, so the breadcrumb always
+         * lines up with the page content. Previously the bar was `px-6` while
+         * `main` was `mx-auto max-w-6xl p-6` — two different rules, so at 1920 the
+         * breadcrumb sat at x=264 and the content at x=528, 264px apart. A bare
+         * gutter on the bar is not enough to fix that: once the frame is capped it
+         * centres in the column, and only an identical frame follows it.
+         */}
+        <header className="flex h-14 items-center border-b border-border/60 bg-background/70 backdrop-blur-xl">
+          <div className="container-page flex items-center justify-between">
+            <div className="text-sm text-muted-foreground">
+              <Link href="/" className="hover:text-foreground">
+                Home
+              </Link>{" "}
+              <span className="mx-1">/</span> <span className="text-foreground">Portal</span>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-surface px-2 py-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-success" /> Starter
+              </span>
+            </div>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-6xl flex-1 space-y-6 p-6">
+        <main className="container-page flex-1 space-y-6 py-6">
           <LifecycleBanner />
           {children}
         </main>

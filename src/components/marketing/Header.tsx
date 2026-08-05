@@ -34,7 +34,7 @@ export function MarketingHeader() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6">
+      <div className="container-page flex h-16 items-center gap-6">
         <Link
           href="/"
           className="group flex items-center gap-2 font-display text-lg font-semibold tracking-tight"
@@ -43,11 +43,20 @@ export function MarketingHeader() {
             <span className="font-mono text-xs">TW</span>
           </span>
           <span className="transition-colors group-hover:text-primary-glow">Tickwise</span>
-          <span className="ml-1 rounded-md border border-border/60 bg-surface/70 px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground backdrop-blur">
+          <span className="ml-1 rounded-md border border-border/60 bg-surface/70 px-1.5 py-0.5 font-sans text-[0.625rem] font-medium uppercase tracking-widest text-muted-foreground backdrop-blur">
             Dex API
           </span>
         </Link>
-        <nav className="ml-4 hidden items-center gap-1 md:flex">
+        {/*
+         * Desktop bar switches in at lg, not md. Its contents need ~795px and a
+         * 768px viewport only offers ~710px inside the gutters, so at md the logo
+         * badge wrapped to two lines and "Get an API key" was clipped off the
+         * right edge — visible in the pre-change screenshots too, since px-6 only
+         * ever gave it 720px. Holding the mobile menu to 1024 is what makes the
+         * 768–1023 band fit; the alternative was shaving 85px out of the nav's
+         * own spacing, which would have cost more than it bought.
+         */}
+        <nav className="ml-4 hidden items-center gap-1 lg:flex">
           {nav.map((n) => {
             const active = pathname === n.to || (n.to !== "/" && pathname.startsWith(n.to));
             return (
@@ -68,7 +77,7 @@ export function MarketingHeader() {
             );
           })}
         </nav>
-        <div className="ml-auto hidden items-center gap-2 md:flex">
+        <div className="ml-auto hidden items-center gap-2 lg:flex">
           <Button
             asChild
             variant="ghost"
@@ -89,7 +98,7 @@ export function MarketingHeader() {
           </Button>
         </div>
         <button
-          className="ml-auto rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground md:hidden"
+          className="ml-auto rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground lg:hidden"
           onClick={() => setOpen((o) => !o)}
           aria-label="Toggle menu"
         >
@@ -97,8 +106,8 @@ export function MarketingHeader() {
         </button>
       </div>
       {open && (
-        <div className="border-t border-border/60 bg-background/90 backdrop-blur-2xl md:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col px-4 py-3">
+        <div className="border-t border-border/60 bg-background/90 backdrop-blur-2xl lg:hidden">
+          <nav className="container-page flex flex-col py-3">
             {nav.map((n) => (
               <Link
                 key={n.to}

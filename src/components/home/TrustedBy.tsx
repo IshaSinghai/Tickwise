@@ -8,7 +8,7 @@ export function TrustedBy() {
   const reduce = useReducedMotion();
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+      <div className="text-[0.6875rem] uppercase tracking-[0.25em] text-muted-foreground">
         Powering data teams at
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">

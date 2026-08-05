@@ -136,7 +136,7 @@ export function DialogContent({
         // visible after it had actually closed. Keying display off the [open]
         // attribute restores that, and keeps the element displayed through the
         // closing animation (the attribute is only removed by .close()).
-        "m-0 fixed left-[50%] top-[50%] z-50 hidden w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 text-foreground shadow-lg duration-200 [&[open]]:grid backdrop:bg-black/80 data-[state=closing]:animate-out data-[state=closing]:fade-out-0 data-[state=closing]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 sm:rounded-lg",
+        "m-0 fixed left-[50%] top-[50%] z-50 hidden w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 text-foreground shadow-lg duration-200 [&[open]]:grid backdrop:bg-[color-mix(in_oklab,var(--background)_78%,transparent)] data-[state=closing]:animate-out data-[state=closing]:fade-out-0 data-[state=closing]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 sm:rounded-lg",
         className,
       )}
       {...props}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { MarketingShell } from "@/components/marketing/MarketingShell";
 import { Button } from "@/components/ui/button";
-import { PLANS, UNIT_COSTS } from "@/lib/mock";
+import type { Plan, UnitCost } from "@/lib/mock";
 import {
   Accordion,
   AccordionContent,
@@ -13,11 +13,16 @@ import {
 } from "@/components/ui/accordion";
 import { useState } from "react";
 
-export function Pricing() {
+/*
+ * The plan catalog and the unit table arrive as props from the server component
+ * that owns this route's metadata — see the note in page.tsx. This view keeps only
+ * the billing-cycle toggle, which is what it needed to be a client component for.
+ */
+export function Pricing({ plans, unitCosts }: { plans: Plan[]; unitCosts: UnitCost[] }) {
   const [cycle, setCycle] = useState<"monthly" | "annual">("monthly");
   return (
     <MarketingShell>
-      <section className="mx-auto max-w-7xl px-6 pt-20 pb-10 text-center">
+      <section className="container-page pt-20 pb-10 text-center">
         <div className="text-xs uppercase tracking-widest text-primary">Pricing</div>
         <h1 className="mt-2 font-display text-5xl font-semibold tracking-tight">
           One API. Four price points.
@@ -43,8 +48,13 @@ export function Pricing() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-4 px-6 pb-16 md:grid-cols-2 lg:grid-cols-4">
-        {PLANS.map((p) => (
+      {/* One gap at every width. An earlier revision widened it at 2xl because
+          content kept growing to 1760px there and the four cards were reading as
+          stretched; content now caps at 1440px and the gap scales with the root
+          font size, so the cards land ~5% wider than at 1280 in proportional
+          terms and there is nothing left to compensate for. */}
+      <section className="container-page grid gap-4 pb-16 md:grid-cols-2 lg:grid-cols-4">
+        {plans.map((p) => (
           <div
             key={p.id}
             className={`relative flex flex-col rounded-2xl border p-6 shadow-card ${
@@ -54,7 +64,7 @@ export function Pricing() {
             }`}
           >
             {p.featured && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-primary px-3 py-1 text-[0.625rem] font-semibold uppercase tracking-widest text-primary-foreground">
                 Most popular
               </div>
             )}
@@ -95,7 +105,10 @@ export function Pricing() {
         ))}
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 py-10">
+      {/* Spans the full frame so its panel edges line up with the plan cards
+          above it, which is the alignment the three-different-max-widths version
+          of this page never had. */}
+      <section className="container-page py-10">
         <div className="rounded-2xl border border-border/60 bg-surface shadow-card">
           <div className="border-b border-border/60 p-6">
             <div className="text-xs uppercase tracking-widest text-primary">Unit costs</div>
@@ -113,7 +126,7 @@ export function Pricing() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
-              {UNIT_COSTS.map((u) => (
+              {unitCosts.map((u) => (
                 <tr key={u.endpoint}>
                   <td className="px-6 py-3 font-mono text-xs">{u.endpoint}</td>
                   <td className="px-6 py-3 font-mono">{u.units}</td>
@@ -125,37 +138,42 @@ export function Pricing() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-16">
-        <h2 className="mb-6 text-center font-display text-3xl font-semibold">Frequently asked</h2>
-        <Accordion type="single" collapsible>
-          {[
-            [
-              "How do I pay?",
-              "Crypto only, on a hosted checkout page. USDC on Ethereum by default. We never touch your wallet — you pay to a one-time address and we confirm on-chain.",
-            ],
-            [
-              "What happens when I hit my quota?",
-              "Requests over quota return 429 with a clear reason header. Your keys keep working next month or as soon as you upgrade — nothing is destroyed.",
-            ],
-            [
-              "Do you rate-limit per key or per account?",
-              "Rate limits are per account. Quota is per account. Keys are just credentials.",
-            ],
-            [
-              "Can I cancel any time?",
-              "Yes. Your plan runs to the end of the current period and then drops to Free. Keys keep working at free-tier limits.",
-            ],
-            [
-              "Is there an SLA?",
-              "Not yet. We won’t claim uptime numbers we can’t back up. See the status page for indexing lag.",
-            ],
-          ].map(([q, a], i) => (
-            <AccordionItem value={`i${i}`} key={q}>
-              <AccordionTrigger className="text-left">{q}</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">{a}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      {/* Centred rather than left-aligned like the other narrow blocks in the
+          site: this section's heading is `text-center`, so centring is the
+          existing design intent here, not a spacing accident. */}
+      <section className="container-page py-16">
+        <div className="container-narrow mx-auto">
+          <h2 className="mb-6 text-center font-display text-3xl font-semibold">Frequently asked</h2>
+          <Accordion type="single" collapsible>
+            {[
+              [
+                "How do I pay?",
+                "Crypto only, on a hosted checkout page. USDC on Ethereum by default. We never touch your wallet — you pay to a one-time address and we confirm on-chain.",
+              ],
+              [
+                "What happens when I hit my quota?",
+                "Requests over quota return 429 with a clear reason header. Your keys keep working next month or as soon as you upgrade — nothing is destroyed.",
+              ],
+              [
+                "Do you rate-limit per key or per account?",
+                "Rate limits are per account. Quota is per account. Keys are just credentials.",
+              ],
+              [
+                "Can I cancel any time?",
+                "Yes. Your plan runs to the end of the current period and then drops to Free. Keys keep working at free-tier limits.",
+              ],
+              [
+                "Is there an SLA?",
+                "Not yet. We won’t claim uptime numbers we can’t back up. See the status page for indexing lag.",
+              ],
+            ].map(([q, a], i) => (
+              <AccordionItem value={`i${i}`} key={q}>
+                <AccordionTrigger className="text-left">{q}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">{a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </section>
     </MarketingShell>
   );

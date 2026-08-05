@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PLANS } from "@/lib/mock";
+import { getPublicPlans } from "@/lib/public-data";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
@@ -8,7 +8,18 @@ export const metadata: Metadata = {
   title: "Change plan — Tickwise portal",
 };
 
-export default function BillingPlansPage() {
+/*
+ * The one page in the portal with no interactivity of its own, so it stays a
+ * server component rendered inside the client-guarded portal shell — the guard and
+ * the chrome are what make the realm client-rendered, not each leaf.
+ *
+ * It reads the same plan catalog /pricing does, through the same getter, so the
+ * two can't drift: an upgrade page that disagrees with the public price list is
+ * the bug worth designing out.
+ */
+export default async function BillingPlansPage() {
+  const plans = await getPublicPlans();
+
   return (
     <div className="space-y-6">
       <h1 className="font-display text-3xl font-semibold">Change plan</h1>
@@ -17,7 +28,7 @@ export default function BillingPlansPage() {
         payment confirms on-chain.
       </p>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {PLANS.map((p) => (
+        {plans.map((p) => (
           <div
             key={p.id}
             className={`flex flex-col rounded-xl border p-5 ${p.featured ? "border-primary/60 bg-surface shadow-glow" : "border-border/60 bg-surface"}`}

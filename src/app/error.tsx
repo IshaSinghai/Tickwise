@@ -11,7 +11,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="px-gutter flex min-h-screen items-center justify-center bg-background">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
           This page didn&apos;t load

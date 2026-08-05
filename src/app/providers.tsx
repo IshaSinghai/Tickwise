@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/theme-provider";
 
 /*
  * Previously wrapped the whole app in @tanstack/react-query's
@@ -15,9 +16,9 @@ import { Toaster } from "@/components/ui/sonner";
  */
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <>
+    <ThemeProvider>
       {children}
       <Toaster />
-    </>
+    </ThemeProvider>
   );
 }

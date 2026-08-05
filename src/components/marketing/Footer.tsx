@@ -3,14 +3,14 @@ import Link from "next/link";
 export function MarketingFooter() {
   return (
     <footer className="mt-24 border-t border-border/60 bg-background/60">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-5">
+      <div className="container-page grid gap-10 py-14 md:grid-cols-5">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 font-display font-semibold">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-primary text-[10px] font-mono text-primary-foreground">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-primary text-[0.625rem] font-mono text-primary-foreground">
               TW
             </span>
             <span>Tickwise</span>
-            <span className="ml-1 rounded-md border border-border/60 bg-surface px-1.5 py-0.5 font-sans text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+            <span className="ml-1 rounded-md border border-border/60 bg-surface px-1.5 py-0.5 font-sans text-[0.625rem] font-medium uppercase tracking-widest text-muted-foreground">
               Dex API
             </span>
           </div>
@@ -49,7 +49,7 @@ export function MarketingFooter() {
         />
       </div>
       <div className="border-t border-border/60">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-6 py-6 text-xs text-muted-foreground">
+        <div className="container-page flex flex-wrap items-center justify-between gap-2 py-6 text-xs text-muted-foreground">
           <div>© {new Date().getFullYear()} Doryoku Labs · Tickwise Dex API</div>
           <div className="font-mono">Uniswap v4 · ETH · AVAX · near-real-time</div>
         </div>

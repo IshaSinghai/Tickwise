@@ -154,7 +154,7 @@ export function HolographicCore({ reduce = false }: { reduce?: boolean }) {
         />
       </motion.div>
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-        <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-foreground/80">
+        <div className="font-mono text-[0.5625rem] uppercase tracking-[0.22em] text-foreground/80">
           liquidity
         </div>
         <div className="font-display text-xs font-semibold tracking-tight text-foreground">

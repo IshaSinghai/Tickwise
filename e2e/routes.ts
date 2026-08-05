@@ -1,7 +1,15 @@
-/** Every routed page.tsx under src/app, dynamic segments already excluded (none exist today). */
+/*
+ * Every routed page.tsx under src/app.
+ *
+ * One dynamic segment exists: /admin/clients/[id]. It is listed as a concrete
+ * instance, because a sweep needs a URL it can actually visit — `cli_100` is the
+ * first row of the client list, so it resolves whether the panel is being served
+ * the fallback or a real response.
+ */
 export const ROUTES = [
   "/",
   "/admin",
+  "/admin/clients/cli_100",
   "/admin/endpoints",
   "/admin/login",
   "/admin/payments",

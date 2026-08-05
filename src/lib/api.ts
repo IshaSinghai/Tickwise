@@ -18,14 +18,25 @@
  */
 
 import {
+  ACCOUNT_PROFILE,
+  ADMIN_CLIENTS,
+  ADMIN_REVENUE,
+  ADMIN_SUBSCRIPTIONS,
+  ADMIN_SUBSCRIPTION_SUMMARY,
   CURRENT_USAGE,
   MOCK_KEYS,
   PAYMENTS,
   PLANS,
   UNIT_COSTS,
   USAGE_MONTHLY,
+  adminClientDetail,
+  type AccountProfile,
+  type AdminClient,
+  type AdminClientDetail,
+  type AdminSubscription,
   type ApiKey,
   type Plan,
+  type UnitCost,
 } from "@/lib/mock";
 import { clearToken, getToken, type Realm } from "@/lib/auth";
 
@@ -104,6 +115,21 @@ function stub<T>(value: T): Promise<T> {
 }
 
 /**
+ * Current-month usage with the reset date computed rather than fixed.
+ *
+ * §4.4 requires the meter to say the quota resets on the 1st of the month, UTC.
+ * The mock module carries a literal `2026-08-01`, which is frozen at build time
+ * and drifts into the past — the meter would then claim a reset that had already
+ * happened. Computing the next 1st keeps the stub honest for as long as it is in
+ * use, and the field is replaced wholesale once the endpoint is live.
+ */
+function stubCurrentUsage(): typeof CURRENT_USAGE {
+  const now = new Date();
+  const nextFirst = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 0, 0, 0, 0));
+  return { ...CURRENT_USAGE, resetOn: nextFirst.toISOString() };
+}
+
+/**
  * Unauthenticated request against a capability URL.
  *
  * Separate from apiRequest because §4.2's checkout-status endpoint must work
@@ -149,6 +175,25 @@ export type UsageResponse = {
 
 export type CreatedKey = { apiKey: ApiKey; secret: string };
 
+/**
+ * What §4.3's banner needs in order to pick its own state.
+ *
+ * The five banner states are derived from this rather than sent by the server, so
+ * the rule ("7 days or fewer means renewal due") lives in one pure function next
+ * to the component instead of being duplicated in the backend. See
+ * `lifecycleStateFor` in components/LifecycleBanner.tsx.
+ */
+export type Subscription = {
+  status: "active" | "grace" | "free";
+  planName: string;
+  /** ISO date the current period ends, or ended if the status is grace/free. */
+  currentPeriodEnd: string;
+  /** ISO date the grace window closes. Only meaningful while status is "grace". */
+  graceEndsAt: string | null;
+  /** The customer has asked to cancel; the plan runs to currentPeriodEnd. */
+  cancelAtPeriodEnd: boolean;
+};
+
 // ── Portal endpoints ─────────────────────────────────────────────────────────
 
 export function getAccountOverview(signal?: AbortSignal): Promise<AccountOverview> {
@@ -157,7 +202,7 @@ export function getAccountOverview(signal?: AbortSignal): Promise<AccountOvervie
     return stub({
       plan: starter,
       keyCount: MOCK_KEYS.length,
-      usage: CURRENT_USAGE,
+      usage: stubCurrentUsage(),
       lastPayment: PAYMENTS[0] ?? null,
     });
   }
@@ -198,9 +243,14 @@ export function revokeAccountKey(id: string): Promise<void> {
   return apiRequest<void>("portal", `/account/keys/${id}`, { method: "DELETE" });
 }
 
+export function getAccountProfile(signal?: AbortSignal): Promise<AccountProfile> {
+  if (!hasBackend()) return stub(ACCOUNT_PROFILE);
+  return apiRequest<AccountProfile>("portal", "/account/profile", { signal });
+}
+
 export function getAccountUsage(signal?: AbortSignal): Promise<UsageResponse> {
   if (!hasBackend()) {
-    return stub({ monthly: USAGE_MONTHLY, current: CURRENT_USAGE, unitCosts: UNIT_COSTS });
+    return stub({ monthly: USAGE_MONTHLY, current: stubCurrentUsage(), unitCosts: UNIT_COSTS });
   }
   return apiRequest<UsageResponse>("portal", "/account/usage", { signal });
 }
@@ -208,6 +258,27 @@ export function getAccountUsage(signal?: AbortSignal): Promise<UsageResponse> {
 export function getAccountPayments(signal?: AbortSignal): Promise<typeof PAYMENTS> {
   if (!hasBackend()) return stub(PAYMENTS);
   return apiRequest<typeof PAYMENTS>("portal", "/account/payments", { signal });
+}
+
+export function getSubscription(signal?: AbortSignal): Promise<Subscription> {
+  if (!hasBackend()) {
+    /*
+     * Dates are computed per call, not at module scope. A literal date would be
+     * frozen at build time and drift into the past — the banner this replaces
+     * hardcoded "1 August 2026", which had already gone stale.
+     */
+    const periodEnd = new Date();
+    periodEnd.setDate(periodEnd.getDate() + 20);
+    const starter = PLANS.find((p) => p.id === "starter") ?? PLANS[0];
+    return stub({
+      status: "active" as const,
+      planName: starter?.name ?? "Starter",
+      currentPeriodEnd: periodEnd.toISOString(),
+      graceEndsAt: null,
+      cancelAtPeriodEnd: false,
+    });
+  }
+  return apiRequest<Subscription>("portal", "/account/subscription", { signal });
 }
 
 // ── Checkout status (public capability URL, no session) ──────────────────────
@@ -245,6 +316,17 @@ export function getCheckoutStatus(
 
 // ── Admin endpoints ──────────────────────────────────────────────────────────
 
+/*
+ * Every endpoint in this section is backend-planned, so each one resolves its
+ * fallback from lib/mock while no API base URL is configured. That is the
+ * arrangement §1 allows for planned endpoints — and unlike the public metrics, an
+ * internal panel behind an admin token is not making a claim to a customer.
+ *
+ * What the fallbacks do *not* do is fake a write. Nothing here pretends a PATCH
+ * succeeded; the pages that offer an edit say the write needs the admin API
+ * instead, which is the same rule the checkout return page follows.
+ */
+
 export function getAdminPlans(signal?: AbortSignal): Promise<Plan[]> {
   if (!hasBackend()) return stub(PLANS);
   return apiRequest<Plan[]>("admin", "/admin/plans", { signal });
@@ -253,4 +335,103 @@ export function getAdminPlans(signal?: AbortSignal): Promise<Plan[]> {
 export function getAdminPayments(signal?: AbortSignal): Promise<typeof PAYMENTS> {
   if (!hasBackend()) return stub(PAYMENTS);
   return apiRequest<typeof PAYMENTS>("admin", "/admin/payments", { signal });
+}
+
+export function getAdminClients(signal?: AbortSignal): Promise<AdminClient[]> {
+  if (!hasBackend()) return stub(ADMIN_CLIENTS);
+  return apiRequest<AdminClient[]>("admin", "/admin/clients", { signal });
+}
+
+/**
+ * One client's detail record.
+ *
+ * Rejects with a 404 for an id that doesn't exist rather than resolving something
+ * empty, so `/admin/clients/nope` renders the error state with a real message
+ * instead of a page of blanks.
+ */
+export function getAdminClient(id: string, signal?: AbortSignal): Promise<AdminClientDetail> {
+  if (!hasBackend()) {
+    const detail = adminClientDetail(id);
+    return detail ? stub(detail) : Promise.reject(new ApiError(404, `No client with id ${id}.`));
+  }
+  return apiRequest<AdminClientDetail>("admin", `/admin/clients/${encodeURIComponent(id)}`, {
+    signal,
+  });
+}
+
+export function getAdminEndpointCosts(signal?: AbortSignal): Promise<UnitCost[]> {
+  if (!hasBackend()) return stub(UNIT_COSTS);
+  return apiRequest<UnitCost[]>("admin", "/admin/endpoints", { signal });
+}
+
+export type AdminSubscriptionsResponse = {
+  subscriptions: AdminSubscription[];
+  summary: typeof ADMIN_SUBSCRIPTION_SUMMARY;
+};
+
+export function getAdminSubscriptions(signal?: AbortSignal): Promise<AdminSubscriptionsResponse> {
+  if (!hasBackend()) {
+    return stub({ subscriptions: ADMIN_SUBSCRIPTIONS, summary: ADMIN_SUBSCRIPTION_SUMMARY });
+  }
+  return apiRequest<AdminSubscriptionsResponse>("admin", "/admin/subscriptions", { signal });
+}
+
+export type AdminRevenue = typeof ADMIN_REVENUE;
+
+export function getAdminRevenue(signal?: AbortSignal): Promise<AdminRevenue> {
+  if (!hasBackend()) return stub(ADMIN_REVENUE);
+  return apiRequest<AdminRevenue>("admin", "/admin/revenue", { signal });
+}
+
+// ── Playground ───────────────────────────────────────────────────────────────
+
+export type PlaygroundResult = { status: number; body: string; unitsSpent: number | null };
+
+/**
+ * Runs one playground request against the real API on the customer's behalf.
+ *
+ * The previous implementation fabricated a response body — `{ pair: "USDC/WETH",
+ * tvl_usd: 12480322, units_spent: 1 }` — and printed it in a JSON viewer under a
+ * heading promising "your real key. Units spent are counted." A made-up API
+ * response is the most misleading kind of invented data on the site, so there is
+ * no offline happy path here: with no API configured this rejects, exactly as the
+ * checkout-status endpoint does.
+ */
+export async function sendPlaygroundRequest(
+  endpoint: string,
+  chain: string,
+  signal?: AbortSignal,
+): Promise<PlaygroundResult> {
+  if (!hasBackend()) {
+    throw new ApiError(
+      503,
+      "The playground sends real requests, so it needs a live API — this environment isn’t connected to one yet.",
+    );
+  }
+
+  // Endpoints arrive as they are printed in the docs, e.g. "GET /v1/pools".
+  const path = endpoint.replace(/^[A-Z]+\s+/, "");
+  const url = `${BASE_URL}${path}${path.includes("?") ? "&" : "?"}chain=${encodeURIComponent(chain)}`;
+  const token = getToken("portal");
+  const response = await fetch(url, {
+    headers: token
+      ? { Accept: "application/json", Authorization: `Bearer ${token}` }
+      : { Accept: "application/json" },
+    signal,
+  });
+
+  const text = await response.text();
+  let body = text;
+  try {
+    body = JSON.stringify(JSON.parse(text), null, 2);
+  } catch {
+    /* not JSON; show it verbatim */
+  }
+
+  const spent = Number(response.headers.get("X-Units-Spent"));
+  return {
+    status: response.status,
+    body,
+    unitsSpent: Number.isFinite(spent) && response.headers.has("X-Units-Spent") ? spent : null,
+  };
 }

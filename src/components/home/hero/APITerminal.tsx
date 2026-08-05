@@ -61,7 +61,7 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
           <span className="h-2 w-2 shrink-0 rounded-full bg-destructive/70" />
           <span className="h-2 w-2 shrink-0 rounded-full bg-warning/70" />
           <span className="h-2 w-2 shrink-0 rounded-full bg-success/70" />
-          <span className="ml-2 truncate font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="ml-2 truncate font-mono text-[0.625rem] uppercase tracking-[0.2em] text-muted-foreground">
             bash — tickwise
           </span>
         </div>
@@ -71,7 +71,7 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
             setCopied(true);
             setTimeout(() => setCopied(false), 1400);
           }}
-          className="inline-flex shrink-0 items-center gap-1 rounded-md px-2 py-1 font-mono text-[11px] text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className="inline-flex shrink-0 items-center gap-1 rounded-md px-2 py-1 font-mono text-[0.6875rem] text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           {copied ? (
             <Check className="h-3.5 w-3.5 text-success" />
@@ -119,7 +119,7 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
               transition={{ duration: 0.5 }}
               className="mt-3 space-y-2"
             >
-              <pre className="overflow-x-auto rounded-lg border border-border/60 bg-background/60 p-3 text-[12px] text-foreground/80">
+              <pre className="overflow-x-auto rounded-lg border border-border/60 bg-background/60 p-3 text-[0.75rem] text-foreground/80">
                 {RESPONSE}
               </pre>
               <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -154,7 +154,7 @@ export function APITerminal({ reduce = false }: { reduce?: boolean }) {
         </AnimatePresence>
 
         {phase === "idle" && (
-          <div className="mt-3 font-mono text-[11px] text-muted-foreground/70">
+          <div className="mt-3 font-mono text-[0.6875rem] text-muted-foreground/70">
             idle · awaiting next call
           </div>
         )}

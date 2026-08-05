@@ -105,7 +105,7 @@ export function Keys() {
                         {k.origins.map((o) => (
                           <span
                             key={o}
-                            className="rounded border border-border/60 bg-surface-2 px-1.5 py-0.5 font-mono text-[10px]"
+                            className="rounded border border-border/60 bg-surface-2 px-1.5 py-0.5 font-mono text-[0.625rem]"
                           >
                             {o}
                           </span>
@@ -116,7 +116,7 @@ export function Keys() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span
-                    className={`rounded-full border px-2 py-0.5 text-[10px] ${k.type === "server" ? "border-primary/40 bg-primary/10 text-primary" : "border-warning/40 bg-warning/10 text-warning"}`}
+                    className={`rounded-full border px-2 py-0.5 text-[0.625rem] ${k.type === "server" ? "border-primary/40 bg-primary/10 text-primary" : "border-warning/40 bg-warning/10 text-warning"}`}
                   >
                     {k.type}
                   </span>

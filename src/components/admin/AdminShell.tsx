@@ -7,7 +7,10 @@ import { Users, Package, Zap, Repeat, Receipt, LineChart } from "lucide-react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 
 const items = [
-  { to: "/admin", label: "Clients", icon: Users, exact: true },
+  // Clients is the panel index, so it has to match exactly or it would light up on
+  // every other page — but a client's detail page lives at /admin/clients/:id and
+  // is still "Clients", hence the second prefix.
+  { to: "/admin", label: "Clients", icon: Users, exact: true, alsoMatches: "/admin/clients" },
   { to: "/admin/plans", label: "Plans", icon: Package },
   { to: "/admin/endpoints", label: "Endpoints", icon: Zap },
   { to: "/admin/subscriptions", label: "Subscriptions", icon: Repeat },
@@ -21,14 +24,16 @@ export function AdminShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen bg-background">
       <aside className="hidden w-60 shrink-0 flex-col border-r border-border/60 bg-sidebar md:flex">
         <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-5 font-display font-semibold">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-destructive/20 font-mono text-[10px] text-destructive">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-destructive/20 font-mono text-[0.625rem] text-destructive">
             AD
           </span>
           Admin panel
         </div>
         <nav className="flex-1 space-y-1 p-3">
           {items.map((it) => {
-            const active = it.exact ? pathname === it.to : pathname.startsWith(it.to);
+            const active = it.exact
+              ? pathname === it.to || (!!it.alsoMatches && pathname.startsWith(it.alsoMatches))
+              : pathname.startsWith(it.to);
             return (
               <Link
                 key={it.to}
@@ -50,15 +55,19 @@ export function AdminShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between border-b border-border/60 bg-background/70 px-6 backdrop-blur-xl">
-          <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            Internal · Admin
+        {/* Same frame as the `main` below, so the bar and the page content share
+            one left edge at every width — see the note in PortalShell. */}
+        <header className="flex h-14 items-center border-b border-border/60 bg-background/70 backdrop-blur-xl">
+          <div className="container-page flex items-center justify-between">
+            <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              Internal · Admin
+            </div>
+            <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
+              ← Back to site
+            </Link>
           </div>
-          <Link href="/" className="text-xs text-muted-foreground hover:text-foreground">
-            ← Back to site
-          </Link>
         </header>
-        <main className="mx-auto w-full max-w-7xl flex-1 space-y-6 p-6">{children}</main>
+        <main className="container-page flex-1 space-y-6 py-6">{children}</main>
       </div>
     </div>
   );

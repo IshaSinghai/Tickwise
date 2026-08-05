@@ -17,13 +17,14 @@ import { CoverageNetwork } from "@/components/home/CoverageNetwork";
 import { TrustedBy } from "@/components/home/TrustedBy";
 import { PricingBanner } from "@/components/home/PricingBanner";
 import { Reveal, EASE } from "@/components/home/motion-primitives";
+import type { PublicStats } from "@/lib/public-data";
 
-export function Landing() {
+export function Landing({ stats }: { stats: PublicStats | null }) {
   return (
     <MarketingShell>
       <AmbientBackground />
       <Hero />
-      <Stats />
+      <Stats stats={stats} />
       <Proof />
       <Features />
       <Quickstart />
@@ -37,7 +38,7 @@ function Hero() {
   const reduce = useSafeReducedMotion();
   return (
     <section className="relative">
-      <div className="mx-auto grid w-full max-w-[1680px] grid-cols-1 items-center gap-12 px-6 pb-14 pt-16 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-14 2xl:px-12">
+      <div className="container-page grid grid-cols-1 items-center gap-12 pb-14 pt-16 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-10 xl:gap-14">
         <div className="lg:col-span-5">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(8px)" }}
@@ -49,7 +50,16 @@ function Hero() {
             Uniswap v4 · Ethereum &amp; Avalanche · near-real-time
           </motion.div>
 
-          <h1 className="mt-6 font-display text-[clamp(2.5rem,4.4vw,4.2rem)] font-semibold leading-[1.03] tracking-tight">
+          {/*
+           * Ceiling is 3.52rem because that is exactly 4.4vw at 1280 — the width
+           * where `container-page` stops growing. The type is sized off the
+           * viewport but lives in a column that now caps with the frame, so
+           * letting it keep growing past that point is what broke the headline's
+           * two-line set into three at 1920. It reaches its ceiling and its
+           * column reaches its ceiling at the same width; below 1280 nothing about
+           * this changes, which is why 1280 looks exactly as it did before.
+           */}
+          <h1 className="mt-6 font-display text-[clamp(2.5rem,4.4vw,3.52rem)] font-semibold leading-[1.03] tracking-tight">
             {["Pools & positions", "as one clean API."].map((line, i) => (
               <motion.span
                 key={line}
@@ -135,17 +145,17 @@ function Hero() {
   );
 }
 
-function Stats() {
+function Stats({ stats }: { stats: PublicStats | null }) {
   return (
-    <section className="mx-auto w-full max-w-[1680px] px-6 py-10 2xl:px-12">
-      <LiveStats />
+    <section className="container-page py-10">
+      <LiveStats stats={stats} />
     </section>
   );
 }
 
 function Proof() {
   return (
-    <Reveal as="section" className="mx-auto max-w-7xl px-6 py-16">
+    <Reveal as="section" className="container-page py-16">
       <TrustedBy />
     </Reveal>
   );
@@ -153,7 +163,7 @@ function Proof() {
 
 function Features() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
+    <section className="container-page py-24">
       <Reveal className="max-w-2xl">
         <div className="text-xs uppercase tracking-widest text-primary">
           Why teams pick Tickwise
@@ -171,7 +181,7 @@ function Features() {
 
 function Quickstart() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
+    <section className="container-page py-24">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
         <Reveal className="lg:col-span-5">
           <div className="text-xs uppercase tracking-widest text-primary">
@@ -213,7 +223,7 @@ function Quickstart() {
 
 function Coverage() {
   return (
-    <Reveal as="section" className="mx-auto max-w-7xl px-6 py-24">
+    <Reveal as="section" className="container-page py-24">
       <CoverageNetwork />
     </Reveal>
   );
@@ -221,7 +231,7 @@ function Coverage() {
 
 function CTA() {
   return (
-    <Reveal as="section" className="mx-auto max-w-7xl px-6 pb-24">
+    <Reveal as="section" className="container-page pb-24">
       <PricingBanner />
     </Reveal>
   );

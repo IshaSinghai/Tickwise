@@ -1,4 +1,25 @@
-// Stubbed data for all UIs. Wire to real backend calls when they land.
+/*
+ * Fallback data for endpoints the backend has not shipped yet.
+ *
+ * No page reads a value out of this file any more — only its types. Every value is
+ * reached through lib/api.ts (authenticated realms) or lib/public-data.ts (public,
+ * server-side), so a page's data path is identical whether it is being served a
+ * fallback or a real response — which is what makes the loading/empty/error states
+ * real code paths rather than ones that only light up after the backend lands.
+ *
+ * Two kinds of thing live in this file, and they are treated differently:
+ *
+ *  - **Catalog / config** — plans, per-endpoint unit costs, the coverage matrix.
+ *    These are our own product facts, they have no live endpoint, and a pricing
+ *    page that renders nothing when the API is down is worse than one that
+ *    renders the catalog. They are used as a graceful fallback.
+ *  - **Metrics** — pools tracked, indexing lag, live positions. These are
+ *    claims about the world, derivable from endpoints that *are* live
+ *    (`/v1/pools`, `/v1/positions`). Per §3 and §8 they must be genuine, so
+ *    there is deliberately **no** metric fallback: when the live source can't be
+ *    reached the UI says so instead of inventing a number. See
+ *    lib/public-data.ts.
+ */
 
 export type Chain = "ETH" | "AVAX";
 export type Plan = {
@@ -67,7 +88,9 @@ export const PLANS: Plan[] = [
   },
 ];
 
-export const UNIT_COSTS = [
+export type UnitCost = { endpoint: string; units: number; note: string };
+
+export const UNIT_COSTS: UnitCost[] = [
   { endpoint: "GET /v1/pools", units: 1, note: "List of top pools" },
   { endpoint: "GET /v1/pools/:id", units: 2, note: "Single pool detail" },
   { endpoint: "GET /v1/positions", units: 1, note: "List of top positions" },
@@ -99,58 +122,16 @@ const rand = (seed: number) => {
   return x - Math.floor(x);
 };
 
-export const POSITIONS: Position[] = Array.from({ length: 24 }).map((_, i) => {
-  const pairs = [
-    ["USDC", "CATE"],
-    ["USDT", "TRUU"],
-    ["BINI", "USDC"],
-    ["ETH", "WCUP"],
-    ["USDC", "sUSDS"],
-    ["WLD", "USDT"],
-    ["PENGU", "USDT"],
-    ["ETH", "BMC"],
-    ["DAM", "USDT"],
-    ["GIVE", "USDT"],
-    ["ETH", "WIN"],
-    ["SWFTC", "USDT"],
-    ["LA", "USDT"],
-    ["ETH", "RALLY"],
-    ["COINDEPO", "USDT"],
-    ["ETH", "DIMO"],
-    ["ETH", "FWAres"],
-    ["etrUSD", "USDT"],
-    ["wPAW", "USDT"],
-    ["PPT", "USDT"],
-    ["COINx", "USDC"],
-    ["USDT", "NEX"],
-    ["ETH", "GROW"],
-    ["USDC", "PEPE"],
-  ];
-  const [a, b] = pairs[i];
-  const r = rand(i + 1);
-  return {
-    id: `p${i}`,
-    pair: `${a}/${b}`,
-    fee: `${(r * 30 + 0.05).toFixed(2)}%`,
-    chain: "ETH" as const,
-    version: "v4" as const,
-    nftId: String(310000 + Math.floor(r * 40000)),
-    owner: `0x${(r * 1e16).toString(16).padStart(4, "0").slice(0, 4)}…${(r * 1e10).toString(16).padStart(4, "0").slice(0, 4)}`,
-    poolAssets: Math.floor(500 + r * 8000) * 1000,
-    pnl: Math.floor(50 + r * 45000) * 100,
-    apr: Math.floor(1000 + r * 34000) / 10,
-    feeApr: Math.floor(900 + r * 36000) / 10,
-    roi: Math.floor(60 + r * 2500) / 10,
-    age: `${Math.floor(1 + r * 220)}d`,
-    risky: r > 0.85,
-  };
-});
-
-export const LIVE_STATS = {
-  poolsTracked: 12_480,
-  positionsTracked: 148_920,
-  indexingLagMinutes: 5,
-};
+/*
+ * There is deliberately no POSITIONS fixture and no LIVE_STATS fixture here.
+ *
+ * Both used to exist and both were rendered as fact: a 24-row table headed "Live
+ * preview of the API", and four landing-page counters reading "12,480 pools
+ * tracked · ~5 min indexing lag". §3 requires those proof numbers be genuine and
+ * §8 bans invented public claims, so the only honest fallback for a metric is to
+ * say it is unavailable. `/v1/pools` and `/v1/positions` are live endpoints —
+ * these numbers have a real source, and lib/public-data.ts reads it.
+ */
 
 export type ApiKey = {
   id: string;
@@ -182,6 +163,22 @@ export const MOCK_KEYS: ApiKey[] = [
     lastUsed: "1 hour ago",
   },
 ];
+
+/*
+ * The signed-in customer's profile.
+ *
+ * These two strings were literals in /portal/settings' JSX — an invented name and
+ * email rendered into the account form as though they were the visitor's own. That
+ * is the same defect as a fixture metric, except the reader is being told something
+ * about themselves. Behind GET /account/profile now, which is backend-planned, so
+ * this is its fallback.
+ */
+export type AccountProfile = { name: string; billingEmail: string };
+
+export const ACCOUNT_PROFILE: AccountProfile = {
+  name: "Alex Rivera",
+  billingEmail: "alex@doryoku.io",
+};
 
 export const USAGE_MONTHLY = [
   { month: "Feb", units: 120_400 },
@@ -243,9 +240,111 @@ export const CHANGELOG = [
   },
 ];
 
-export const STATUS_ROWS = [
-  { chain: "Ethereum · Uniswap v4", lag: "5 min", state: "ok" as const },
-  { chain: "Avalanche · Uniswap v4", lag: "7 min", state: "ok" as const },
-  { chain: "Arbitrum · Uniswap v4", lag: "indexed, not servable", state: "note" as const },
-  { chain: "Optimism · Uniswap v4", lag: "indexed, not servable", state: "note" as const },
+/*
+ * The status page's chain list, split from its lag numbers.
+ *
+ * Which chain/protocol pairs are servable is a product fact we own — the same
+ * matrix /docs/coverage publishes — so it belongs here and is safe to serve as a
+ * fallback. The lag *value* beside each servable row is a metric, and comes from
+ * the live source or not at all (see lib/public-data.ts). Keeping them in one
+ * object was what made the page state "5 min" whether or not anything had been
+ * measured.
+ */
+export type CoverageRow = { chain: string; servable: boolean };
+
+export const COVERAGE_ROWS: CoverageRow[] = [
+  { chain: "Ethereum · Uniswap v4", servable: true },
+  { chain: "Avalanche · Uniswap v4", servable: true },
+  { chain: "Arbitrum · Uniswap v4", servable: false },
+  { chain: "Optimism · Uniswap v4", servable: false },
 ];
+
+// ── Admin realm (every endpoint below is backend-planned) ────────────────────
+
+export type AdminClient = {
+  id: string;
+  email: string;
+  plan: string;
+  /** Units consumed month-to-date. */
+  units: number;
+  keys: number;
+};
+
+export type AdminClientDetail = AdminClient & {
+  createdAt: string;
+  status: "active" | "grace" | "canceled";
+  periodEnd: string;
+  quota: number;
+  rateLimit: string;
+  apiKeys: ApiKey[];
+  payments: typeof PAYMENTS;
+};
+
+export const ADMIN_CLIENTS: AdminClient[] = Array.from({ length: 12 }, (_, i) => ({
+  id: `cli_${100 + i}`,
+  email: `client${i + 1}@example.com`,
+  plan: ["Free", "Starter", "Growth", "Scale"][i % 4],
+  units: Math.floor(rand(i + 1) * 500_000),
+  keys: (i % 4) + 1,
+}));
+
+/** Builds the detail record for one client id, or undefined if there is no such client. */
+export function adminClientDetail(id: string): AdminClientDetail | undefined {
+  const client = ADMIN_CLIENTS.find((c) => c.id === id);
+  if (!client) return undefined;
+  const index = ADMIN_CLIENTS.indexOf(client);
+  const plan = PLANS.find((p) => p.name === client.plan) ?? PLANS[0];
+  return {
+    ...client,
+    // Literal rather than derived from today's date: a computed date renders
+    // differently on the server than on the client and trips a hydration
+    // mismatch, and these are placeholders until the endpoint is live.
+    createdAt: `2026-0${(index % 6) + 1}-0${(index % 8) + 1}`,
+    status: (["active", "grace", "canceled"] as const)[index % 3],
+    periodEnd: `2026-0${(index % 8) + 1}-15`,
+    quota: plan.quota,
+    rateLimit: plan.rateLimit,
+    apiKeys: MOCK_KEYS.slice(0, client.keys > MOCK_KEYS.length ? MOCK_KEYS.length : client.keys),
+    payments: plan.monthlyPrice > 0 ? PAYMENTS : [],
+  };
+}
+
+export type AdminSubscription = {
+  id: string;
+  client: string;
+  plan: string;
+  status: "active" | "grace" | "canceled";
+  periodEnd: string;
+};
+
+export const ADMIN_SUBSCRIPTIONS: AdminSubscription[] = Array.from({ length: 10 }, (_, i) => ({
+  id: `sub_${200 + i}`,
+  client: `client${i + 1}@example.com`,
+  plan: ["Starter", "Growth", "Scale"][i % 3],
+  status: (["active", "grace", "canceled"] as const)[i % 3],
+  periodEnd: `2026-0${(i % 8) + 1}-15`,
+}));
+
+export const ADMIN_SUBSCRIPTION_SUMMARY = { mrr: 4782, arr: 57_384, active: 98 };
+
+export const ADMIN_REVENUE = {
+  kpis: {
+    mrr: 4782,
+    mrrDelta: "+12%",
+    newThisMonth: 8,
+    newDelta: "+3",
+    churned: 2,
+    churnedDelta: "-1",
+  },
+  monthly: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"].map((month, i) => ({
+    month,
+    paid: 2500 + i * 350,
+    pending: 400 + i * 80,
+  })),
+  byPlan: PLANS.filter((p) => p.monthlyPrice > 0).map((p, i) => ({
+    planId: p.id,
+    name: p.name,
+    activeSubs: 20 - i * 5,
+    mrr: p.monthlyPrice * (20 - i * 5),
+  })),
+};

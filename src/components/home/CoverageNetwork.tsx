@@ -114,7 +114,7 @@ export function CoverageNetwork() {
 
           {/* hub */}
           <motion.div
-            className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border border-primary/40 bg-surface/80 font-mono text-[10px] uppercase tracking-widest text-muted-foreground backdrop-blur"
+            className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border border-primary/40 bg-surface/80 font-mono text-[0.625rem] uppercase tracking-widest text-muted-foreground backdrop-blur"
             animate={
               reduce
                 ? undefined
@@ -191,7 +191,7 @@ export function CoverageNetwork() {
                   ["Indexing", c.indexing],
                 ].map(([k, v]) => (
                   <div key={k}>
-                    <dt className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                    <dt className="text-[0.625rem] uppercase tracking-widest text-muted-foreground">
                       {k}
                     </dt>
                     <dd className="mt-1 font-display text-lg tabular-nums">{v}</dd>

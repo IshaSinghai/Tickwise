@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { UNIT_COSTS } from "@/lib/mock";
+import { getPublicUnitCosts } from "@/lib/public-data";
 import { CodeBlock } from "@/components/CodeBlock";
 
 export const metadata: Metadata = {
@@ -8,7 +8,18 @@ export const metadata: Metadata = {
   description: "How units are counted, per-endpoint costs, rate limits, and quota headers.",
 };
 
-export default function UnitsAndLimitsPage() {
+/*
+ * Server component. The unit table is the substance of this docs page, so it has
+ * to be in the HTML a crawler sees — which rules out fetching it client-side.
+ *
+ * Unit costs are catalog rather than metric: they are our own pricing, there is no
+ * live endpoint that owns them today, and a docs page that renders an empty table
+ * when the API is unreachable is worse than one that renders the catalog. So this
+ * getter falls back rather than returning null. See lib/public-data.ts.
+ */
+export default async function UnitsAndLimitsPage() {
+  const unitCosts = await getPublicUnitCosts();
+
   return (
     <div className="space-y-6">
       <div>
@@ -31,7 +42,7 @@ export default function UnitsAndLimitsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-border/60">
-            {UNIT_COSTS.map((u) => (
+            {unitCosts.map((u) => (
               <tr key={u.endpoint}>
                 <td className="px-4 py-2 font-mono text-xs">{u.endpoint}</td>
                 <td className="px-4 py-2 font-mono">{u.units}</td>

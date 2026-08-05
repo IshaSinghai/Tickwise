@@ -2,7 +2,13 @@
 @source "../";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/*
+ * Realigned onto data-theme, matching the rest of the theming. Nothing currently
+ * uses a `dark:` utility — the palette is driven entirely by the custom properties
+ * below — but leaving this pointing at a `.dark` class that is never applied would
+ * mean the first `dark:` utility anyone wrote silently never matched.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
  * Doryoku / Tickwise design system
@@ -66,6 +72,47 @@
 
 :root {
   --radius: 0.625rem;
+
+  /*
+   * Horizontal edge margin for page content, site-wide. Deliberately in px, not
+   * rem: the large-viewport block below scales the root font size, and a rem
+   * gutter would compound with it.
+   *
+   * 16px at 640px-and-below, ramping to 24px and holding flat from a 720px
+   * viewport up. Above 720 that is identical to the `px-6` every wrapper used
+   * before this frame existed. Only the phone end differs: `px-6` gave 24px at
+   * 375px too, which is more edge margin than a 375px screen can spare.
+   *
+   * Above 1280 it ramps again — see the media query at the end of this block.
+   */
+  --gutter: clamp(16px, 10vw - 48px, 24px);
+
+  /*
+   * Widest the page frame gets. 1536 with a 48px gutter caps *content* at 1440,
+   * and past that width the margin absorbs everything else: 240px each side at
+   * 1920, 560px at 2560.
+   *
+   * Content stops growing well before the viewport does on purpose. Past roughly
+   * 1450px a text column and a card grid stop reading as "designed larger" and
+   * start reading as spread out — the same reason Stripe, Linear and Vercel all
+   * cap far below their widest supported viewport. The scale-up that makes a
+   * 1920 screen feel designed for is the root font size below, not more width.
+   *
+   * Kept in px for the same reason as the gutter.
+   */
+  --container-page: 1536px;
+
+  /*
+   * Measures for content that must not span the full frame. `narrow` is for
+   * forms, timelines and small panels; `prose` is a reading measure (~95ch at
+   * the body size) for running text.
+   *
+   * In rem, unlike the two above, and that is the point: they are measured in
+   * characters, so they should track the root font size and hold the same
+   * characters-per-line as the type scales up.
+   */
+  --container-narrow: 56rem;
+  --container-prose: 48rem;
 
   /* Midnight Indigo — dark by default */
   --background: oklch(0.14 0.03 275);
@@ -133,8 +180,65 @@
     0 1px 0 0 color-mix(in oklab, white 4%, transparent) inset, 0 10px 30px -20px oklch(0 0 0 / 60%);
 }
 
-/* Optional light theme (design assumes dark). */
-.light {
+/*
+ * Large-viewport scale-up. Everything about how the site looks above 1280px
+ * lives in these four lines; below 1280px nothing here applies and phone and
+ * tablet render exactly as they did.
+ *
+ * `80rem` is 1280px. rem in a *media query* resolves against the browser's
+ * initial font size, not the one set below, so this threshold — and every
+ * Tailwind breakpoint — stays put regardless of the scaling. (Verified in
+ * Chromium: `min-width: 80rem` still matches at exactly 1280px with an 18px
+ * root.) Without that guarantee, scaling the root would silently drag `md:`,
+ * `lg:`, `xl:` and `2xl:` along with it.
+ *
+ * Scaling the root font size, rather than retuning type and spacing per
+ * component, is what keeps the enlargement coherent. Tailwind v4 derives
+ * spacing from `--spacing: .25rem` and every `--text-*` from rem, so one value
+ * moves type, section rhythm, card padding, gaps and radii by an identical
+ * ratio. Proportions cannot drift, because nothing is being retuned relative to
+ * anything else.
+ *
+ * Together with the 1440px content cap, 1920 works out as very nearly a pure
+ * enlargement of 1280: 1232px of content at a 16px root is 77 root-ems, and
+ * 1440px at an 18px root is 80 — 4% wider in the terms that decide whether a
+ * layout looks spread out, while being 36% wider in physical pixels.
+ *
+ * `rem` not px for the font size itself: on the root element `1rem` is the
+ * user's own base size, so this scales *their* preference by 1x to 1.125x. A px
+ * value would throw it away and override their browser setting.
+ */
+@media (min-width: 80rem) {
+  :root {
+    /* 24px at 1280 -> 48px at 1536, then flat. The ceiling is reached exactly
+       where --container-page caps, so content grows monotonically and then
+       holds: a gutter still growing after the frame stopped would eat into
+       content and make the page narrower as the screen got wider. */
+    --gutter: clamp(24px, 9.375vw - 96px, 48px);
+    /* 16px at 1280 -> 18px at 1920, then flat. */
+    font-size: clamp(1rem, 0.75rem + 0.3125vw, 1.125rem);
+  }
+}
+
+/*
+ * Light theme.
+ *
+ * Selected by `data-theme="light"` on <html>, set by ThemeProvider. The dark
+ * values in :root above are the default, so the site renders exactly as it always
+ * has unless a visitor has explicitly chosen light.
+ *
+ * This block previously overrode 19 of the 48 properties in :root, which meant
+ * "light theme" was nominal: every sidebar colour, success, warning, destructive,
+ * primary-glow, all five chart colours, --gradient-hero and --shadow-card kept
+ * their dark values, so the portal sidebar would have rendered near-black against
+ * a white page and the status pills would have used dark-surface chroma on white.
+ * The set below is complete, so selecting light now produces a usable page.
+ *
+ * Not overridden, deliberately: --gradient-primary and --shadow-glow are composed
+ * from var(--primary)/var(--primary-glow), so they adapt on their own. --radius,
+ * --gutter and the --container-* values are geometry, not colour.
+ */
+[data-theme="light"] {
   --background: oklch(0.985 0.005 260);
   --foreground: oklch(0.16 0.03 275);
   --surface: oklch(1 0 0);
@@ -145,6 +249,7 @@
   --popover-foreground: oklch(0.16 0.03 275);
   --primary: oklch(0.5 0.22 275);
   --primary-foreground: oklch(0.99 0.005 260);
+  --primary-glow: oklch(0.6 0.22 275);
   --secondary: oklch(0.94 0.015 260);
   --secondary-foreground: oklch(0.16 0.03 275);
   --muted: oklch(0.94 0.015 260);
@@ -154,6 +259,43 @@
   --border: oklch(0.88 0.015 260);
   --input: oklch(0.9 0.015 260);
   --ring: oklch(0.5 0.22 275);
+
+  /* Status colours darkened for contrast against white rather than reused from
+     the dark palette, where they sit on oklch(0.18) surfaces. */
+  --destructive: oklch(0.55 0.23 22);
+  --destructive-foreground: oklch(0.99 0.005 0);
+  --success: oklch(0.52 0.15 155);
+  --success-foreground: oklch(0.99 0.01 155);
+  --warning: oklch(0.56 0.14 75);
+  --warning-foreground: oklch(0.99 0.01 75);
+
+  --chart-1: oklch(0.5 0.22 275);
+  --chart-2: oklch(0.52 0.15 155);
+  --chart-3: oklch(0.56 0.14 75);
+  --chart-4: oklch(0.55 0.2 320);
+  --chart-5: oklch(0.55 0.16 200);
+
+  --sidebar: oklch(0.97 0.008 260);
+  --sidebar-foreground: oklch(0.25 0.03 275);
+  --sidebar-primary: oklch(0.5 0.22 275);
+  --sidebar-primary-foreground: oklch(0.99 0.005 260);
+  --sidebar-accent: oklch(0.93 0.02 275);
+  --sidebar-accent-foreground: oklch(0.16 0.03 275);
+  --sidebar-border: oklch(0.87 0.015 260 / 70%);
+  --sidebar-ring: oklch(0.5 0.22 275);
+
+  /* The dark hero gradient ends on a near-black stop and the card shadow uses a
+     white inset highlight over a heavy black drop — both invert badly. */
+  --gradient-hero:
+    radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      color-mix(in oklab, var(--primary) 14%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--background), oklch(0.95 0.01 260));
+  --shadow-card:
+    0 1px 0 0 color-mix(in oklab, white 60%, transparent) inset,
+    0 10px 30px -22px oklch(0.2 0.03 275 / 22%);
 }
 
 @layer base {
@@ -162,6 +304,18 @@
   }
   html,
   body {
+    /*
+     * Contains decorative horizontal bleed. The hero's orbit rings and the
+     * ambient orbs are absolutely positioned past the viewport edge on purpose,
+     * and several sit outside any clipping ancestor — measured, the landing page
+     * scrolled sideways by 40px at 1280 and 171px at 320.
+     *
+     * `clip`, not `hidden`: `overflow: hidden` turns the element into a scroll
+     * container, which breaks `position: sticky` on descendants — and the
+     * marketing header is sticky. `clip` crops without that side effect. Only the
+     * x axis, so vertical scrolling is untouched.
+     */
+    overflow-x: clip;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -181,6 +335,55 @@
   samp {
     font-family: var(--font-mono);
   }
+}
+
+/*
+ * The one horizontal frame every page and section wrapper uses.
+ *
+ * Before this existed, each wrapper picked its own `mx-auto max-w-* px-*` trio,
+ * and the inconsistency was visible: /pricing had three different left edges on
+ * one page (max-w-7xl cards, max-w-5xl table, max-w-3xl FAQ), and the marketing
+ * header's logo sat 176px inboard of the hero headline directly beneath it
+ * (max-w-7xl header vs max-w-[1680px] hero). Section wrappers get this class and
+ * keep only their own vertical padding.
+ */
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/*
+ * Horizontal padding only, for pages whose content is a centred card rather than
+ * a page frame — auth, error, not-found. Their card is centred by its own
+ * `max-w-*`, so all the gutter has to do is keep it off the edge on a phone.
+ *
+ * Not for the portal/admin top bars: those need to line up with the `main` below
+ * them, and a bare gutter only matches while the frame is uncapped. They use a
+ * nested `container-page` instead — see PortalShell/AdminShell.
+ */
+@utility px-gutter {
+  padding-inline: var(--gutter);
+}
+
+/*
+ * Capped single-column content, nested inside a `container-page`.
+ *
+ * Left-aligned rather than centred, deliberately: it keeps the block's edge on
+ * the same line as the page heading above it and as every other page in the site,
+ * which is the alignment you actually perceive moving between pages. Stretching a
+ * contact form or a two-row status panel to the full frame would satisfy "equal
+ * margins both sides" literally and look worse for it.
+ */
+@utility container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+}
+
+@utility container-prose {
+  width: 100%;
+  max-width: var(--container-prose);
 }
 
 @utility bg-hero {

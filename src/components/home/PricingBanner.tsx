@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
+import { useEffect, useMemo, useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SpringValue, mapRange } from "@/components/home/hero/spring";
 
 const tiers = [
   { name: "Free", units: "25,000", note: "no card" },
@@ -13,30 +15,64 @@ const tiers = [
 
 export function PricingBanner() {
   const reduce = useReducedMotion();
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 60, damping: 20 });
-  const sy = useSpring(my, { stiffness: 60, damping: 20 });
-  const rotateY = useTransform(sx, [-0.5, 0.5], [5, -5]);
-  const rotateX = useTransform(sy, [-0.5, 0.5], [-4, 4]);
+  const tiltRef = useRef<HTMLDivElement>(null);
+
+  // Same physics the `useSpring` here used: stiffness 60, damping 20, and
+  // motion's default mass of 1.
+  const springs = useMemo(
+    () => ({
+      x: new SpringValue(0, { stiffness: 60, damping: 20, mass: 1 }),
+      y: new SpringValue(0, { stiffness: 60, damping: 20, mass: 1 }),
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    const el = tiltRef.current;
+    if (!el) return;
+
+    let lastX = NaN;
+    let lastY = NaN;
+    const run = () => {
+      const x = springs.x.get();
+      const y = springs.y.get();
+      if (x === lastX && y === lastY) return;
+      lastX = x;
+      lastY = y;
+      const rotateY = mapRange(x, -0.5, 0.5, 5, -5);
+      const rotateX = mapRange(y, -0.5, 0.5, -4, 4);
+      el.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+
+    run();
+    const offX = springs.x.subscribe(run);
+    const offY = springs.y.subscribe(run);
+    return () => {
+      offX();
+      offY();
+      springs.x.destroy();
+      springs.y.destroy();
+    };
+  }, [springs]);
 
   return (
-    <motion.div
+    <div
       onPointerMove={(e) => {
         if (reduce) return;
         const r = e.currentTarget.getBoundingClientRect();
-        mx.set((e.clientX - r.left) / r.width - 0.5);
-        my.set((e.clientY - r.top) / r.height - 0.5);
+        springs.x.set((e.clientX - r.left) / r.width - 0.5);
+        springs.y.set((e.clientY - r.top) / r.height - 0.5);
       }}
       onPointerLeave={() => {
-        mx.set(0);
-        my.set(0);
+        springs.x.set(0);
+        springs.y.set(0);
       }}
       style={{ perspective: 1200 }}
       className="relative"
     >
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      <div
+        ref={tiltRef}
+        style={{ transformStyle: "preserve-3d" }}
         className="relative overflow-hidden rounded-3xl border border-border/60 bg-surface/40 p-8 shadow-card backdrop-blur-xl md:p-12"
       >
         <div
@@ -115,7 +151,7 @@ export function PricingBanner() {
             ))}
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { rnd, usePointer, useSafeReducedMotion } from "./primitives";
+import { mapRange, rnd, usePointer, usePointerStyle, useSafeReducedMotion } from "./primitives";
 import { YieldStream } from "./YieldStream";
 import { PipelineArc } from "./PipelineArc";
 import { FloatingMetricCard, MetricHeader } from "./FloatingMetricCard";
@@ -27,10 +27,18 @@ export function HeroScene() {
   const scrollY = useTransform(scrollYProgress, [0, 1], [0, -70]);
   const scrollFade = useTransform(scrollYProgress, [0, 0.85], [1, 0.15]);
 
-  const sceneX = useTransform(pointer.x, [-1, 1], [10, -10]);
-  const sceneY = useTransform(pointer.y, [-1, 1], [8, -8]);
-  const glowX = useTransform(pointer.x, [-1, 1], ["35%", "65%"]);
-  const glowY = useTransform(pointer.y, [-1, 1], ["35%", "65%"]);
+  // pointer-tracked lighting position, as CSS custom properties
+  const glowRef = usePointerStyle<HTMLDivElement>(pointer, (el, x, y) => {
+    el.style.setProperty("--gx", `${mapRange(x, -1, 1, 35, 65)}%`);
+    el.style.setProperty("--gy", `${mapRange(y, -1, 1, 35, 65)}%`);
+  });
+
+  // whole-scene parallax
+  const sceneRef = usePointerStyle<HTMLDivElement>(pointer, (el, x, y) => {
+    const sceneX = mapRange(x, -1, 1, 10, -10);
+    const sceneY = mapRange(y, -1, 1, 8, -8);
+    el.style.transform = `translateX(${sceneX}px) translateY(${sceneY}px)`;
+  });
 
   const pulses = Array.from({ length: 14 }, (_, i) => ({
     x: rnd(i, 11) * 100,
@@ -55,23 +63,18 @@ export function HeroScene() {
       }}
     >
       {/* pointer-tracked lighting */}
-      <motion.div
+      <div
+        ref={glowRef}
         aria-hidden
         className="pointer-events-none absolute -inset-16 rounded-[40%]"
         style={{
           background:
-            "radial-gradient(38% 38% at var(--gx) var(--gy), color-mix(in oklab, var(--primary) 24%, transparent), transparent 70%)",
-          // @ts-expect-error CSS custom properties are supported by motion
-          "--gx": glowX,
-          "--gy": glowY,
+            "radial-gradient(38% 38% at var(--gx, 50%) var(--gy, 50%), color-mix(in oklab, var(--primary) 24%, transparent), transparent 70%)",
           filter: "blur(30px)",
         }}
       />
 
-      <motion.div
-        className="absolute inset-0"
-        style={{ x: sceneX, y: sceneY, willChange: "transform" }}
-      >
+      <div ref={sceneRef} className="absolute inset-0" style={{ willChange: "transform" }}>
         {/* rings + core */}
 
         <OrbitRing size={520} duration={70} opacity={0.28} dashed delay={0.15} reduce={reduce} />
@@ -333,7 +336,7 @@ export function HeroScene() {
         {pulses.map((p, i) => (
           <DataPulse key={i} {...p} reduce={reduce} />
         ))}
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

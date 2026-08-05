@@ -53,6 +53,36 @@ export default defineConfig({
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   expect: {
-    toHaveScreenshot: { maxDiffPixelRatio: 0.01 },
+    /*
+     * An absolute pixel budget, not a ratio — the ratio was actively hiding
+     * layout bugs.
+     *
+     * `maxDiffPixelRatio: 0.01` scales the allowance with page height, so the
+     * taller the page the more it forgives. /pricing is a 1280x2335 full-page
+     * shot, i.e. 2,988,800 pixels, which bought it a 29,888-pixel free pass.
+     * Moving its unit-cost panel 128px left and widening it by 256px registered
+     * 15,721 differing pixels — a change you can see across the room — and the
+     * sweep passed it. Two admin pages passed the same way during the same
+     * change. A ratio also means the same regression is caught on a short page
+     * and missed on a long one, which is the opposite of useful.
+     *
+     * 100 absolute pixels sits between the two things measured on this suite:
+     * run-to-run drift on the asserted routes is 0 pixels (two consecutive runs
+     * at maxDiffPixelRatio: 0 both passed against freshly regenerated
+     * baselines), and the smallest real signal worth catching is ~1,200 pixels
+     * — one border line of a full-width panel moving a single pixel. So it is
+     * >100x above the noise and >10x below the smallest thing it must catch.
+     *
+     * `threshold` is Playwright's default, pinned explicitly because it is
+     * load-bearing here: it is the per-pixel colour distance below which pixels
+     * count as identical, and this palette is dark-on-dark (surface oklch 0.18
+     * on background oklch 0.14). Panel *fills* shift without registering at
+     * 0.2; borders and text still do, which is what makes the budget above
+     * work. Lower it before loosening the budget if that ever stops holding.
+     *
+     * Continuous-animation routes are excluded from assertion in sweep.spec.ts
+     * rather than absorbed by tolerance here — see CONTINUOUS_ANIMATION_ROUTES.
+     */
+    toHaveScreenshot: { maxDiffPixels: 100, threshold: 0.2 },
   },
 });

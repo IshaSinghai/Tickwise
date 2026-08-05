@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
-import { Activity, Database, Layers, Timer } from "lucide-react";
-import { LIVE_STATS } from "@/lib/mock";
+import { Coins, Database, Layers, Timer, type LucideIcon } from "lucide-react";
+import type { PublicStats } from "@/lib/public-data";
 import { seeded } from "./motion-primitives";
 
 function Counter({
@@ -65,21 +66,54 @@ function MicroChart({ seed }: { seed: number }) {
   );
 }
 
-const stats = [
-  { icon: Database, label: "Pools tracked", value: LIVE_STATS.poolsTracked, suffix: "" },
-  { icon: Layers, label: "Positions tracked", value: LIVE_STATS.positionsTracked, suffix: "" },
-  {
-    icon: Timer,
-    label: "Indexing lag",
-    value: LIVE_STATS.indexingLagMinutes,
-    prefix: "~",
-    suffix: " min",
-  },
-  { icon: Activity, label: "Chains live", value: 2, suffix: "" },
-];
+type Stat = {
+  icon: LucideIcon;
+  label: string;
+  value: number | null;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+};
 
-export function LiveStats() {
+/*
+ * The four cards, and what is behind each one.
+ *
+ * The fourth card was "Chains live: 2". §8 prohibits a chain count outright, so
+ * it is now TVL indexed — a real metric derivable from GET /v1/pools, and one the
+ * hero already surfaces. Four cards either way, so the grid and the connection
+ * lines drawn down from the hero scene are unchanged.
+ *
+ * The values arrive as a prop from the server component that owns this route, and
+ * they are `null` together: `getPublicStats()` returns null unless it measured all
+ * four, so the page never mixes one real number with three placeholders. These
+ * were module-level constants until now — four invented figures presented as
+ * proof, which is exactly what §3 asks not to happen.
+ */
+function statsFor(live: PublicStats | null): Stat[] {
+  return [
+    { icon: Database, label: "Pools tracked", value: live?.poolsTracked ?? null },
+    { icon: Layers, label: "Positions tracked", value: live?.positionsTracked ?? null },
+    {
+      icon: Timer,
+      label: "Indexing lag",
+      value: live?.indexingLagMinutes ?? null,
+      prefix: "~",
+      suffix: " min",
+    },
+    {
+      icon: Coins,
+      label: "TVL indexed",
+      value: live ? live.tvlIndexedUsd / 1e9 : null,
+      prefix: "$",
+      suffix: "B",
+      decimals: 2,
+    },
+  ];
+}
+
+export function LiveStats({ stats: live }: { stats: PublicStats | null }) {
   const reduce = useReducedMotion();
+  const stats = statsFor(live);
   return (
     <div className="relative">
       {/* connection lines travelling down from the hero scene into the cards */}
@@ -150,10 +184,25 @@ export function LiveStats() {
             />
             <div className="relative flex items-start justify-between">
               <s.icon className="h-5 w-5 text-primary transition-transform duration-700 group-hover:rotate-12" />
-              <span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />
+              {/* The pulsing green dot is the card's claim to be live. It only
+                  earns that when there is a measured number under it. */}
+              {s.value === null ? (
+                <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40" />
+              ) : (
+                <span className="h-1.5 w-1.5 animate-ping-slow rounded-full bg-success" />
+              )}
             </div>
             <div className="relative mt-6 font-display text-3xl font-semibold tracking-tight md:text-4xl">
-              <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
+              {s.value === null ? (
+                <span className="tabular-nums text-muted-foreground/50">—</span>
+              ) : (
+                <Counter
+                  value={s.value}
+                  prefix={s.prefix}
+                  suffix={s.suffix}
+                  decimals={s.decimals}
+                />
+              )}
             </div>
             <div className="relative mt-1 text-xs uppercase tracking-widest text-muted-foreground">
               {s.label}
@@ -164,6 +213,16 @@ export function LiveStats() {
           </motion.div>
         ))}
       </div>
+      {live === null && (
+        <p className="mt-4 text-center text-xs text-muted-foreground">
+          Live counts are unavailable right now — we’d rather show nothing than a number we haven’t
+          measured. See{" "}
+          <Link href="/status" className="text-primary hover:underline">
+            status
+          </Link>
+          .
+        </p>
+      )}
     </div>
   );
 }

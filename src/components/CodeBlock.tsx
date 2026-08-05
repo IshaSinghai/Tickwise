@@ -8,7 +8,7 @@ export function CodeBlock({ code, lang = "bash" }: { code: string; lang?: string
   const [copied, setCopied] = useState(false);
   return (
     <div className="my-4 overflow-hidden rounded-lg border border-border/60 bg-[color:var(--surface-2)]">
-      <div className="flex items-center justify-between border-b border-border/60 px-3 py-1.5 text-[11px] uppercase tracking-widest text-muted-foreground">
+      <div className="flex items-center justify-between border-b border-border/60 px-3 py-1.5 text-[0.6875rem] uppercase tracking-widest text-muted-foreground">
         <span className="font-mono">{lang}</span>
         <Button
           size="sm"

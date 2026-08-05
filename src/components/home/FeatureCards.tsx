@@ -58,7 +58,7 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
     );
   if (kind === "keys")
     return (
-      <div className="flex gap-1.5 font-mono text-[9px]">
+      <div className="flex gap-1.5 font-mono text-[0.5625rem]">
         <span className="rounded border border-success/40 bg-success/10 px-1.5 py-0.5 text-success">
           server
         </span>
@@ -69,7 +69,7 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
     );
   if (kind === "layers")
     return (
-      <div className="flex items-center gap-2 font-mono text-[9px] text-muted-foreground">
+      <div className="flex items-center gap-2 font-mono text-[0.5625rem] text-muted-foreground">
         {["ethereum", "avalanche"].map((c, i) => (
           <motion.span
             key={c}
@@ -84,11 +84,11 @@ function Viz({ kind, seed }: { kind: (typeof items)[number]["viz"]; seed: number
     );
   if (kind === "curl")
     return (
-      <div className="font-mono text-[10px] text-muted-foreground">KC-APIKey: kc_live_•••</div>
+      <div className="font-mono text-[0.625rem] text-muted-foreground">KC-APIKey: kc_live_•••</div>
     );
   if (kind === "honest")
     return (
-      <div className="flex gap-1.5 font-mono text-[9px] text-muted-foreground">
+      <div className="flex gap-1.5 font-mono text-[0.5625rem] text-muted-foreground">
         <span className="rounded border border-border/60 px-1.5 py-0.5">no fake SLA</span>
         <span className="rounded border border-border/60 px-1.5 py-0.5">real footprint</span>
       </div>
